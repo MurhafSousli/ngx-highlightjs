@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="200px" width="200px" style="text-align: center;" src="https://raw.githubusercontent.com/MurhafSousli/ngx-highlightjs/dev/demo/src/assets/logo.svg">
+  <img height="200px" width="200px" style="text-align: center;" src="https://cdn.rawgit.com/MurhafSousli/ngx-highlightjs/master/assets/logo.svg">
   <h1 align="center">Angular Highlight.js</h1>
 </p>
 
@@ -14,7 +14,7 @@ ___
 
 ## Installation
 
-1. To install this library, run:
+1. Install it with npm
 
 ```bash
 $ npm install --save ngx-highlightjs
@@ -74,7 +74,6 @@ export class AppModule { }
 ```html
 <!-- Highlight target element -->
 <pre><code highlight [textContent]="someCode"></code></pre>
-<div [textContent]="anotherCode"></div>
 ```
  - Highlight all code elements
 
@@ -98,19 +97,19 @@ export class AppModule { }
 
 ## Options
 
- - Highlight element(s)
+- Highlight element(s)
 
   **[highlight]**: string, default `''`
 
-    - Use just `highlight` on the element to highlight it.
-    - Use `highlight="all"` to highlight all child code elements.
-    - Use `highlight="{selector}"` to highlight custom child elements.
+  * Use just `highlight` on the element to highlight it.
+  * Use `highlight="all"` to highlight all child code elements.
+  * Use `highlight="{selector}"` to highlight custom child elements.
 
- - Auto-highlight on changes
+- Auto-highlight on changes
 
   **[hlAuto]**: boolean, default `true`;
 
- - Highlight delay 
+- Highlight delay 
 
   **[hlDelay]**: number, default `200` ms;
 
