@@ -102,9 +102,9 @@ export class AppModule { }
 
   **[highlight]**: string, default `''`
 
-   if you just use `highlight` on the element, it will highlight it
-   if you use `highlight="all"`: highlights all child code elements.
-   if you use `highlight="p code"`: highlights custom child elements.
+    - Use just `highlight` on the element to highlight it.
+    - Use `highlight="all"` to highlight all child code elements.
+    - Use `highlight="{selector}"` to highlight custom child elements.
 
  - Auto-highlight on changes
 
