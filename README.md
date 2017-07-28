@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="200px" width="200px" style="text-align: center;" src="https://cdn.rawgit.com/MurhafSousli/ngx-highlightjs/79d7fbba96cc528238e67aadb85eafe8653198de/assets/logo.svg">
+  <img height="200px" width="200px" style="text-align: center;" src="https://raw.githubusercontent.com/MurhafSousli/ngx-highlightjs/dev/demo/src/assets/logo.svg">
   <h1 align="center">Angular Highlight.js</h1>
 </p>
 
@@ -22,15 +22,15 @@ $ npm install --save ngx-highlightjs
 
 2. Head to [highlight.js download page](https://highlightjs.org/download/) and get your custom package bundle including only the languages you need.
 
-Create new folder in `src/assets/highlight.js` and extract the downloaded zip file.
+3. Create new folder in `src/assets/highlight.js` and extract the downloaded zip file.
 
-3. import highlight.js script in `index.html`
+4. import highlight.js script in `index.html`
 
 ```html
 <script src="assets/highlight.js/highlight.pack.js"></script>
 ```
 
-3. import highlight.js theme in global style `style.scss`
+5. import highlight.js theme in global style `style.scss`
 
 ```scss
 @import 'assets/highlight.js/styles/monokai-sublime.css';
@@ -100,15 +100,19 @@ export class AppModule { }
 
  - Highlight element(s)
 
-  [highlight]: string `'' | 'all' | 'child selector'`, default `''`
+  **[highlight]**: string, default `''`
+
+   if you just use `highlight` on the element, it will highlight it
+   if you use `highlight="all"`: highlights all child code elements.
+   if you use `highlight="p code"`: highlights custom child elements.
 
  - Auto-highlight on changes
 
-  [hlAuto]: boolean, default `true`;
+  **[hlAuto]**: boolean, default `true`;
 
  - Highlight delay 
 
-  [hlDelay]: number, default `200`;
+  **[hlDelay]**: number, default `200` ms;
 
 ## Development
 
