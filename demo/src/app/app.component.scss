@@ -1,0 +1,84 @@
+.container {
+    margin: 1em;
+    position: relative;
+    max-width: 100%;
+}
+
+md-chip-list {
+    display: flex;
+    justify-content: center;
+}
+
+md-chip {
+    cursor: pointer;
+}
+
+md-card {
+    display: flex;
+    flex-direction: column;
+    height: 360px;
+    min-width: 250px;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 1em;
+}
+
+.mat-card {
+    padding: 0;
+}
+
+md-card-header {
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+md-card-content {
+    flex: 1;
+    position: relative;
+    margin-bottom: 0;
+    overflow: hidden;
+    background: #282A36;
+    display: flex;
+    flex-direction: column;
+}
+
+md-card-footer {
+    position: relative !important;
+    padding: 1em !important;
+    left: 0;
+    right: 0;
+}
+
+textarea {
+    font-family: monospace, monospace;
+    width: 100%;
+    font-size: 1em;
+    font-weight: 100;
+    line-height: 1.6em;
+    border: none;
+    outline: none;
+    padding: 24px;
+    box-sizing: border-box;
+    color: white;
+    background: transparent;
+    flex: 1 0 auto;
+}
+
+pre {
+    word-wrap: normal;
+    code {
+        flex: 1;
+        width: 100%;
+        line-height: 1.8em;
+        display: block;
+        font-size: 0.9em;
+        padding: 24px;
+    }
+}
+
+md-icon {
+    margin-right: 0.5em;
+}
