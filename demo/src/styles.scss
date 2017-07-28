@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+@import '~normalize.css';
+@import '~@angular/material/theming';
+@import '~perfect-scrollbar/dist/css/perfect-scrollbar.min.css';
+
+// Highlight.js
+@import 'assets/highlight.js/styles/monokai-sublime.css';
+
+@include mat-core();
+$primary: mat-palette($mat-red, 600, 200, 800);
+$accent: mat-palette($mat-red, 800);
+$warn: mat-palette($mat-lime, 400);
+$theme: mat-dark-theme($primary, $accent, $warn);
+@include angular-material-theme($theme);
+
+body {
+  background-color: mat-color($primary, 600);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.grid {
+    max-width: 1255px;
+    margin: auto;
+}
+
+.code-shortcuts .mat-toolbar-row {
+  justify-content: center;
+}
+
+.code-editor {
+  background-color: mat-color($primary, A100);
+}
+
+md-card-header, md-card-footer {
+  background-color: mat-color($accent);
+}
