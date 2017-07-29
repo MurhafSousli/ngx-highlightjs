@@ -54,19 +54,19 @@ import { HighlightModule } from 'ngx-highlightjs';
 })
 export class AppModule { }
 ```
-default theme is `github`, but you can choose any theme by `HighlightModule.forRoot('theme-name')` with the `.css` in the end
-_[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
-**forRoot(theme?, path?)** function has two optional parameters:
+The function **forRoot** accepts `forRoot(theme?, path?)`
 
- - theme: theme name without the extension, default: `'github'`
- - path: package directory path, default: `'assets/lib/hljs'`
+ - **theme**: theme name without the extension, default: `'github'`
+ - **path**: package directory path, default: `'assets/lib/hljs'`
 
  Choose highlighting theme:
 ```ts
     HighlightModule.forRoot('monokai-sublime');
 ```
- Import from custom path
+_[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_`forRoot(theme?, path?)` function has two optional parameters:
+
+ Import the library from a custom path
  ```ts
     HighlightModule.forRoot('monokai-sublime', 'assets/js/highlight-js');
  ```
