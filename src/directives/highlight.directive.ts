@@ -1,8 +1,5 @@
 import { Directive, AfterViewInit, ElementRef, Renderer2, OnDestroy, Input } from '@angular/core';
 
-/** Rollup: does not allow this "import * as" otherwise highlight.js script would have merged with the module */
-// import * as hljs from 'highlight.js';
-
 declare const hljs: any;
 
 import { Subject } from 'rxjs/Subject';
@@ -12,6 +9,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/skipWhile';
+import { HighlightService } from '../service/highlight.service';
 
 @Directive({
   selector: '[highlight]'
@@ -26,21 +25,19 @@ export class HighlightDirective implements AfterViewInit, OnDestroy {
   @Input() hlAuto = true;
   @Input() hlDelay = 200;
 
-  constructor(el: ElementRef, private renderer: Renderer2) {
+  constructor(el: ElementRef, private renderer: Renderer2, private hl: HighlightService) {
     this.el = el.nativeElement;
+
   }
 
   ngAfterViewInit() {
 
-    if (typeof hljs === 'undefined') {
-      throw new Error('Highlight.js is not loaded.');
-    }
-
     let codeElements: any = [];
 
-    this.highlighter$.delay(this.hlDelay)
+    this.highlighter$
+      .skipWhile(() => this.notLoaded())
+      .delay(this.hlDelay)
       .switchMap(() => {
-
         switch (this.highlight) {
           case 'all':
             codeElements = this.el.querySelectorAll('pre code');
@@ -62,7 +59,7 @@ export class HighlightDirective implements AfterViewInit, OnDestroy {
               const highlightedCode = hljs.highlightAuto(code.innerText.trim()).value;
 
               /** Render the highlighted code */
-              if (highlightedCode) {
+              if (highlightedCode !== code.innerHTML) {
                 this.renderer.setProperty(code, 'innerHTML', highlightedCode);
               }
 
@@ -70,13 +67,47 @@ export class HighlightDirective implements AfterViewInit, OnDestroy {
           });
       }).subscribe();
 
-    this.highlighter$.next();
+    /** Load highlight.js script and theme */
+    if (this.notLoaded()) {
+      this.loadScript();
+      this.loadTheme();
+    } else {
+      this.highlighter$.next();
+    }
 
     /** Auto highlight on changes */
     if (this.hlAuto) {
       this.domObs = new MutationObserver(() => this.highlighter$.next());
-      this.domObs.observe(this.el, { childList: true, subtree: true });
+      this.domObs.observe(this.el, {childList: true, subtree: true});
     }
+  }
+
+  loadScript() {
+
+    const script = this.renderer.createElement('script');
+    script.async = true;
+    script.type = 'text/javascript';
+    script.onload = () => {
+      this.highlighter$.next();
+    };
+    script.src = `${this.hl.path}/highlight.pack.js`;
+    this.renderer.setAttribute(script, 'data-timestamp', new Date().getTime().toString());
+    this.renderer.appendChild(this.el, script);
+  }
+
+  loadTheme() {
+    const style = this.renderer.createElement('link');
+    style.rel = 'stylesheet';
+    style.type = 'text/css';
+    // style.onload = () => {
+    //   console.log('theme loaded');
+    // };
+    style.href = `${this.hl.path}/styles/${this.hl.theme}.css`;
+    this.renderer.appendChild(this.el, style);
+  }
+
+  notLoaded() {
+    return typeof hljs === 'undefined';
   }
 
   ngOnDestroy() {
@@ -85,5 +116,4 @@ export class HighlightDirective implements AfterViewInit, OnDestroy {
     }
     this.highlighter$.unsubscribe();
   }
-
 }

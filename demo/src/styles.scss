@@ -5,9 +5,6 @@
 @import '~@angular/material/theming';
 @import '~perfect-scrollbar/dist/css/perfect-scrollbar.min.css';
 
-// Highlight.js
-@import 'assets/highlight.js/styles/monokai-sublime.css';
-
 @include mat-core();
 $primary: mat-palette($mat-red, 600, 200, 800);
 $accent: mat-palette($mat-red, 800);

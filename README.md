@@ -22,22 +22,7 @@ $ npm install --save ngx-highlightjs
 
 2. Head to [highlight.js download page](https://highlightjs.org/download/) and get your custom package bundle including only the languages you need.
 
-3. Create new folder in `src/assets/highlight.js` and extract the downloaded zip file.
-
-4. import highlight.js script in `index.html`
-
-```html
-<script src="assets/highlight.js/highlight.pack.js"></script>
-```
-
-5. import highlight.js theme in global style `style.scss`
-
-```scss
-@import 'assets/highlight.js/styles/monokai-sublime.css';
-```
-
-
-_[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
+3. Create new folder in `src/assets/lib/hljs` and extract the downloaded zip file there.
 
 
 ### SystemJS
@@ -50,7 +35,9 @@ map: {
   'ngx-highlightjs': 'node_modules/ngx-highlightjs/bundles/ngx-highlightjs.umd.js',
 }
 ```
-Here is a working [plunker](https://plnkr.co/edit/OULKGeN9jG1KHREYZ4YF?p=preview).
+Import `HighlightUmdModule`, you will need to import highlight.js script and style manually, Here is a working [plunker](https://plnkr.co/edit/OULKGeN9jG1KHREYZ4YF?p=preview).
+
+---
 
 ## Usage
 
@@ -62,12 +49,31 @@ import { HighlightModule } from 'ngx-highlightjs';
 @NgModule({
   imports: [
     // ...
-    HighlightModule
+    HighlightModule.forRoot()
   ]
 })
 export class AppModule { }
 ```
+default theme is `github`, but you can choose any theme by `HighlightModule.forRoot('theme-name')` with the `.css` in the end
+_[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
+**forRoot(theme?, path?)** function has two optional parameters:
+
+ - theme: theme name without the extension, default: `'github'`
+ - path: package directory path, default: `'assets/lib/hljs'`
+
+ Choose highlighting theme:
+```ts
+    HighlightModule.forRoot('monokai-sublime');
+```
+ Import from custom path
+ ```ts
+    HighlightModule.forRoot('monokai-sublime', 'assets/js/highlight-js');
+ ```
+
+---
+
+Now you can use the directive `highlight`, you can:
 
  - Highlight a code element
 
@@ -75,7 +81,7 @@ export class AppModule { }
 <!-- Highlight target element -->
 <pre><code highlight [textContent]="someCode"></code></pre>
 ```
- - Highlight all code elements
+ - Highlight all child code elements
 
 ```html
 <!-- Highlight child elements of type <pre><code> -->
