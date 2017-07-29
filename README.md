@@ -55,7 +55,7 @@ import { HighlightModule } from 'ngx-highlightjs';
 export class AppModule { }
 ```
 
-The function **forRoot** accepts `forRoot(theme?, path?)`
+The function **forRoot** accepts 2 optional parameters, `forRoot(theme?, path?)`
 
  - **theme**: theme name without the extension, default: `'github'`
  - **path**: package directory path, default: `'assets/lib/hljs'`
