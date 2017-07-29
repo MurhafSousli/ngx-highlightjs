@@ -30,7 +30,9 @@
         <md-icon>code</md-icon>Editor
       </md-card-header>
       <md-card-content perfect-scrollbar>
-        <textarea #text [(ngModel)]="code" [style.height.px]=text.scrollHeight></textarea>
+        <div perfect-scrollbar style="height: 100%;">
+          <textarea #textEl [(ngModel)]="code" [style.height.px]="textEl.scrollHeight"></textarea>
+        </div>
       </md-card-content>
 
       <md-card-footer>

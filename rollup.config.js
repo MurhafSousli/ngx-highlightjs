@@ -11,6 +11,7 @@ const globals = {
     'rxjs/add/operator/take': 'Rx.Observable.prototype',
     'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
     'rxjs/add/operator/map': 'Rx.Observable.prototype',
+    'rxjs/add/operator/skipWhile': 'Rx.Observable.prototype',
     'highlight.js': 'hljs'
 };
 

@@ -3,5 +3,18 @@ $ cat .gitignore
 /dist
 /documentation
 
+# IDEs and editors
+/.idea
+*/.idea/workspace.xml
+*/.idea/tasks.xml
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
 *.log
 *.tgz
+tests/

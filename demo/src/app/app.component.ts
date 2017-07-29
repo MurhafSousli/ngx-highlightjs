@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
 @NgModule({
   imports: [
-    HighlightModule,
+    HighlightModule.forRoot('monokai-sublime')
   ]
 })
 export class AppModule { }`;
@@ -57,4 +57,5 @@ export class AppModule { }`;
   ngOnInit() {
     this.code = this.tsCode;
   }
+
 }
