@@ -64,7 +64,7 @@ The function **forRoot** accepts 2 optional parameters, `forRoot(theme?, path?)`
 ```ts
     HighlightModule.forRoot('monokai-sublime');
 ```
-_[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_`forRoot(theme?, path?)` function has two optional parameters:
+_[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
  Import the library from a custom path
  ```ts
