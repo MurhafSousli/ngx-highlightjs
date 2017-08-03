@@ -3,16 +3,12 @@
   <h1 align="center">Angular Highlight.js</h1>
 </p>
 
-Super easy to use, auto highlight code and auto-detect language 
-
-___
-[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-highlightjs/)
+Super easy to use, auto highlight code and auto-detect language [![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-highlightjs/)
 [![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs) 
 [![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs) 
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 
----
 <p align="center">
   <img style="text-align: center;" src="https://cdn.rawgit.com/MurhafSousli/ngx-highlightjs/master/assets/preview.gif">
 </p>
@@ -67,7 +63,7 @@ With `options` parameter you can set:
 
  - **theme**: select the theme, use theme's name without the extension, default: `'github'`
  - **path**: hljs library location, default: `'assets/lib/hljs'`
- - **auto**: auto-highlight on code text changes, default: `true`
+ - **auto**: auto-highlight when code's text changes, default: `true`
 
  Choose highlighting theme:
 ```ts
@@ -75,12 +71,11 @@ With `options` parameter you can set:
 ```
 _[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
- Import the library from a custom path and disable auto highlight on changes
+ Import highlight.js library from a custom path
  ```ts
     const options: HighlightOptions = {
       theme: 'monokai-sublime',
-      path: 'assets/js/highlight-js',
-      auto: false
+      path: 'assets/js/highlight-js'
     };
 
     HighlightModule.forRoot(options);
@@ -125,6 +120,9 @@ Now you can use the directive `highlight`, you can:
   * Use just `highlight` on the element to highlight it.
   * Use `highlight="all"` to highlight all child code elements.
   * Use `highlight="{selector}"` to highlight custom child elements.
+
+
+If you are using `HighlightUmdModule` (system.js), you can use these options
 
 - Auto-highlight on changes (for systemjs users)
 
