@@ -1,6 +1,6 @@
 ## Angular highlight.js Changelog
 
-### 1.1.0
+### 1.1.1
 
  - Improve performance
  - Fix load hljs script only once

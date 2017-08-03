@@ -1,6 +1,6 @@
 {
     "name": "ngx-highlightjs",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Angular Highlight.js",
     "main": "./bundles/ngx-highlightjs.umd.js",
     "module": "./modules/ngx-highlightjs.es5.js",
