@@ -9,10 +9,12 @@
     "use-host-property-decorator": true,
     "no-attribute-parameter-decorator": true,
     "no-input-rename": true,
+    "no-console": false,
     "no-output-rename": true,
     "no-forward-ref": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
+    "interface-name": false,
     "component-class-suffix": [
       true,
       "Component"

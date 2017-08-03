@@ -10,6 +10,8 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/skipWhile';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/delay';
 
 @Directive({
   selector: '[highlight]'
@@ -20,13 +22,12 @@ export class HighlightUmdDirective implements AfterViewInit, OnDestroy {
   domObs: MutationObserver;
   highlighter$ = new Subject<any>();
 
-  @Input('highlight') highlight;
+  @Input() highlight: string;
   @Input() hlAuto = true;
   @Input() hlDelay = 200;
 
   constructor(el: ElementRef, private renderer: Renderer2) {
     this.el = el.nativeElement;
-
   }
 
   ngAfterViewInit() {
@@ -34,9 +35,9 @@ export class HighlightUmdDirective implements AfterViewInit, OnDestroy {
     let codeElements: any = [];
 
     this.highlighter$
-      .skipWhile(() => this.notLoaded())
       .delay(this.hlDelay)
-      .switchMap(() => {
+      .skipWhile(() => !isReady())
+      .do(() => {
         switch (this.highlight) {
           case 'all':
             codeElements = this.el.querySelectorAll('pre code');
@@ -48,22 +49,20 @@ export class HighlightUmdDirective implements AfterViewInit, OnDestroy {
             codeElements = this.el.querySelectorAll(this.highlight);
         }
 
-        return Observable.from(codeElements)
+        Observable.from(codeElements)
           .take(1)
+          .filter((code: HTMLElement) => (code.childNodes.length === 1 && code.childNodes[0].nodeName === '#text'))
           .map((code: HTMLElement) => {
 
-            /** Highlight only If content is plain text */
-            if (code.childNodes.length === 1 && code.childNodes[0].nodeName === '#text') {
+            /** Highlight only if content is a plain text */
+            const highlightedCode = hljs.highlightAuto(code.innerText.trim()).value;
 
-              const highlightedCode = hljs.highlightAuto(code.innerText.trim()).value;
-
-              /** Render the highlighted code */
-              if (highlightedCode !== code.innerHTML) {
-                this.renderer.setProperty(code, 'innerHTML', highlightedCode);
-              }
-
+            /** Render the highlighted code */
+            if (highlightedCode !== code.innerHTML) {
+              this.renderer.setProperty(code, 'innerHTML', highlightedCode);
             }
-          });
+          }).subscribe();
+
       }).subscribe();
 
     this.highlighter$.next();
@@ -71,12 +70,8 @@ export class HighlightUmdDirective implements AfterViewInit, OnDestroy {
     /** Auto highlight on changes */
     if (this.hlAuto) {
       this.domObs = new MutationObserver(() => this.highlighter$.next());
-      this.domObs.observe(this.el, {childList: true, subtree: true});
+      this.domObs.observe(this.el, { childList: true, subtree: true });
     }
-  }
-
-  notLoaded() {
-    return typeof hljs === 'undefined';
   }
 
   ngOnDestroy() {
@@ -85,4 +80,8 @@ export class HighlightUmdDirective implements AfterViewInit, OnDestroy {
     }
     this.highlighter$.unsubscribe();
   }
+}
+
+function isReady() {
+  return typeof hljs !== 'undefined';
 }
