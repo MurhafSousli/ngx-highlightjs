@@ -60,7 +60,6 @@ export class HighlightService {
 
       /** highlight all code elements */
       Observable.from(codeElements)
-        .take(1)
         .filter((code: HTMLElement) => code.childNodes.length === 1 && code.childNodes[0].nodeName === '#text')
         .map((code: HTMLElement) => {
 
