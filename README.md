@@ -12,6 +12,12 @@ ___
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 
+---
+<p align="center">
+  <img style="text-align: center;" src="https://cdn.rawgit.com/MurhafSousli/ngx-highlightjs/master/assets/preview.gif">
+</p>
+
+
 ## Installation
 
 1. Install it with npm
@@ -55,20 +61,29 @@ import { HighlightModule } from 'ngx-highlightjs';
 export class AppModule { }
 ```
 
-The function **forRoot** accepts 2 optional parameters, `forRoot(theme?, path?)`
+The function **forRoot** accepts 1 optional parameters, `forRoot(options?: HighlightOptions)`
 
- - **theme**: theme name without the extension, default: `'github'`
- - **path**: package directory path, default: `'assets/lib/hljs'`
+With `options` parameter you can set:
+
+ - **theme**: select the theme, use theme's name without the extension, default: `'github'`
+ - **path**: hljs library location, default: `'assets/lib/hljs'`
+ - **auto**: auto-highlight on code text changes, default: `true`
 
  Choose highlighting theme:
 ```ts
-    HighlightModule.forRoot('monokai-sublime');
+    HighlightModule.forRoot({ theme: 'monokai-sublime'});
 ```
 _[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
- Import the library from a custom path
+ Import the library from a custom path and disable auto highlight on changes
  ```ts
-    HighlightModule.forRoot('monokai-sublime', 'assets/js/highlight-js');
+    const options: HighlightOptions = {
+      theme: 'monokai-sublime',
+      path: 'assets/js/highlight-js',
+      auto: false
+    };
+
+    HighlightModule.forRoot(options);
  ```
 
 ---
@@ -111,11 +126,11 @@ Now you can use the directive `highlight`, you can:
   * Use `highlight="all"` to highlight all child code elements.
   * Use `highlight="{selector}"` to highlight custom child elements.
 
-- Auto-highlight on changes
+- Auto-highlight on changes (for systemjs users)
 
   **[hlAuto]**: boolean, default `true`;
 
-- Highlight delay 
+- Highlight delay (for systemjs users)
 
   **[hlDelay]**: number, default `200` ms;
 

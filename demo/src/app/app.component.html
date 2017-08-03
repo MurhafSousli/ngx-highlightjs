@@ -2,7 +2,7 @@
   ngx-highlightjs
   <span style="flex: 1"></span>
   <a md-button class="btn-icon" href="https://github.com/MurhafSousli/ngx-highlightjs">
-    <md-icon>fork</md-icon><i class="fa fa-github" aria-hidden="true"></i>Github
+    <img src="assets/github-logo.svg"> GITHUB
   </a>
 </md-toolbar>
 
@@ -10,15 +10,15 @@
 
 <div class="container">
 
-  <!-- PREVIEW  -->
+  <!-- PREVIEW -->
 
   <div class="grid" fxLayout fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutAlign.lt-md="center flex-start">
     <md-card fxFlex="1 1 600px" fxFlex.lt-md="0 0 auto" color="accent">
       <md-card-header>
         <md-icon>visibility</md-icon>Preview
       </md-card-header>
-      <md-card-content highlight="all">
-        <pre perfect-scrollbar><code [textContent]="code"></code></pre>
+      <md-card-content>
+        <pre perfect-scrollbar><code highlight [textContent]="code"></code></pre>
       </md-card-content>
     </md-card>
 
@@ -30,9 +30,7 @@
         <md-icon>code</md-icon>Editor
       </md-card-header>
       <md-card-content perfect-scrollbar>
-        <div perfect-scrollbar style="height: 100%;">
-          <textarea #textEl [(ngModel)]="code" [style.height.px]="textEl.scrollHeight"></textarea>
-        </div>
+        <textarea #textEl [(ngModel)]="code" [style.height.px]="textEl.scrollHeight"></textarea>
       </md-card-content>
 
       <md-card-footer>

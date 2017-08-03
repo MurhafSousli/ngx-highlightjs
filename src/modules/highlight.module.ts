@@ -1,30 +1,28 @@
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { HighlightDirective } from '../directives/highlight.directive';
 import { HighlightService } from '../service/highlight.service';
+import { HighlightOptions } from '../models/highlight-options';
 
-/** Initialize HighlightService with theme and path */
-export function HighlightFactory(theme: string, path: string) {
-  return new HighlightService(theme, path);
+export function HighlightFactory(options: HighlightOptions) {
+  return new HighlightService(options);
 }
 
-export const PATH = new InjectionToken<string>('path');
-export const THEME = new InjectionToken<string>('theme');
+export const OPTIONS = new InjectionToken<HighlightOptions>('options');
 
 @NgModule({
   declarations: [HighlightDirective],
   exports: [HighlightDirective]
 })
 export class HighlightModule {
-  static forRoot(theme?: string, path?: string): ModuleWithProviders {
+  static forRoot(options?: HighlightOptions): ModuleWithProviders {
     return {
       ngModule: HighlightModule,
       providers: [
-        {provide: THEME, useValue: theme},
-        {provide: PATH, useValue: path},
+        {provide: OPTIONS, useValue: options},
         {
           provide: HighlightService,
           useFactory: HighlightFactory,
-          deps: [THEME, PATH]
+          deps: [OPTIONS]
         }
       ]
     };
