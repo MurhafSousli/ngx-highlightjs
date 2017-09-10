@@ -1,5 +1,11 @@
 ## Angular highlight.js Changelog
 
+### 1.2.0
+
+ - Remove *HighlightUmdModule* and systemjs support
+ - Refactir(HighlightModule)
+ - Add `[code]` input
+
 ### 1.1.1
 
  - Improve performance

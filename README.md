@@ -27,20 +27,6 @@ $ npm install --save ngx-highlightjs
 3. Create new folder in `src/assets/lib/hljs` and extract the downloaded zip file there.
 
 
-### SystemJS
-
-If you are using SystemJS, you should also adjust your configuration to point to the UMD bundle.
-
-In your systemjs config file, map needs to tell the System loader where to look for `ngx-highlightjs`:
-```js
-map: {
-  'ngx-highlightjs': 'node_modules/ngx-highlightjs/bundles/ngx-highlightjs.umd.js',
-}
-```
-Import `HighlightUmdModule`, you will need to import highlight.js script and style manually, Here is a working [plunker](https://plnkr.co/edit/OULKGeN9jG1KHREYZ4YF?p=preview).
-
----
-
 ## Usage
 
 Import `HighlightModule` library from any module:
@@ -89,6 +75,8 @@ Now you can use the directive `highlight`, you can:
 
 ```html
 <!-- Highlight target element -->
+<pre><code highlight [code]="someCode"></code></pre>
+<!-- Or -->
 <pre><code highlight [textContent]="someCode"></code></pre>
 ```
  - Highlight all child code elements
@@ -111,26 +99,15 @@ Now you can use the directive `highlight`, you can:
 </div>
 ```
 
-## Options
+## Inputs
 
-- Highlight element(s)
-
-  **[highlight]**: string, default `''`
+- **[highlight]**: string, default `''`
 
   * Use just `highlight` on the element to highlight it.
   * Use `highlight="all"` to highlight all child code elements.
   * Use `highlight="{selector}"` to highlight custom child elements.
 
-
-If you are using `HighlightUmdModule` (system.js), you can use these options
-
-- Auto-highlight on changes (for systemjs users)
-
-  **[hlAuto]**: boolean, default `true`;
-
-- Highlight delay (for systemjs users)
-
-  **[hlDelay]**: number, default `200` ms;
+- **[code]**: string, default `null`
 
 ## Development
 

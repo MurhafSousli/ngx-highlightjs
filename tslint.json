@@ -41,6 +41,7 @@
       true,
       "as-needed"
     ],
-    "no-string-throw": false
+    "no-string-throw": false,
+    "arrow-parens": false
   }
 }
