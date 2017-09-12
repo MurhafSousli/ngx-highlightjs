@@ -1,5 +1,9 @@
 ## Angular highlight.js Changelog
 
+### 1.2.1
+
+ - fix(HighlightDirective): Use `el.tagName.toLowerCase()` to check for if the highlight element is `<code>`
+
 ### 1.2.0
 
  - Remove *HighlightUmdModule* and systemjs support
