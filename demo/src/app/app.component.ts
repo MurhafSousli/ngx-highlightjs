@@ -16,18 +16,19 @@ export class AppComponent implements OnInit {
 
 @NgModule({
   imports: [
-    HighlightModule.forRoot('monokai-sublime')
+    HighlightModule.forRoot({ theme: 'monokai-sublime' })
   ]
 })
 export class AppModule { }`;
 
-  htmlCode = `<!-- Highlight target element -->
+  htmlCode = `<!-- Highlight element directly -->
+<pre><code highlight [code]="someCode"></code></pre>
 <pre><code highlight [textContent]="someCode"></code></pre>
-<div [textContent]="anotherCode"></div>
+<pre><code highlight>import { HighlightModule } from 'ngx-highlightjs';</code></pre>
 
-<!-- Highlight child elements of type <pre><code> -->
+<!-- Highlight all child elements of type <pre><code> -->
 <div highlight="all">
-  <pre><code [textContent]="htmlCode"></code></pre>
+  <pre><code>import { HighlightModule } from 'ngx-highlightjs';</code></pre>
   <pre><code [textContent]="tsCode"></code></pre>
   <pre><code [textContent]="cssCode"></code></pre>
 </div>
@@ -35,7 +36,7 @@ export class AppModule { }`;
 <!-- Highlight custom child elements -->
 <div highlight="section code">
   <section><code [textContent]="pythonCode"></code></section>
-  <section><code [textContent]="swiftCode"></code></section>
+  <section><code>import { HighlightModule } from 'ngx-highlightjs';</code></section>
 </div>`;
 
   scssCode = `pre {

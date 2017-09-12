@@ -6,15 +6,20 @@
 @import '~perfect-scrollbar/dist/css/perfect-scrollbar.min.css';
 
 @include mat-core();
-$primary: mat-palette($mat-red, 600, 200, 800);
-$accent: mat-palette($mat-red, 800);
+$primary: mat-palette($mat-red, 700);
+$accent: mat-palette($mat-grey, 800);
 $warn: mat-palette($mat-lime, 400);
 $theme: mat-dark-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 
 body {
-  background-color: mat-color($primary, 600);
+  background: url(assets/bg.jpg) center center no-repeat;
+  background-size: cover;
+  min-height: 100vh;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 * {
@@ -22,8 +27,12 @@ body {
 }
 
 .grid {
-    max-width: 1255px;
-    margin: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 1255px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
 }
 
 .code-shortcuts .mat-toolbar-row {
@@ -33,8 +42,3 @@ body {
 .code-editor {
   background-color: mat-color($primary, A100);
 }
-
-md-card-header, md-card-footer {
-  background-color: mat-color($accent);
-}
-
