@@ -1,48 +1,50 @@
-<md-toolbar color="accent">
-  ngx-highlightjs
-  <span style="flex: 1"></span>
-  <a md-button class="btn-icon" href="https://github.com/MurhafSousli/ngx-highlightjs">
+<div class="wrapper">
+  <md-toolbar color="primary">
+    ngx-highlightjs
+    <span style="flex: 1"></span>
+    <a md-button class="btn-icon" href="https://github.com/MurhafSousli/ngx-highlightjs">
     <img src="assets/github-logo.svg"> GITHUB
   </a>
-</md-toolbar>
+  </md-toolbar>
 
-<app-header></app-header>
+  <app-header></app-header>
 
-<div class="container">
+  <div class="container">
 
-  <!-- PREVIEW -->
+    <!-- PREVIEW -->
 
-  <div class="grid" fxLayout fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutAlign.lt-md="center flex-start">
-    <md-card fxFlex="1 1 600px" fxFlex.lt-md="0 0 auto" color="accent">
-      <md-card-header>
-        <md-icon>visibility</md-icon>Preview
-      </md-card-header>
-      <md-card-content>
-        <pre perfect-scrollbar><code highlight [textContent]="code"></code></pre>
-      </md-card-content>
-    </md-card>
+    <div class="grid" fxLayout fxLayout.lt-md="column">
+      <md-card fxFlex="0 1 auto" fxFlex.lt-md="0 0 auto" color="accent">
+        <md-card-header>
+          <md-icon>visibility</md-icon>Preview
+        </md-card-header>
+        <md-card-content>
+          <pre perfectScrollbar><code highlight [textContent]="code"></code></pre>
+        </md-card-content>
+      </md-card>
 
 
-    <!-- EDITOR -->
+      <!-- EDITOR -->
 
-    <md-card fxFlex="1 1 600px">
-      <md-card-header>
-        <md-icon>code</md-icon>Editor
-      </md-card-header>
-      <md-card-content perfect-scrollbar>
-        <textarea #textEl [(ngModel)]="code" [style.height.px]="textEl.scrollHeight"></textarea>
-      </md-card-content>
+      <md-card fxFlex="0 1 auto">
+        <md-card-header>
+          <md-icon>code</md-icon>Editor
+        </md-card-header>
+        <md-card-content class="hljs" perfectScrollbar>
+          <textarea #textEl [(ngModel)]="code" [style.height.px]="textEl.scrollHeight"></textarea>
+        </md-card-content>
 
-      <md-card-footer>
+        <md-card-footer>
 
-        <md-chip-list>
-          <md-chip color="primary" selected="true" (click)="code = tsCode">TYPESCRIPT</md-chip>
-          <md-chip color="primary" selected="true" (click)="code = htmlCode">HTML</md-chip>
-          <md-chip color="primary" selected="true" (click)="code = scssCode">SCSS</md-chip>
-          <md-chip color="primary" selected="true" (click)="code = bashCode">BASH</md-chip>
-        </md-chip-list>
-      </md-card-footer>
-    </md-card>
+          <md-chip-list>
+            <md-chip color="primary" selected="true" (click)="code = tsCode">TYPESCRIPT</md-chip>
+            <md-chip color="primary" selected="true" (click)="code = htmlCode">HTML</md-chip>
+            <md-chip color="primary" selected="true" (click)="code = scssCode">SCSS</md-chip>
+            <md-chip color="primary" selected="true" (click)="code = bashCode">BASH</md-chip>
+          </md-chip-list>
+        </md-card-footer>
+      </md-card>
+    </div>
+
   </div>
-
 </div>

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, OnDestroy, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Renderer2, OnDestroy, Input, OnInit, HostBinding } from '@angular/core';
 import { HighlightService } from '../service/highlight.service';
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
@@ -39,6 +39,8 @@ export class HighlightDirective implements OnInit, OnDestroy {
       .subscribe(() => this.highlightElement(this.el, code));
   }
 
+  @HostBinding('class.hljs') hljsClass = true;
+
   constructor(el: ElementRef, private renderer: Renderer2, private hl: HighlightService) {
     this.el = el.nativeElement;
   }
@@ -65,7 +67,7 @@ export class HighlightDirective implements OnInit, OnDestroy {
   highlightTextContent() {
     if (!this.highlight) {
       /** <code highlight [textContent]="code"></code> */
-      if (this.el.tagName === 'code') {
+      if (this.el.tagName.toLowerCase() === 'code') {
         this.highlightElement(this.el, this.el.innerText.trim());
       } else {
         console.warn(`[HighlightDirective]: Use 'highlight' on <code> elements only`);
