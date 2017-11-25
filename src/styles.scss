@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Roboto:500,700");
+@import '~normalize.css';
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$primary: mat-palette($mat-red,700);
+$accent: mat-palette($mat-grey,800);
+$warn: mat-palette($mat-lime,400);
+$theme: mat-dark-theme($primary,$accent,$warn);
+
+@include angular-material-theme($theme);
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: url(assets/bg.png) repeat;
+  min-height: 100vh;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid {
+  width: 100%;
+  height: 100%;
+  max-width: 1255px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.code-shortcuts .mat-toolbar-row {
+  justify-content: center;
+}
+
+.code-editor {
+  background-color: mat-color($primary, A100);
+}
+
+.editor-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.ng-scrollbar-thumb.scroll-thumbs {
+  background-color: rgba(161, 27, 27, 0.4);
+  &:hover,
+  &:active {
+    background-color: rgba(161, 27, 27, 0.7);
+  }
+}

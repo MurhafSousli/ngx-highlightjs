@@ -1,12 +1,21 @@
-$ cat .gitignore
-/node_modules
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
 /dist
-/documentation
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
 
 # IDEs and editors
 /.idea
-*/.idea/workspace.xml
-*/.idea/tasks.xml
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
 # IDE - VSCode
 .vscode/*
@@ -15,6 +24,19 @@ $ cat .gitignore
 !.vscode/launch.json
 !.vscode/extensions.json
 
-*.log
-*.tgz
-tests/
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
