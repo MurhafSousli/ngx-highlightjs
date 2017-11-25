@@ -1,18 +1,31 @@
 <p align="center">
-  <img height="200px" width="200px" style="text-align: center;" src="https://cdn.rawgit.com/MurhafSousli/ngx-highlightjs/master/assets/logo.svg">
+  <img height="200px" width="200px" style="text-align: center" src="https://raw.githubusercontent.com/MurhafSousli/ngx-scrollbar/master/src/assets/logo.svg">
   <h1 align="center">Angular Highlight.js</h1>
 </p>
 
-Super easy to use, auto highlight code and auto-detect language [![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-highlightjs/)
+[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-highlightjs/)
 [![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs) 
 [![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs) 
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
+Instant code highlighting, auto-detect language, super easy to use
+___
 
 <p align="center">
-  <img style="text-align: center;" src="https://cdn.rawgit.com/MurhafSousli/ngx-highlightjs/master/assets/preview.gif">
+  <img style="text-align: center;" src="src/assets/preview.gif?raw=true">
 </p>
 
+## Table of Contents
+
+- [Live Demo](https://MurhafSousli.github.io/ngx-highlightjs/)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Development](#development)
+- [Issues](#issues)
+- [Author](#author)
+- [More plugins](#more-plugins)
+
+<a name="installation"/>
 
 ## Installation
 
@@ -26,6 +39,7 @@ $ npm install --save ngx-highlightjs
 
 3. Create new folder in `src/assets/lib/hljs` and extract the downloaded zip file there.
 
+<a name="usage"/>
 
 ## Usage
 
@@ -53,14 +67,14 @@ With `options` parameter you can set:
 
  Choose highlighting theme:
 ```ts
-    HighlightModule.forRoot({ theme: 'monokai-sublime'});
+    HighlightModule.forRoot({ theme: 'agate'});
 ```
 _[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
  Import highlight.js library from a custom path
  ```ts
     const options: HighlightOptions = {
-      theme: 'monokai-sublime',
+      theme: 'agate',
       path: 'assets/js/highlight-js'
     };
 
@@ -71,7 +85,7 @@ _[List of all available themes from highlight.js](https://github.com/isagalaev/h
 
 Now you can use the directive `highlight`, you can:
 
- - Highlight a code element
+- Highlight a code element
 
 ```html
 <!-- Highlight target element -->
@@ -79,7 +93,8 @@ Now you can use the directive `highlight`, you can:
 <!-- Or -->
 <pre><code highlight [textContent]="someCode"></code></pre>
 ```
- - Highlight all child code elements
+
+- Highlight all child code elements
 
 ```html
 <!-- Highlight child elements of type <pre><code> -->
@@ -89,7 +104,8 @@ Now you can use the directive `highlight`, you can:
   <pre><code [textContent]="cssCode"></code></pre>
 </div>
 ```
- - Highlight custom elements
+
+- Highlight custom elements
 
 ```html
 <!-- Highlight custom child elements -->
@@ -99,38 +115,53 @@ Now you can use the directive `highlight`, you can:
 </div>
 ```
 
-## Inputs
+## Options
 
 - **[highlight]**: string, default `''`
 
-  * Use just `highlight` on the element to highlight it.
-  * Use `highlight="all"` to highlight all child code elements.
-  * Use `highlight="{selector}"` to highlight custom child elements.
+  - Use just `highlight` on the element to highlight it.
+  - Use `highlight="all"` to highlight all child code elements.
+  - Use `highlight="{selector}"` to highlight custom child elements.
 
 - **[code]**: string, default `null`
 
+<a name="development"/>
+
 ## Development
 
-To generate all `*.js`, `*.d.ts` and `*.metadata.json` files:
+This project uses [ng-packagr](https://github.com/dherges/ng-packagr) for development.
+
+Use the following command to build
 
 ```bash
-$ npm run build
+$ npm run packagr
 ```
 
-To lint all `*.ts` files:
-
-```bash
-$ npm run lint
-```
+<a name="issues"/>
 
 ## Issues
 
-If you identify any errors in the library, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/ngx-highlightjs/issues). I am excited to see what the community thinks of this project, and I would love your input!
+If you identify any errors in the library, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/ngx-highlightjs/issues).
+
+<a name="author"/>
 
 ## Author
 
  **[Murhaf Sousli](http://murhafsousli.com)**
 
- - [github/murhafsousli](https://github.com/MurhafSousli)
- - [twitter/murhafsousli](https://twitter.com/MurhafSousli)
+- [github/murhafsousli](https://github.com/MurhafSousli)
+- [twitter/murhafsousli](https://twitter.com/MurhafSousli)
 
+<a name="more-plugins"/>
+
+## More plugins
+
+- [ngx-sharebuttons](https://github.com/MurhafSousli/ngx-sharebuttons)
+- [ng-gallery](https://github.com/MurhafSousli/ng-gallery)
+- [ngx-progressbar](https://github.com/MurhafSousli/ngx-progressbar)
+- [ngx-scrollbar](https://github.com/MurhafSousli/ngx-scrollbar)
+- [ngx-bar-rating](https://github.com/MurhafSousli/ngx-bar-rating)
+- [ngx-disqus](https://github.com/MurhafSousli/ngx-disqus)
+- [ngx-wordpress](https://github.com/MurhafSousli/ngx-wordpress)
+- [ngx-highlightjs](https://github.com/MurhafSousli/ngx-highlightjs)
+- [ng-teximate](https://github.com/MurhafSousli/ng-teximate)

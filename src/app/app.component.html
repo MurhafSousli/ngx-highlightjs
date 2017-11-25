@@ -1,0 +1,54 @@
+<div class="wrapper">
+  <mat-toolbar color="primary">
+    ngx-highlightjs
+    <span style="flex: 1"></span>
+    <a mat-button class="btn-icon" href="https://github.com/MurhafSousli/ngx-highlightjs">
+      <img src="assets/github-logo.svg"> GITHUB
+    </a>
+  </mat-toolbar>
+
+  <app-header></app-header>
+
+  <div class="container">
+
+    <!-- PREVIEW -->
+
+    <div class="grid" fxLayout fxLayout.lt-md="column">
+      <mat-card fxFlex="0 1 auto" fxFlex.lt-md="0 0 auto" color="accent">
+        <mat-card-header>
+          <mat-icon>visibility</mat-icon>Preview
+        </mat-card-header>
+        <mat-card-content>
+          <ng-scrollbar trackX="true" thumbClass="scroll-thumbs">
+            <pre><code highlight [textContent]="code"></code></pre>
+          </ng-scrollbar>
+        </mat-card-content>
+      </mat-card>
+
+
+      <!-- EDITOR -->
+
+      <mat-card fxFlex="0 1 auto">
+        <mat-card-header>
+          <mat-icon>code</mat-icon>Editor
+        </mat-card-header>
+        <mat-card-content>
+          <ng-scrollbar #textScrollbar trackX="true" viewClass="editor-view" thumbClass="scroll-thumbs">
+            <textarea #textEl class="hljs" [(ngModel)]="code"></textarea>
+          </ng-scrollbar>
+        </mat-card-content>
+
+        <mat-card-footer>
+
+          <mat-chip-list>
+            <mat-chip color="primary" selected="true" (click)="setCode(tsCode)">TYPESCRIPT</mat-chip>
+            <mat-chip color="primary" selected="true" (click)="setCode(htmlCode)">HTML</mat-chip>
+            <mat-chip color="primary" selected="true" (click)="setCode(scssCode)">SCSS</mat-chip>
+            <mat-chip color="primary" selected="true" (click)="setCode(bashCode)">BASH</mat-chip>
+          </mat-chip-list>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+
+  </div>
+</div>
