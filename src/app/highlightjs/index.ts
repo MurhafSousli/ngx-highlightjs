@@ -1,2 +1,2 @@
-export { HighlightModule } from './modules/highlight.module';
-export { HighlightOptions } from './models/highlight-options';
+export { HighlightModule } from './highlight.module';
+export { HighlightOptions } from './highlight.model';

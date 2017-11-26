@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Renderer2, OnDestroy, Input, OnInit, HostBinding } from '@angular/core';
-import { HighlightService } from '../service/highlight.service';
+import { HighlightService } from './highlight.service';
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
 import 'rxjs/add/operator/map';
