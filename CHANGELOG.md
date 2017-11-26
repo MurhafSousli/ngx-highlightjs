@@ -1,5 +1,9 @@
 # Angular highlight.js Changelog
 
+## 1.2.3
+
+- Fix(HighlightService) Move `InjectionToken` to a seperate file, closes [#11](https://github.com/MurhafSousli/ngx-highlightjs/issues/11)
+
 ## 1.2.2
 
 - No Changes, just an update for the build enviroment

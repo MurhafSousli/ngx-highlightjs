@@ -1,8 +1,7 @@
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { HighlightOptions } from '../models/highlight-options';
-
-export const OPTIONS = new InjectionToken<HighlightOptions>('OPTIONS');
+import { HighlightOptions } from './highlight.model';
+import { OPTIONS } from './highlight.token';
 
 declare const hljs: any;
 
