@@ -1,10 +1,7 @@
 import { Directive, ElementRef, Renderer2, OnDestroy, Input, OnInit, HostBinding } from '@angular/core';
 import { HighlightService } from './highlight.service';
-import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/filter';
+import { map, take, filter, tap } from 'rxjs/operators';
 
 /** Highlight.js library */
 declare const hljs: any;
@@ -35,8 +32,11 @@ export class HighlightDirective implements OnInit, OnDestroy {
   @Input('code')
   set setCode(code: string) {
     this.code = code;
-    this.hl.ready$.filter(ready => ready).take(1)
-      .subscribe(() => this.highlightElement(this.el, code));
+    this.hl.ready$.pipe(
+      filter(ready => ready),
+      take(1),
+      tap(() => this.highlightElement(this.el, code))
+    ).subscribe();
   }
 
   @HostBinding('class.hljs') hljsClass = true;
@@ -50,16 +50,17 @@ export class HighlightDirective implements OnInit, OnDestroy {
     /** If code is undefined, highlight using element text content */
     if (!this.code && this.hl.options.auto) {
 
-      this.hl.ready$
-        .filter(ready => ready).take(1)
-        .subscribe(() => {
-
+      this.hl.ready$.pipe(
+        filter(ready => ready),
+        take(1),
+        tap(() => {
           this.highlightTextContent();
 
           /** Highlight when text content changes */
           this.domObs = new MutationObserver(() => this.highlightTextContent());
           this.domObs.observe(this.el, { childList: true, subtree: true });
-        });
+        })
+      ).subscribe();
     }
   }
 
@@ -105,13 +106,11 @@ export class HighlightDirective implements OnInit, OnDestroy {
     const codeElements = el.querySelectorAll(selector);
 
     /** highlight all children with the same selector */
-    from(codeElements)
-      .filter((code: HTMLElement) => code.childNodes.length === 1 && code.childNodes[0].nodeName === '#text')
-      .map((codeElement: HTMLElement) => {
-        this.highlightElement(codeElement, codeElement.innerText.trim());
-      })
-      .take(1)
-      .subscribe();
+    from(codeElements).pipe(
+      filter((code: HTMLElement) => code.childNodes.length === 1 && code.childNodes[0].nodeName === '#text'),
+      map((codeElement: HTMLElement) => this.highlightElement(codeElement, codeElement.innerText.trim())),
+      take(1)
+    ).subscribe();
   }
 
   ngOnDestroy() {
