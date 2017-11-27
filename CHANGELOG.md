@@ -1,5 +1,9 @@
 # Angular highlight.js Changelog
 
+## 1.2.4
+
+- Refactor with RxJS pipe 5.5 style
+
 ## 1.2.3
 
 - Fix(HighlightService) Move `InjectionToken` to a seperate file, closes [#11](https://github.com/MurhafSousli/ngx-highlightjs/issues/11)
