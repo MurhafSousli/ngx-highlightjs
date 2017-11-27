@@ -1,7 +1,7 @@
 {
   "name": "ngx-highlightjs",
   "description": "Instant code highlighting, auto-detect language, super easy to use.",
-  "version": "1.2.4",
+  "version": "1.2.6",
   "homepage": "http://github.com/murhafsousli/ngx-highlightjs",
   "author": {
     "name": "Murhaf Sousli",
@@ -32,7 +32,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "packagr": "ng-packagr -p ng-package.json"
+    "packagr": "ng-packagr -p lib/ng-package.json"
   },
   "private": false,
   "dependencies": {

@@ -1,6 +1,6 @@
 # Angular highlight.js Changelog
 
-## 1.2.4
+## 1.2.6
 
 - Refactor with RxJS pipe 5.5 style
 
