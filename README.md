@@ -125,6 +125,8 @@ Now you can use the directive `highlight`, you can:
 
 - **[code]**: string, default `null`
 
+- **(highlighted)**: Stream that emits highlight result
+
 <a name="development"/>
 
 ## Development

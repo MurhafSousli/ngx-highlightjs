@@ -1,5 +1,9 @@
 # Angular highlight.js Changelog
 
+## 1.3.0
+
+- Feature: Add `(highlighted)` output, a stream that emits higlight result, closes [#16](https://github.com/MurhafSousli/ngx-highlightjs/issues/16).
+
 ## 1.2.6
 
 - Refactor with RxJS pipe 5.5 style
