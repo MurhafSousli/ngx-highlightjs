@@ -1,2 +1,3 @@
 export { HighlightModule } from './highlight.module';
-export { HighlightOptions } from './highlight.model';
+export { HighlightDirective } from './highlight.directive';
+export { HighlightOptions, HighlightResult } from './highlight.model';
