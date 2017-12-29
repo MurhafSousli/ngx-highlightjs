@@ -120,15 +120,17 @@ Now you can use the directive `highlight`, you can:
 
 ## Options
 
-- **[highlight]**: string, default `''`
+- **[highlight]**: (string), default `null`
 
-  - Use just `highlight` on the element to highlight it.
-  - Use `highlight="all"` to highlight all child code elements.
-  - Use `highlight="{selector}"` to highlight custom child elements.
+  - Use just `highlight` without a value to highlight the element.
+  - Use `highlight="all"` to highlight child elements with 'pre code' selector.
+  - Use `highlight="{selector}"` to highlight child elements with custom selector.
 
-- **[code]**: string, default `null`
+- **[code]**: (string), code content, default `null`
 
-- **(highlighted)**: Stream that emits highlight result
+- **[language]**: (string[]), an array of language names and aliases restricting auto detection to only these languages, default: `null`
+
+- **(highlighted)**: Stream that emits highlight result, you can use `HighlightResult` interface for the response
 
 <a name="development"/>
 
