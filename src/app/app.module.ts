@@ -20,7 +20,7 @@ import { HeaderComponent } from './header/header.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HighlightModule.forRoot({ theme: 'agate'}),
+    HighlightModule.forRoot({ theme: 'agate' }),
     FormsModule,
     MaterialModule,
     FlexLayoutModule,

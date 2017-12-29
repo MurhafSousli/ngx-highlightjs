@@ -17,13 +17,20 @@ export class HighlightService {
   /** hljs script on load event */
   ready$ = new BehaviorSubject(false);
 
-  constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions) {
+  constructor( @Optional() @Inject(OPTIONS) options: HighlightOptions) {
 
-    this.options = {...this.options, ...options};
+    this.options = { ...this.options, ...options };
 
-    /** Load hljs script and style only once */
-    this.loadScript();
-    this.loadTheme();
+    if (typeof hljs !== 'undefined') {
+      /** hljs is loaded by the user */
+      hljs.configure(this.options.config);
+      this.ready$.next(true);
+    } else {
+
+      /** Load hljs script and style locally */
+      this.loadScript();
+      this.loadTheme();
+    }
   }
 
   loadScript() {
@@ -31,6 +38,7 @@ export class HighlightService {
     script.async = true;
     script.type = 'text/javascript';
     script.onload = () => {
+      hljs.configure(this.options.config);
       this.ready$.next(true);
     };
     script.src = `${this.options.path}/highlight.pack.js`;

@@ -1,7 +1,7 @@
 {
   "name": "ngx-highlightjs",
   "description": "Instant code highlighting, auto-detect language, super easy to use.",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "homepage": "http://github.com/murhafsousli/ngx-highlightjs",
   "author": {
     "name": "Murhaf Sousli",
