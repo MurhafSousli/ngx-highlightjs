@@ -4,10 +4,9 @@ import { HighlightResult } from './highlight.model';
 import { from } from 'rxjs/observable/from';
 import { map, take, filter, tap } from 'rxjs/operators';
 
-/** Highlight.js library */
 declare const hljs: any;
 
-/** There are 2 ways to set the code
+/** There are 2 ways to higlight a code
  *  1 - using the [code] input (default) <code highlight [code]="yourCode"></code>
  *  2 - using element text content <code> {{yourCode}} </code>
  */
@@ -17,19 +16,11 @@ declare const hljs: any;
 })
 export class HighlightDirective implements OnInit, OnDestroy {
 
-  /** Element ref */
   el: HTMLElement;
-
-  /** Highlight code from text content on changes */
   domObs: MutationObserver;
-
-  /** Code text */
   code: string;
-
-  /** Highlight, can be use to select highlight mode */
   @Input() highlight: string;
-
-  /** Highlight code directly */
+  @Input() language: string[];
   @Input('code')
   set setCode(code: string) {
     this.code = code;
@@ -50,7 +41,8 @@ export class HighlightDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    /** If code is undefined, highlight using element text content */
+    /** Acitvate MutationObserver if `auto` option is true and `[code]` input is not used
+     * This will highlight using the text content */
     if (!this.code && this.hl.options.auto) {
 
       this.hl.ready$.pipe(
@@ -70,45 +62,34 @@ export class HighlightDirective implements OnInit, OnDestroy {
   /** Highlight using element text content */
   highlightTextContent() {
     if (!this.highlight) {
-      /** <code highlight [textContent]="code"></code> */
       if (this.el.tagName.toLowerCase() === 'code') {
         this.highlightElement(this.el, this.el.innerText.trim());
       } else {
-        console.warn(`[HighlightDirective]: Use 'highlight' on <code> elements only`);
+        console.warn(`[HighlightDirective]: Use 'highlight' on <code> element only`);
       }
     } else if (this.highlight === 'all') {
-      /** <div highlight="all">
-       *    <pre><code [textContent]="code"></code></pre>
-       *    <pre><code [textContent]="code"></code></pre>
-       *  </div>
-       */
       this.highlightChildren(this.el, 'pre code');
     } else {
-      /** <div highlight="section code">
-       *    <section><code [textContent]="code"></code></section>
-       *    <section><code [textContent]="code"></code></section>
-       *  </div>
-       */
       this.highlightChildren(this.el, this.highlight);
     }
   }
 
-  /** Highlight single element */
+  /** Highlight a code block */
   highlightElement(el: HTMLElement, code: string) {
 
-    const res: HighlightResult = hljs.highlightAuto(code);
+    const res: HighlightResult = hljs.highlightAuto(code, this.language);
     if (res.value !== el.innerHTML) {
       this.renderer.setProperty(el, 'innerHTML', res.value);
       this.highlighted.emit(res);
     }
   }
 
-  /** Highlight children */
+  /** Highlight multiple code blocks */
   highlightChildren(el: HTMLElement, selector: string) {
 
     const codeElements = el.querySelectorAll(selector);
 
-    /** highlight all children with the same selector */
+    /** highlight children with the same selector */
     from(codeElements).pipe(
       filter((code: HTMLElement) => code.childNodes.length === 1 && code.childNodes[0].nodeName === '#text'),
       map((codeElement: HTMLElement) => this.highlightElement(codeElement, codeElement.innerText.trim())),
