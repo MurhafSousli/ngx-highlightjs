@@ -1,5 +1,11 @@
 # Angular highlight.js Changelog
 
+## 1.4.0
+
+- Feature(language input): an array of language names and aliases restricting auto detection to only these languages.
+- Feature(hljs [global config](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options)): set global config in `HighlightModule.forRoot({ config: hljsConfig })`).
+- Support the manual load of hljs script and styles.
+
 ## 1.3.0
 
 - Feature: Add `(highlighted)` output, a stream that emits higlight result, closes [#16](https://github.com/MurhafSousli/ngx-highlightjs/issues/16).
