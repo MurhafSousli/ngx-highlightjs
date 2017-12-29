@@ -17,7 +17,7 @@ ___
 
 ## Table of Contents
 
-- [Live Demo](https://MurhafSousli.github.io/ngx-highlightjs/)
+- [Live Demo](https://MurhafSousli.github.io/ngx-highlightjs/) | [Stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Development](#development)
@@ -61,24 +61,27 @@ The function **forRoot** accepts 1 optional parameters, `forRoot(options?: Highl
 
 With `options` parameter you can set:
 
- - **theme**: select the theme, use theme's name without the extension, default: `'github'`
- - **path**: hljs library location, default: `'assets/lib/hljs'`
- - **auto**: auto-highlight when code's text changes, default: `true`
+- **theme**: select the theme, use theme's name without the extension, default: `'github'`
+- **path**: hljs library location, default: `'assets/lib/hljs'`
+- **auto**: Enable observer mutation to auto-highlight on text changes, default: `true`
+- **config**: Configures global options, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options), default: null.
 
  Choose highlighting theme:
+
 ```ts
-    HighlightModule.forRoot({ theme: 'agate'});
+HighlightModule.forRoot({ theme: 'agate'});
 ```
+
 _[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
  Import highlight.js library from a custom path
  ```ts
-    const options: HighlightOptions = {
-      theme: 'agate',
-      path: 'assets/js/highlight-js'
-    };
+const options: HighlightOptions = {
+  theme: 'agate',
+  path: 'assets/js/highlight-js'
+};
 
-    HighlightModule.forRoot(options);
+HighlightModule.forRoot(options);
  ```
 
 ---
@@ -88,7 +91,7 @@ Now you can use the directive `highlight`, you can:
 - Highlight a code element
 
 ```html
-<!-- Highlight target element -->
+<!-- Highlight directly -->
 <pre><code highlight [code]="someCode"></code></pre>
 <!-- Or -->
 <pre><code highlight [textContent]="someCode"></code></pre>
@@ -97,7 +100,7 @@ Now you can use the directive `highlight`, you can:
 - Highlight all child code elements
 
 ```html
-<!-- Highlight child elements of type <pre><code> -->
+<!-- Highlight child elements with 'pre code' selector -->
 <div highlight="all">
   <pre><code [textContent]="htmlCode"></code></pre>
   <pre><code [textContent]="tsCode"></code></pre>
@@ -108,7 +111,7 @@ Now you can use the directive `highlight`, you can:
 - Highlight custom elements
 
 ```html
-<!-- Highlight custom child elements -->
+<!-- Highlight child elements with custom selector -->
 <div highlight="section code">
   <section><code [textContent]="pythonCode"></code></section>
   <section><code [textContent]="swiftCode"></code></section>
@@ -124,6 +127,8 @@ Now you can use the directive `highlight`, you can:
   - Use `highlight="{selector}"` to highlight custom child elements.
 
 - **[code]**: string, default `null`
+
+- **(highlighted)**: Stream that emits highlight result
 
 <a name="development"/>
 
