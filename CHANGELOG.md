@@ -1,8 +1,12 @@
 # Angular highlight.js Changelog
 
+## 1.4.1
+
+- Fix(HighlightDirective): `highlight="all"`, Apply `.hljs` class on code elements only, closes [#23](https://github.com/MurhafSousli/ngx-highlightjs/issues/23)
+
 ## 1.4.0
 
-- Feature(language input): an array of language names and aliases restricting auto detection to only these languages.
+- Feature(language input): an array of language names and aliases restricting auto detection to only these languages, closes [#20](https://github.com/MurhafSousli/ngx-highlightjs/issues/20).
 - Feature(hljs [global config](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options)): set global config in `HighlightModule.forRoot({ config: hljsConfig })`).
 - Support the manual load of hljs script and styles.
 

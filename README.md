@@ -97,6 +97,8 @@ Now you can use the directive `highlight`, you can:
 <pre><code highlight [textContent]="someCode"></code></pre>
 ```
 
+Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
+
 - Highlight all child code elements
 
 ```html
@@ -107,6 +109,8 @@ Now you can use the directive `highlight`, you can:
   <pre><code [textContent]="cssCode"></code></pre>
 </div>
 ```
+
+Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-all)
 
 - Highlight custom elements
 

@@ -1,8 +1,11 @@
-import { Directive, ElementRef, Renderer2, OnDestroy, Input, Output, EventEmitter, OnInit, HostBinding } from '@angular/core';
+import { Directive, ElementRef, Renderer2, OnDestroy, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { HighlightService } from './highlight.service';
 import { HighlightResult } from './highlight.model';
 import { from } from 'rxjs/observable/from';
-import { map, take, filter, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators/map';
+import { take } from 'rxjs/operators/take';
+import { filter } from 'rxjs/operators/filter';
+import { tap } from 'rxjs/operators/tap';
 
 declare const hljs: any;
 
@@ -32,8 +35,6 @@ export class HighlightDirective implements OnInit, OnDestroy {
   }
 
   @Output() highlighted = new EventEmitter<HighlightResult>();
-
-  @HostBinding('class.hljs') hljsClass = true;
 
   constructor(el: ElementRef, private renderer: Renderer2, private hl: HighlightService) {
     this.el = el.nativeElement;
@@ -79,6 +80,7 @@ export class HighlightDirective implements OnInit, OnDestroy {
 
     const res: HighlightResult = hljs.highlightAuto(code, this.language);
     if (res.value !== el.innerHTML) {
+      this.renderer.addClass(el, 'hljs');
       this.renderer.setProperty(el, 'innerHTML', res.value);
       this.highlighted.emit(res);
     }
