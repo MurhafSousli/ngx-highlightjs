@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HighlightModule } from './highlightjs';
+import { HighlightModule } from 'ngx-highlightjs';
 
 import { MaterialModule } from './material/material.module';
 
