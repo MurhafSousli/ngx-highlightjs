@@ -1,11 +1,8 @@
 import { Directive, ElementRef, Renderer2, OnDestroy, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { HighlightService } from './highlight.service';
 import { HighlightResult } from './highlight.model';
-import { from } from 'rxjs/observable/from';
-import { map } from 'rxjs/operators/map';
-import { take } from 'rxjs/operators/take';
-import { filter } from 'rxjs/operators/filter';
-import { tap } from 'rxjs/operators/tap';
+import { from } from 'rxjs';
+import { map, take, filter, tap} from 'rxjs/operators';
 
 declare const hljs: any;
 
