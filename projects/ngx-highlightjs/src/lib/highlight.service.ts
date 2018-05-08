@@ -1,5 +1,5 @@
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { HighlightOptions } from './highlight.model';
 import { OPTIONS } from './highlight.token';
 
