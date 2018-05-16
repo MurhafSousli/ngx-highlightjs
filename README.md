@@ -140,12 +140,10 @@ Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-all)
 
 ## Development
 
-This project uses [ng-packagr](https://github.com/dherges/ng-packagr) for development.
-
-Use the following command to build
+This project Angular CLI 6 to build the package.
 
 ```bash
-$ npm run packagr
+$ ng build ngx-highlightjs --prod
 ```
 
 <a name="issues"/>
