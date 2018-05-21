@@ -140,7 +140,7 @@ Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-all)
 
 ## Development
 
-This project Angular CLI 6 to build the package.
+This project uses Angular CLI 6 to build the package.
 
 ```bash
 $ ng build ngx-highlightjs --prod
