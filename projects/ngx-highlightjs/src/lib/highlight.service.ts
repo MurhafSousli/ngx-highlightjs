@@ -38,13 +38,13 @@ export class HighlightJS {
     }
   }
 
-  highlight(name, value, ignore_illegals, continuation): HighlightResult {
+  highlight(name: string, value: string, ignore_illegals: boolean, continuation?: any): HighlightResult {
     if (typeof hljs !== 'undefined') {
       return hljs.highlight(name, value, ignore_illegals, continuation);
     }
   }
 
-  highlightAuto(value, languageSubset): HighlightResult {
+  highlightAuto(value: string, languageSubset: string[]): HighlightResult {
     if (typeof hljs !== 'undefined') {
       return hljs.highlightAuto(value, languageSubset);
     }
@@ -62,7 +62,7 @@ export class HighlightJS {
     }
   }
 
-  configure(options) {
+  configure(options: HighlightOptions) {
     if (typeof hljs !== 'undefined') {
       hljs.configure(this.options.config);
     }
