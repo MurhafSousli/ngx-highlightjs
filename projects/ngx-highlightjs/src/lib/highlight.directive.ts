@@ -1,10 +1,8 @@
 import { Directive, ElementRef, Renderer2, OnDestroy, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { HighlightService } from './highlight.service';
+import { HighlightJS } from './highlight.service';
 import { HighlightResult } from './highlight.model';
 import { from } from 'rxjs';
 import { map, take, filter, tap} from 'rxjs/operators';
-
-declare const hljs: any;
 
 /** There are 2 ways to higlight a code
  *  1 - using the [code] input (default) <code highlight [code]="yourCode"></code>
@@ -24,16 +22,12 @@ export class HighlightDirective implements OnInit, OnDestroy {
   @Input('code')
   set setCode(code: string) {
     this.code = code;
-    this.hl.ready$.pipe(
-      filter(ready => ready),
-      take(1),
-      tap(() => this.highlightElement(this.el, code))
-    ).subscribe();
+    this.hljs.isReady.subscribe(() => this.highlightElement(this.el, code));
   }
 
   @Output() highlighted = new EventEmitter<HighlightResult>();
 
-  constructor(el: ElementRef, private renderer: Renderer2, private hl: HighlightService) {
+  constructor(el: ElementRef, private renderer: Renderer2, private hljs: HighlightJS) {
     this.el = el.nativeElement;
   }
 
@@ -41,19 +35,15 @@ export class HighlightDirective implements OnInit, OnDestroy {
 
     /** Acitvate MutationObserver if `auto` option is true and `[code]` input is not used
      * This will highlight using the text content */
-    if (!this.code && this.hl.options.auto) {
+    if (!this.code && this.hljs.options.auto) {
 
-      this.hl.ready$.pipe(
-        filter(ready => ready),
-        take(1),
-        tap(() => {
-          this.highlightTextContent();
+      this.hljs.isReady.subscribe(() => {
+        this.highlightTextContent();
 
-          /** Highlight when text content changes */
-          this.domObs = new MutationObserver(() => this.highlightTextContent());
-          this.domObs.observe(this.el, { childList: true, subtree: true });
-        })
-      ).subscribe();
+        /** Highlight when text content changes */
+        this.domObs = new MutationObserver(() => this.highlightTextContent());
+        this.domObs.observe(this.el, { childList: true, subtree: true });
+      });
     }
   }
 
@@ -75,7 +65,7 @@ export class HighlightDirective implements OnInit, OnDestroy {
   /** Highlight a code block */
   highlightElement(el: HTMLElement, code: string) {
 
-    const res: HighlightResult = hljs.highlightAuto(code, this.language);
+    const res: HighlightResult = this.hljs.highlightAuto(code, this.language);
     if (res.value !== el.innerHTML) {
       this.renderer.addClass(el, 'hljs');
       this.renderer.setProperty(el, 'innerHTML', res.value);
@@ -98,7 +88,7 @@ export class HighlightDirective implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     /** Disconnect MutationObserver */
-    if (!this.code && this.hl.options.auto) {
+    if (!this.code && this.hljs.options.auto) {
       this.domObs.disconnect();
     }
   }
