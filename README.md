@@ -136,6 +136,29 @@ Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-all)
 
 - **(highlighted)**: Stream that emits highlight result, you can use `HighlightResult` interface for the response
 
+
+## Use highlight.js functions (version >= 2.1.0)
+
+If you wish to use highlight.js functions, check the [official API](http://highlightjs.readthedocs.io/en/latest/api.html#) for thw usage.
+
+Example:
+
+```ts
+import { HighlightJS } from 'ngx-highlightjs';
+
+export class AppComponent implements OnInit {
+
+  constructor(private hljs: HighlightJS) {
+  }
+
+  ngOnInit() {
+    this.hljs.isReady.subscribe(() => {
+      console.log(this.hljs.listLanguages());
+    });
+  }
+}
+```
+
 <a name="development"/>
 
 ## Development
