@@ -37,6 +37,8 @@ $ npm install --save ngx-highlightjs
 
 2. Head to [highlight.js download page](https://highlightjs.org/download/) and get your custom package bundle including only the languages you need.
 
+ > If you want to use HighlightJs from a CDN, then skip step 2 and 3, and just add the script in the document head.
+
 3. Create new folder in `src/assets/lib/hljs` and extract the downloaded zip file there.
 
 <a name="usage"/>
