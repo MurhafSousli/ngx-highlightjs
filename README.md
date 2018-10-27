@@ -4,8 +4,8 @@
 </p>
 
 [![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-highlightjs/)
-[![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs) 
-[![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs) 
+[![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
+[![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 Instant code highlighting, auto-detect language, super easy to use
@@ -29,10 +29,18 @@ ___
 
 ## Installation
 
-1. Install it with npm
+1. Install the library
+
+**NPM**
 
 ```bash
-$ npm install --save ngx-highlightjs
+$ npm install -S ngx-highlightjs
+```
+
+**YARN**
+
+```bash
+$ yarn add ngx-highlightjs
 ```
 
 2. Head to [highlight.js download page](https://highlightjs.org/download/) and get your custom package bundle including only the languages you need.
@@ -165,7 +173,7 @@ export class AppComponent implements OnInit {
 
 ## Development
 
-This project Angular CLI 6 to build the package.
+This project uses Angular CLI to build the package.
 
 ```bash
 $ ng build ngx-highlightjs --prod
@@ -198,4 +206,4 @@ If you identify any errors in the library, or have an idea for an improvement, p
 - [ngx-disqus](https://github.com/MurhafSousli/ngx-disqus)
 - [ngx-wordpress](https://github.com/MurhafSousli/ngx-wordpress)
 - [ngx-highlightjs](https://github.com/MurhafSousli/ngx-highlightjs)
-- [ng-teximate](https://github.com/MurhafSousli/ng-teximate)
+- [ngx-teximate](https://github.com/MurhafSousli/ngx-teximate)
