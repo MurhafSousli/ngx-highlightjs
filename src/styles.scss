@@ -42,11 +42,6 @@ body {
   background-color: mat-color($primary, A100);
 }
 
-.editor-view {
-  display: flex;
-  flex-direction: column;
-}
-
 .ng-scrollbar-thumb.scroll-thumbs {
   background-color: rgba(161, 27, 27, 0.4);
   &:hover,

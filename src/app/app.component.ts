@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { ScrollbarComponent } from 'ngx-scrollbar';
-import * as Autosize from 'autosize';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+// import * as Autosize from 'autosize';
 
 @Component({
   selector: 'app-root',
@@ -56,29 +57,23 @@ export class AppModule { }`;
 
   code: string;
 
-  @ViewChild('textEl') text: ElementRef;
-  @ViewChild('textScrollbar') textScrollbar: ScrollbarComponent;
+  // @ViewChild('textEl') text: ElementRef;
+  @ViewChild(ScrollbarComponent) textScrollbar: ScrollbarComponent;
+  @ViewChild(CdkTextareaAutosize) textareaAutosize: CdkTextareaAutosize;
 
   ngOnInit() {
-    this.code = this.tsCode;
-    Autosize(this.text.nativeElement);
-
-    /** Update scrollbar on textarea resize */
-    this.text.nativeElement.addEventListener('autosize:resized', () => this.textScrollbar.update());
-
-    /** Update textarea size */
-    this.updateTextareaSize();
+    this.setCode(this.tsCode);
   }
 
   setCode(code: string) {
     this.code = code;
-    this.updateTextareaSize();
+    this.textScrollbar.scrollToTop().subscribe();
+    setTimeout(() => {
+      this.textareaAutosize.resizeToFitContent();
+      setTimeout(() => {
+        this.textScrollbar.update();
+      }, 200);
+    }, 100);
   }
 
-  updateTextareaSize() {
-    /** Must give a timeout before updating textarea */
-    setTimeout(() => {
-      Autosize.update(this.text.nativeElement);
-    }, 50);
-  }
 }

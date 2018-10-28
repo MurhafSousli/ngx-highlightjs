@@ -33,8 +33,9 @@
           <mat-icon>code</mat-icon>Editor
         </mat-card-header>
         <mat-card-content>
-          <ng-scrollbar #textScrollbar trackX="true" viewClass="editor-view" thumbClass="scroll-thumbs">
-            <textarea #textEl class="hljs" [(ngModel)]="code"></textarea>
+          <ng-scrollbar trackX="true" viewClass="editor-view" thumbClass="scroll-thumbs">
+            <textarea cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize" class="hljs" [(ngModel)]="code"></textarea>
           </ng-scrollbar>
         </mat-card-content>
 
