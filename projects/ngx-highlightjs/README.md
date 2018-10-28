@@ -4,8 +4,10 @@
 </p>
 
 [![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-highlightjs/)
-[![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs) 
-[![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs) 
+[![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
+[![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs)
+[![npm](https://img.shields.io/npm/dt/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
+[![npm](https://img.shields.io/npm/dm/ngx-highlightjs.svg)](https://www.npmjs.com/package/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 Instant code highlighting, auto-detect language, super easy to use
@@ -29,13 +31,23 @@ ___
 
 ## Installation
 
-1. Install it with npm
+1. Install the library
+
+**NPM**
 
 ```bash
-$ npm install --save ngx-highlightjs
+$ npm install -S ngx-highlightjs
+```
+
+**YARN**
+
+```bash
+$ yarn add ngx-highlightjs
 ```
 
 2. Head to [highlight.js download page](https://highlightjs.org/download/) and get your custom package bundle including only the languages you need.
+
+ > If you want to use HighlightJs from a CDN, then skip step 2 and 3, and just add the script in the document head.
 
 3. Create new folder in `src/assets/lib/hljs` and extract the downloaded zip file there.
 
@@ -136,16 +148,37 @@ Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-all)
 
 - **(highlighted)**: Stream that emits highlight result, you can use `HighlightResult` interface for the response
 
+
+## Use highlight.js functions (version >= 2.1.0)
+
+If you wish to use highlight.js functions, check the [official API](http://highlightjs.readthedocs.io/en/latest/api.html#) for thw usage.
+
+Example:
+
+```ts
+import { HighlightJS } from 'ngx-highlightjs';
+
+export class AppComponent implements OnInit {
+
+  constructor(private hljs: HighlightJS) {
+  }
+
+  ngOnInit() {
+    this.hljs.isReady.subscribe(() => {
+      console.log(this.hljs.listLanguages());
+    });
+  }
+}
+```
+
 <a name="development"/>
 
 ## Development
 
-This project uses [ng-packagr](https://github.com/dherges/ng-packagr) for development.
-
-Use the following command to build
+This project uses Angular CLI to build the package.
 
 ```bash
-$ npm run packagr
+$ ng build ngx-highlightjs --prod
 ```
 
 <a name="issues"/>
@@ -175,4 +208,4 @@ If you identify any errors in the library, or have an idea for an improvement, p
 - [ngx-disqus](https://github.com/MurhafSousli/ngx-disqus)
 - [ngx-wordpress](https://github.com/MurhafSousli/ngx-wordpress)
 - [ngx-highlightjs](https://github.com/MurhafSousli/ngx-highlightjs)
-- [ng-teximate](https://github.com/MurhafSousli/ng-teximate)
+- [ngx-teximate](https://github.com/MurhafSousli/ngx-teximate)
