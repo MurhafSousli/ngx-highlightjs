@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ScrollbarComponent } from 'ngx-scrollbar';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-// import * as Autosize from 'autosize';
 
 @Component({
   selector: 'app-root',
@@ -57,7 +56,6 @@ export class AppModule { }`;
 
   code: string;
 
-  // @ViewChild('textEl') text: ElementRef;
   @ViewChild(ScrollbarComponent) textScrollbar: ScrollbarComponent;
   @ViewChild(CdkTextareaAutosize) textareaAutosize: CdkTextareaAutosize;
 
