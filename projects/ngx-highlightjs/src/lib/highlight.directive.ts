@@ -1,8 +1,8 @@
 import { Directive, ElementRef, Renderer2, OnDestroy, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { from } from 'rxjs';
+import { map, take, filter } from 'rxjs/operators';
 import { HighlightJS } from './highlight.service';
 import { HighlightResult } from './highlight.model';
-import { from } from 'rxjs';
-import { map, take, filter, tap} from 'rxjs/operators';
 
 /** There are 2 ways to higlight a code
  *  1 - using the [code] input (default) <code highlight [code]="yourCode"></code>
