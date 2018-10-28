@@ -1,12 +1,7 @@
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
-import { HighlightJS } from './highlight.service';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HighlightDirective } from './highlight.directive';
 import { HighlightOptions } from './highlight.model';
 import { OPTIONS } from './highlight.token';
-
-export function HighlightFactory(options: HighlightOptions) {
-  return new HighlightJS(options);
-}
 
 @NgModule({
   declarations: [HighlightDirective],
@@ -17,12 +12,7 @@ export class HighlightModule {
     return {
       ngModule: HighlightModule,
       providers: [
-        {provide: OPTIONS, useValue: options},
-        {
-          provide: HighlightJS,
-          useFactory: HighlightFactory,
-          deps: [OPTIONS]
-        }
+        {provide: OPTIONS, useValue: options}
       ]
     };
   }

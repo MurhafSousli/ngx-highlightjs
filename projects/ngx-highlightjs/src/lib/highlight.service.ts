@@ -1,4 +1,4 @@
-import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
+import { Injectable, Inject, Optional } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { take, filter } from 'rxjs/operators';
 import { HighlightOptions, HighlightResult } from './highlight.model';
@@ -6,7 +6,9 @@ import { OPTIONS } from './highlight.token';
 
 declare const hljs: any;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HighlightJS {
   options: HighlightOptions = {
     theme: 'github',
@@ -20,7 +22,7 @@ export class HighlightJS {
   get isReady(): Observable<boolean> {
     return this._isReady$.pipe(
       filter(isReady => isReady),
-      take(1),
+      take(1)
     );
   }
 
