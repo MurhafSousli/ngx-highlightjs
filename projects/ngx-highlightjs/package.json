@@ -1,8 +1,30 @@
 {
   "name": "ngx-highlightjs",
-  "version": "2.1.1",
+  "version": "2.1.2",
+  "description": "Instant code highlighting, auto-detect language, super easy to use.",
+  "homepage": "http://github.com/murhafsousli/ngx-highlightjs",
+  "author": {
+    "name": "Murhaf Sousli",
+    "url": "http://github.com/murhafsousli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/murhafsousli/ngx-highlightjs.git"
+  },
+  "bugs": {
+    "url": "http://github.com/murhafsousli/ngx-highlightjs/issues"
+  },
+  "keywords": [
+    "angular",
+    "highlight",
+    "highlightjs",
+    "prism",
+    "syntax",
+    "code"
+  ],
+  "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+    "@angular/common": ">=6.0.0",
+    "@angular/core": ">=6.0.0"
   }
 }

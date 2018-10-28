@@ -1,4 +1,9 @@
-# Angular highlight.js Changelog
+# Changelog
+
+## 2.1.2
+
+- fix peerDependecies for Angular >= 6
+- refactor(HighlightJS): Provide `HighlightJS` using `providedIn: 'root'`
 
 ## 2.1.1
 

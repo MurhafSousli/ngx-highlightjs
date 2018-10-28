@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { HighlightModule } from 'ngx-highlightjs';
 
 import { MaterialModule } from './material/material.module';
@@ -23,6 +24,7 @@ import { HeaderComponent } from './header/header.component';
     HighlightModule.forRoot({ theme: 'agate' }),
     FormsModule,
     MaterialModule,
+    TextFieldModule,
     FlexLayoutModule,
     ScrollbarModule
   ],

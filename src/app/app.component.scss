@@ -63,16 +63,16 @@ ng-scrollbar {
 
 textarea {
   font-family: monospace, monospace;
-  min-height: 100%;
-  min-width: 100%;
+  min-height: calc(100% - 48px);
+  min-width: calc(100% - 48px);
   font-size: 1em;
   font-weight: 100;
   line-height: 1.6em;
   border: none;
   outline: none;
-  padding: 24px;
-  box-sizing: border-box;
-  flex: 1 0 auto;
+  padding: 24px;   
+  box-sizing: content-box;
+  // flex: 1 0 auto;
   overflow: hidden;
 }
 
