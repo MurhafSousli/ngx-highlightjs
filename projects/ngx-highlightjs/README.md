@@ -14,7 +14,7 @@ Instant code highlighting, auto-detect language, super easy to use
 ___
 
 <p align="center">
-  <img style="text-align: center;" src="src/assets/preview.gif?raw=true">
+  <img style="text-align: center;" src="https://raw.githubusercontent.com/MurhafSousli/ngx-highlightjs/master/src/assets/preview.gif">
 </p>
 
 ## Table of Contents
