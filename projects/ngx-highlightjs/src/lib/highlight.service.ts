@@ -1,4 +1,5 @@
 import { Injectable, Inject, Optional } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { take, filter } from 'rxjs/operators';
 import { HighlightOptions, HighlightResult } from './highlight.model';
@@ -26,7 +27,7 @@ export class HighlightJS {
     );
   }
 
-  constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions) {
+  constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions, @Inject(DOCUMENT) private _document: Document) {
     this.options = { ...this.options, ...options };
 
     if (typeof hljs !== 'undefined') {
@@ -101,7 +102,7 @@ export class HighlightJS {
   }
 
   private _loadScript() {
-    const script = document.createElement('script');
+    const script = this._document.createElement('script');
     script.async = true;
     script.type = 'text/javascript';
     script.onload = () => {
@@ -109,14 +110,14 @@ export class HighlightJS {
       this._isReady$.next(true);
     };
     script.src = `${this.options.path}/highlight.pack.js`;
-    document.head.appendChild(script);
+    this._document.head.appendChild(script);
   }
 
   private _loadTheme() {
-    const style = document.createElement('link');
+    const style = this._document.createElement('link');
     style.rel = 'stylesheet';
     style.type = 'text/css';
     style.href = `${this.options.path}/styles/${this.options.theme}.css`;
-    document.head.appendChild(style);
+    this._document.head.appendChild(style);
   }
 }
