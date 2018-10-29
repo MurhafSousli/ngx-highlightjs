@@ -27,7 +27,7 @@ export class HighlightJS {
     );
   }
 
-  constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions, @Inject(DOCUMENT) private _document: Document) {
+  constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions, @Inject(DOCUMENT) private _document: any) {
     this.options = { ...this.options, ...options };
 
     if (typeof hljs !== 'undefined') {
