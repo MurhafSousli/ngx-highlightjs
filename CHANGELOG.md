@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3
+
+- refactor(HighlightJS): Inject `DOCUMENT` to access the document class, in [4ff6ceb](https://github.com/MurhafSousli/ngx-highlightjs/pull/52/commits/4ff6ceb4aadee1c7dbfda73dcb39a04a8dacd551).
+
 ## 2.1.2
 
 - fix peerDependecies for Angular >= 6
