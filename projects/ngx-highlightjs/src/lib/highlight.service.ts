@@ -2,7 +2,7 @@ import { Injectable, Inject, Optional } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { take, filter } from 'rxjs/operators';
-import { HighlightOptions, HighlightResult } from './highlight.model';
+import { HighlightConfig, HighlightOptions, HighlightResult } from './highlight.model';
 import { OPTIONS } from './highlight.token';
 
 declare const hljs: any;
@@ -65,9 +65,9 @@ export class HighlightJS {
     }
   }
 
-  configure(options: HighlightOptions) {
-    if (typeof hljs !== 'undefined') {
-      hljs.configure(this.options.config);
+  configure(config: HighlightConfig) {
+    if (this.hljs) {
+      this.hljs.configure(config);
     }
   }
 
