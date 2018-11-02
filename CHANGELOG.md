@@ -9,7 +9,7 @@
 
 ## 2.1.2
 
-- fix peerDependecies for Angular >= 6
+- fix peerDependencies for Angular >= 6
 - refactor(HighlightJS): Provide `HighlightJS` using `providedIn: 'root'`
 
 ## 2.1.1
