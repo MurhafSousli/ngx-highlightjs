@@ -27,11 +27,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
     "build-demo": "ng build --prod --base-href https://murhafsousli.github.io/ngx-highlightjs/",
     "build-lib": "ng build ngx-highlightjs --prod",
+    "build-lib-dev": "ng build ngx-highlightjs",
     "link-lib": "npm link dist/ngx-highlightjs && npm link ngx-highlightjs",
     "publish-lib": "npm publish dist/ngx-highlightjs"
   },
@@ -50,16 +48,16 @@
     "@angular/platform-browser-dynamic": "^7.0.1",
     "@angular/router": "^7.0.1",
     "core-js": "^2.5.4",
-    "ngx-scrollbar": "^2.3.0",
+    "ngx-scrollbar": "^3.1.0",
     "normalize.css": "^8.0.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.1.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.10.3",
+    "@angular-devkit/build-angular": "~0.10.0",
     "@angular-devkit/build-ng-packagr": "^0.10.3",
-    "@angular/cli": "7.0.3",
+    "@angular/cli": "7.0.4",
     "@angular/compiler-cli": "^7.0.1",
     "@angular/language-service": "^7.0.1",
     "@types/jasmine": "~2.8.6",
@@ -79,6 +77,6 @@
     "tsickle": "^0.33.1",
     "tslib": "^1.7.1",
     "tslint": "~5.9.1",
-    "typescript": "~3.1.3"
+    "typescript": "~3.1.6"
   }
 }
