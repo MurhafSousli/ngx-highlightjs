@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { ScrollbarComponent } from 'ngx-scrollbar';
+import { NgScrollbar } from 'ngx-scrollbar';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 @Component({
@@ -56,7 +56,8 @@ export class AppModule { }`;
 
   code: string;
 
-  @ViewChild(ScrollbarComponent) textScrollbar: ScrollbarComponent;
+  @ViewChild('textScrollbar') textScrollbar: NgScrollbar;
+  @ViewChild('highlightScrollbar') highlightScrollbar: NgScrollbar;
   @ViewChild(CdkTextareaAutosize) textareaAutosize: CdkTextareaAutosize;
 
   ngOnInit() {
@@ -65,13 +66,11 @@ export class AppModule { }`;
 
   setCode(code: string) {
     this.code = code;
-    this.textScrollbar.scrollToTop().subscribe();
+    this.textareaAutosize.resizeToFitContent();
     setTimeout(() => {
-      this.textareaAutosize.resizeToFitContent();
-      setTimeout(() => {
-        this.textScrollbar.update();
-      }, 200);
-    }, 100);
+      this.textScrollbar.update();
+      this.highlightScrollbar.update();
+    }, 300);
   }
 
 }

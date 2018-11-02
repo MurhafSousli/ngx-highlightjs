@@ -38,14 +38,18 @@ body {
   justify-content: center;
 }
 
-.code-editor {
+.scroll-view {
   background-color: mat-color($primary, A100);
 }
 
-.ng-scrollbar-thumb.scroll-thumbs {
-  background-color: rgba(161, 27, 27, 0.4);
+.scroll-bar {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+.scroll-thumbs {
+  transition: height 150ms ease-out;
+  background-color: rgba(161, 27, 27, 0.4) !important;
   &:hover,
   &:active {
-    background-color: rgba(161, 27, 27, 0.7);
+    background-color: rgba(161, 27, 27, 0.7) !important;
   }
 }
