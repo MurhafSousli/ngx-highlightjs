@@ -62,6 +62,7 @@ ng-scrollbar {
 }
 
 textarea {
+  position: absolute;
   font-family: monospace, monospace;
   min-height: calc(100% - 48px);
   min-width: calc(100% - 48px);
@@ -72,13 +73,14 @@ textarea {
   outline: none;
   padding: 24px;   
   box-sizing: content-box;
-  // flex: 1 0 auto;
   overflow: hidden;
 }
 
 pre {
+  position: absolute;
   word-wrap: normal;
   height: 100%;
+  width: 100%;
   margin-top: 0;
   margin-bottom: 0;
   code {

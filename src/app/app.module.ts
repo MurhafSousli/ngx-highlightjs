@@ -5,12 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { HighlightModule } from 'ngx-highlightjs';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { MaterialModule } from './material/material.module';
 
 import { AppComponent } from './app.component';
 
-import { ScrollbarModule } from 'ngx-scrollbar';
 import { HeaderComponent } from './header/header.component';
 
 @NgModule({
@@ -26,7 +26,7 @@ import { HeaderComponent } from './header/header.component';
     MaterialModule,
     TextFieldModule,
     FlexLayoutModule,
-    ScrollbarModule
+    NgScrollbarModule
   ],
   bootstrap: [AppComponent]
 })

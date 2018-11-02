@@ -1,16 +1,17 @@
 import { Injectable, Inject, Optional } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { take, filter } from 'rxjs/operators';
-import { HighlightOptions, HighlightResult } from './highlight.model';
+import { BehaviorSubject, Observable, from, of } from 'rxjs';
+import { take, filter, tap, switchMap } from 'rxjs/operators';
+import { HighlightConfig, HighlightOptions, HighlightResult } from './highlight.model';
 import { OPTIONS } from './highlight.token';
-
-declare const hljs: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class HighlightJS {
+
+  hljs: any;
+
   options: HighlightOptions = {
     theme: 'github',
     path: 'assets/lib/hljs',
@@ -27,97 +28,120 @@ export class HighlightJS {
     );
   }
 
-  constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions, @Inject(DOCUMENT) private _document: any) {
+  constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions,
+              @Inject(DOCUMENT) private _document: any) {
     this.options = { ...this.options, ...options };
 
-    if (typeof hljs !== 'undefined') {
-      /** hljs is loaded by the user */
-      hljs.configure(this.options.config);
-      this._isReady$.next(true);
-    } else {
-      /** Load hljs script and style locally */
-      this._loadScript();
-      this._loadTheme();
-    }
+    this._hljsLoader().subscribe();
+    this._themeLoader().subscribe();
   }
 
   highlight(name: string, value: string, ignore_illegals: boolean, continuation?: any): HighlightResult {
-    if (typeof hljs !== 'undefined') {
-      return hljs.highlight(name, value, ignore_illegals, continuation);
+    if (this.hljs) {
+      return this.hljs.highlight(name, value, ignore_illegals, continuation);
     }
   }
 
   highlightAuto(value: string, languageSubset: string[]): HighlightResult {
-    if (typeof hljs !== 'undefined') {
-      return hljs.highlightAuto(value, languageSubset);
+    if (this.hljs) {
+      return this.hljs.highlightAuto(value, languageSubset);
     }
   }
 
   fixMarkup(value: string): string {
-    if (typeof hljs !== 'undefined') {
-      return hljs.fixMarkup(value);
+    if (this.hljs) {
+      return this.hljs.fixMarkup(value);
     }
   }
 
   highlightBlock(block: HTMLElement) {
-    if (typeof hljs !== 'undefined') {
-      hljs.highlightBlock(block);
+    if (this.hljs) {
+      this.hljs.highlightBlock(block);
     }
   }
 
-  configure(options: HighlightOptions) {
-    if (typeof hljs !== 'undefined') {
-      hljs.configure(this.options.config);
+  configure(config: HighlightConfig) {
+    if (this.hljs) {
+      this.hljs.configure(config);
     }
   }
 
   initHighlighting() {
-    if (typeof hljs !== 'undefined') {
-      hljs.initHighlighting();
+    if (this.hljs) {
+      this.hljs.initHighlighting();
     }
   }
 
   initHighlightingOnLoad() {
-    if (typeof hljs !== 'undefined') {
-      hljs.initHighlightingOnLoad();
+    if (this.hljs) {
+      this.hljs.initHighlightingOnLoad();
     }
   }
 
   registerLanguage(name: string, language: Function) {
-    if (typeof hljs !== 'undefined') {
-      hljs.registerLanguage(name, language);
+    if (this.hljs) {
+      this.hljs.registerLanguage(name, language);
     }
   }
 
   listLanguages(): string[] {
-    if (typeof hljs !== 'undefined') {
-      return hljs.listLanguages();
+    if (this.hljs) {
+      return this.hljs.listLanguages();
     }
   }
 
   getLanguage(name: string): any {
-    if (typeof hljs !== 'undefined') {
-      return hljs.getLanguage(name);
+    if (this.hljs) {
+      return this.hljs.getLanguage(name);
     }
   }
 
-  private _loadScript() {
-    const script = this._document.createElement('script');
-    script.async = true;
-    script.type = 'text/javascript';
-    script.onload = () => {
-      hljs.configure(this.options.config);
-      this._isReady$.next(true);
-    };
-    script.src = `${this.options.path}/highlight.pack.js`;
-    this._document.head.appendChild(script);
+  private _hljsLoader(): Observable<any> {
+    return this._document.defaultView.hljs ? this._initHLJS() : this._loadScript();
   }
 
-  private _loadTheme() {
-    const style = this._document.createElement('link');
-    style.rel = 'stylesheet';
-    style.type = 'text/css';
-    style.href = `${this.options.path}/styles/${this.options.theme}.css`;
-    this._document.head.appendChild(style);
+  /**
+   * Load hljs script
+   */
+  private _loadScript(): Observable<any> {
+    const promise = new Promise((resolve) => {
+      const script = this._document.createElement('script');
+      script.async = true;
+      script.type = 'text/javascript';
+      script.onload = resolve;
+      script.src = `${this.options.path}/highlight.pack.js`;
+      this._document.head.appendChild(script);
+    });
+    return from(promise).pipe(
+      switchMap(() => this._initHLJS())
+    );
+  }
+
+  /**
+   * Load hljs theme
+   */
+  private _themeLoader(): Observable<any> {
+    const promise = new Promise((resolve) => {
+      const style = this._document.createElement('link');
+      style.rel = 'stylesheet';
+      style.type = 'text/css';
+      style.onload = resolve;
+      style.href = `${this.options.path}/styles/${this.options.theme}.css`;
+      this._document.head.appendChild(style);
+    });
+    return from(promise);
+  }
+
+  /**
+   * Initialize hljs on load
+   */
+  private _initHLJS() {
+    return of({}).pipe(
+      tap(() => {
+        this.hljs = this._document.defaultView.hljs;
+        this.hljs.configure(this.options.config);
+        this._isReady$.next(true);
+      })
+    );
   }
 }
