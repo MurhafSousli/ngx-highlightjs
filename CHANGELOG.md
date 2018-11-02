@@ -4,7 +4,8 @@
 
 - fix(HighlightJS): Fix initializing hljs configure and the function parameter interface `hljs.configure(config: HighlightConfig)`.
 - refactor(HighlightJS): Inject `DOCUMENT` to access the document class, in [4ff6ceb](https://github.com/MurhafSousli/ngx-highlightjs/pull/52/commits/4ff6ceb4aadee1c7dbfda73dcb39a04a8dacd551).
-- enhance(HighlightJS): Access hljs from `document.defaultView`
+- enhance(HighlightJS): Access hljs from `document.defaultView`.
+- Add rxjs as peerDependency.
 
 ## 2.1.2
 
