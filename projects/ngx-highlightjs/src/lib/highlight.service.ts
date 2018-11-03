@@ -31,9 +31,7 @@ export class HighlightJS {
   constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions,
               @Inject(DOCUMENT) private _document: any) {
     this.options = { ...this.options, ...options };
-
     this._hljsLoader().subscribe();
-    this._themeLoader().subscribe();
   }
 
   highlight(name: string, value: string, ignore_illegals: boolean, continuation?: any): HighlightResult {
@@ -97,7 +95,12 @@ export class HighlightJS {
   }
 
   private _hljsLoader(): Observable<any> {
-    return this._document.defaultView.hljs ? this._initHLJS() : this._loadScript();
+    if (this._document.defaultView.hljs) {
+      return this._initHLJS();
+    } else {
+      this._themeLoader().subscribe();
+      return this._loadScript();
+    }
   }
 
   /**
