@@ -191,7 +191,7 @@ If you identify any errors in the library, or have an idea for an improvement, p
 
 ## Author
 
- **[Murhaf Sousli](http://murhafsousli.com)**
+ **Murhaf Sousli**
 
 - [github/murhafsousli](https://github.com/MurhafSousli)
 - [twitter/murhafsousli](https://twitter.com/MurhafSousli)
