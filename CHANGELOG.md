@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.4
+
+- fix(HighlightJS): load hljs theme only if hljs script is loaded automatically, closes [#56](https://github.com/MurhafSousli/ngx-highlightjs/issues/56) in [66d0688](https://github.com/MurhafSousli/ngx-highlightjs/pull/57/commits/66d0688aed0fed878b23ca61be1a6bcd3b06fc62).
+
 ## 2.1.3
 
 - fix(HighlightJS): Fix initializing hljs configure and the function parameter interface `hljs.configure(config: HighlightConfig)`.
