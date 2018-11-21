@@ -1,8 +1,15 @@
+import { InjectionToken } from '@angular/core';
+
+export const HIGHLIGHT_OPTIONS = new InjectionToken<HighlightOptions>('HIGHLIGHT_OPTIONS');
+
 export interface HighlightOptions {
-  theme?: string;
-  path?: string;
-  auto?: boolean;
+  languages?: any[];
   config?: HighlightConfig;
+}
+
+export interface HighlightLanguage {
+  name: string;
+  func: Function;
 }
 
 export interface HighlightConfig {

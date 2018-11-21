@@ -1,150 +1,109 @@
 import { Injectable, Inject, Optional } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { take, filter, tap, switchMap } from 'rxjs/operators';
-import { HighlightConfig, HighlightOptions, HighlightResult } from './highlight.model';
-import { OPTIONS } from './highlight.token';
+import { HighlightConfig, HighlightResult, HighlightLanguage, HighlightOptions, HIGHLIGHT_OPTIONS } from './highlight.model';
+import hljs from 'highlight.js/lib/highlight.js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HighlightJS {
-
-  hljs: any;
-
-  options: HighlightOptions = {
-    theme: 'github',
-    path: 'assets/lib/hljs',
-    auto: true
-  };
-
-  private _isReady$ = new BehaviorSubject(false);
-
-  // Stream that emits when highlightjs is loaded
-  get isReady(): Observable<boolean> {
-    return this._isReady$.pipe(
-      filter(isReady => isReady),
-      take(1)
-    );
+  constructor(@Optional() @Inject(HIGHLIGHT_OPTIONS) options: HighlightOptions) {
+    if (options) {
+      // Register languages
+      options.languages.map((language: HighlightLanguage) =>
+        this.registerLanguage(language.name, language.func)
+      );
+      if (options.config) {
+        // Set global config if present
+        this.configure(options.config);
+      }
+    }
+    // Throw an error if no languages were registered.
+    if (this.listLanguages().length < 1) {
+      throw new Error('[HighlightJS]: No languages were registered!');
+    }
   }
 
-  constructor(@Optional() @Inject(OPTIONS) options: HighlightOptions,
-              @Inject(DOCUMENT) private _document: any) {
-    this.options = { ...this.options, ...options };
-    this._hljsLoader().subscribe();
-  }
-
+  /**
+   * Core highlighting function.
+   * @param name Accepts a language name, or an alias
+   * @param value A string with the code to highlight.
+   * @param ignore_illegals When present and evaluates to a true value, forces highlighting to finish
+   * even in case of detecting illegal syntax for the language instead of throwing an exception.
+   * @param continuation An optional mode stack representing unfinished parsing.
+   * When present, the function will restart parsing from this state instead of initializing a new one
+   */
   highlight(name: string, value: string, ignore_illegals: boolean, continuation?: any): HighlightResult {
-    if (this.hljs) {
-      return this.hljs.highlight(name, value, ignore_illegals, continuation);
-    }
+    return hljs.highlight(name, value, ignore_illegals, continuation);
   }
 
+  /**
+   * Highlighting with language detection.
+   * @param value Accepts a string with the code to highlight
+   * @param languageSubset An optional array of language names and aliases restricting detection to only those languages.
+   * The subset can also be set with configure, but the local parameter overrides the option if set.
+   */
   highlightAuto(value: string, languageSubset: string[]): HighlightResult {
-    if (this.hljs) {
-      return this.hljs.highlightAuto(value, languageSubset);
-    }
+    return hljs.highlightAuto(value, languageSubset);
   }
 
+  /**
+   * Post-processing of the highlighted markup.
+   * Currently consists of replacing indentation TAB characters and using <br> tags instead of new-line characters.
+   * Options are set globally with configure.
+   * @param value Accepts a string with the highlighted markup
+   */
   fixMarkup(value: string): string {
-    if (this.hljs) {
-      return this.hljs.fixMarkup(value);
-    }
+    return hljs.fixMarkup(value);
   }
 
+  /**
+   * Applies highlighting to a DOM node containing code.
+   * The function uses language detection by default but you can specify the language in the class attribute of the DOM node.
+   * See the class reference for all available language names and aliases.
+   * @param block The element to apply highlight on.
+   */
   highlightBlock(block: HTMLElement) {
-    if (this.hljs) {
-      this.hljs.highlightBlock(block);
-    }
+    hljs.highlightBlock(block);
   }
 
+  /**
+   * Configures global options:
+   * @param config
+   */
   configure(config: HighlightConfig) {
-    if (this.hljs) {
-      this.hljs.configure(config);
-    }
+    hljs.configure(config);
   }
 
+  /**
+   * Applies highlighting to all <pre><code>..</code></pre> blocks on a page.
+   */
   initHighlighting() {
-    if (this.hljs) {
-      this.hljs.initHighlighting();
-    }
+    hljs.initHighlighting();
   }
 
-  initHighlightingOnLoad() {
-    if (this.hljs) {
-      this.hljs.initHighlightingOnLoad();
-    }
-  }
-
+  /**
+   * Adds new language to the library under the specified name. Used mostly internally.
+   * @param name A string with the name of the language being registered
+   * @param language A function that returns an object which represents the language definition.
+   * The function is passed the hljs object to be able to use common regular expressions defined within it.
+   */
   registerLanguage(name: string, language: Function) {
-    if (this.hljs) {
-      this.hljs.registerLanguage(name, language);
-    }
+    hljs.registerLanguage(name, language);
   }
 
+  /**
+   * @return The languages names list.
+   */
   listLanguages(): string[] {
-    if (this.hljs) {
-      return this.hljs.listLanguages();
-    }
+    return hljs.listLanguages();
   }
 
+  /**
+   * Looks up a language by name or alias.
+   * @param name Language name
+   * @return The language object if found, undefined otherwise.
+   */
   getLanguage(name: string): any {
-    if (this.hljs) {
-      return this.hljs.getLanguage(name);
-    }
-  }
-
-  private _hljsLoader(): Observable<any> {
-    if (this._document.defaultView.hljs) {
-      return this._initHLJS();
-    } else {
-      this._themeLoader().subscribe();
-      return this._loadScript();
-    }
-  }
-
-  /**
-   * Load hljs script
-   */
-  private _loadScript(): Observable<any> {
-    const promise = new Promise((resolve) => {
-      const script = this._document.createElement('script');
-      script.async = true;
-      script.type = 'text/javascript';
-      script.onload = resolve;
-      script.src = `${this.options.path}/highlight.pack.js`;
-      this._document.head.appendChild(script);
-    });
-    return from(promise).pipe(
-      switchMap(() => this._initHLJS())
-    );
-  }
-
-  /**
-   * Load hljs theme
-   */
-  private _themeLoader(): Observable<any> {
-    const promise = new Promise((resolve) => {
-      const style = this._document.createElement('link');
-      style.rel = 'stylesheet';
-      style.type = 'text/css';
-      style.onload = resolve;
-      style.href = `${this.options.path}/styles/${this.options.theme}.css`;
-      this._document.head.appendChild(style);
-    });
-    return from(promise);
-  }
-
-  /**
-   * Initialize hljs on load
-   */
-  private _initHLJS() {
-    return of({}).pipe(
-      tap(() => {
-        this.hljs = this._document.defaultView.hljs;
-        this.hljs.configure(this.options.config);
-        this._isReady$.next(true);
-      })
-    );
+    return hljs.getLanguage(name);
   }
 }
