@@ -13,10 +13,6 @@
 Instant code highlighting, auto-detect language, super easy to use
 ___
 
-<p align="center">
-  <img style="text-align: center;" src="https://raw.githubusercontent.com/MurhafSousli/ngx-highlightjs/master/src/assets/preview.gif">
-</p>
-
 ## Table of Contents
 
 - [Live Demo](https://MurhafSousli.github.io/ngx-highlightjs/) | [Stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
@@ -31,145 +27,110 @@ ___
 
 ## Installation
 
-1. Install the library
-
 **NPM**
 
 ```bash
-$ npm install -S ngx-highlightjs
+$ npm install -S ngx-highlightjs highlight.js
 ```
 
 **YARN**
 
 ```bash
-$ yarn add ngx-highlightjs
+$ yarn add ngx-highlightjs highlight.js
 ```
-
-2. Head to [highlight.js download page](https://highlightjs.org/download/) and get your custom package bundle including only the languages you need.
-
- > If you want to use HighlightJs from a CDN, then skip step 2 and 3, and just add the script in the document head.
-
-3. Create new folder in `src/assets/lib/hljs` and extract the downloaded zip file there.
 
 <a name="usage"/>
 
 ## Usage
 
-Import `HighlightModule` library from any module:
+1. Import `HighlightModule` library from any module:
 
 ```ts
 import { HighlightModule } from 'ngx-highlightjs';
 
+import xml from 'highlight.js/lib/languages/xml';
+import scss from 'highlight.js/lib/languages/scss';
+import typescript from 'highlight.js/lib/languages/typescript';
+
 @NgModule({
   imports: [
     // ...
-    HighlightModule.forRoot()
+    HighlightModule.forRoot({
+      languages: [
+        { name: 'typescript', func: typescript },
+        { name: 'scss', func: scss },
+        { name: 'xml', func: xml }
+      ]
+    })
   ]
 })
 export class AppModule { }
 ```
 
-The function **forRoot** accepts 1 optional parameters, `forRoot(options?: HighlightOptions)`
+`HighlightModule.forRoot(options)` Should be called at least once to register highlighting languages.
 
-With `options` parameter you can set:
+`forRoot(options)` Accepts options parameter which have the following properties:
 
-- **theme**: select the theme, use theme's name without the extension, default: `'github'`
-- **path**: hljs library location, default: `'assets/lib/hljs'`
-- **auto**: Enable observer mutation to auto-highlight on text changes, default: `true`
-- **config**: Configures global options, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options), default: null.
+- **languages**: The set of languages to register.
+- **config**: Configures global options, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
 
- Choose highlighting theme:
+ > **Note:** name of each language must match the file name its imported.
 
-```ts
-HighlightModule.forRoot({ theme: 'agate'});
+2. Import highlighting theme
+
+```scss
+@import '~highlight.js/styles/github.css';
 ```
 
 _[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
- Import highlight.js library from a custom path
- ```ts
-const options: HighlightOptions = {
-  theme: 'agate',
-  path: 'assets/js/highlight-js'
-};
+## `highlight` directive
 
-HighlightModule.forRoot(options);
- ```
-
----
-
-Now you can use the directive `highlight`, you can:
-
-- Highlight a code element
+Highlight host element
 
 ```html
 <!-- Highlight directly -->
-<pre><code highlight [code]="someCode"></code></pre>
-<!-- Or -->
-<pre><code highlight [textContent]="someCode"></code></pre>
+<pre><code highlight="someCode"></code></pre>
 ```
 
 Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 
-- Highlight all child code elements
+## Options
+
+- **[highlight]**: (string), Accept code string to highlight, default `null`
+
+- **[language]**: (string[]), an array of language names and aliases restricting auto detection to only these languages, default: `null`
+
+- **(highlighted)**: Stream that emits `HighlightResult` object when element is highlighted.
+
+## `highlightChildren` directive
+
+Highlight children code elements
 
 ```html
 <!-- Highlight child elements with 'pre code' selector -->
-<div highlight="all">
+<div highlightChildren>
   <pre><code [textContent]="htmlCode"></code></pre>
   <pre><code [textContent]="tsCode"></code></pre>
   <pre><code [textContent]="cssCode"></code></pre>
 </div>
 ```
 
-Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-all)
+Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-children)
 
-- Highlight custom elements
+- Highlight children custom elements by selector
 
 ```html
 <!-- Highlight child elements with custom selector -->
-<div highlight="section code">
-  <section><code [textContent]="pythonCode"></code></section>
-  <section><code [textContent]="swiftCode"></code></section>
+<div highlightChildren="section p">
+  <section><p [textContent]="pythonCode"></p></section>
+  <section><p [textContent]="swiftCode"></p></section>
 </div>
 ```
 
-## Options
+## `HighlightJS` service
 
-- **[highlight]**: (string), default `null`
-
-  - Use just `highlight` without a value to highlight the element.
-  - Use `highlight="all"` to highlight child elements with 'pre code' selector.
-  - Use `highlight="{selector}"` to highlight child elements with custom selector.
-
-- **[code]**: (string), code content, default `null`
-
-- **[language]**: (string[]), an array of language names and aliases restricting auto detection to only these languages, default: `null`
-
-- **(highlighted)**: Stream that emits highlight result, you can use `HighlightResult` interface for the response
-
-
-## Use highlight.js functions (version >= 2.1.0)
-
-If you wish to use highlight.js functions, check the [official API](http://highlightjs.readthedocs.io/en/latest/api.html#) for thw usage.
-
-Example:
-
-```ts
-import { HighlightJS } from 'ngx-highlightjs';
-
-export class AppComponent implements OnInit {
-
-  constructor(private hljs: HighlightJS) {
-  }
-
-  ngOnInit() {
-    this.hljs.isReady.subscribe(() => {
-      console.log(this.hljs.listLanguages());
-    });
-  }
-}
-```
+Use this service if you wish to access the [Official HighlightJS API](http://highlightjs.readthedocs.io/en/latest/api.html#).
 
 <a name="development"/>
 
