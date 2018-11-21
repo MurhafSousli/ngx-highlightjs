@@ -4,13 +4,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { HighlightModule } from 'ngx-highlightjs';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { MaterialModule } from './material/material.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+
+import { HighlightModule } from 'ngx-highlightjs';
 
 import typescript from 'highlight.js/lib/languages/typescript';
 import scss from 'highlight.js/lib/languages/scss';
@@ -41,7 +42,6 @@ export function highlightLanguages() {
     FlexLayoutModule,
     NgScrollbarModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

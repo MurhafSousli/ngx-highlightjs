@@ -7,10 +7,10 @@
 
 @include mat-core();
 
-$primary: mat-palette($mat-red,700);
-$accent: mat-palette($mat-grey,800);
-$warn: mat-palette($mat-lime,400);
-$theme: mat-dark-theme($primary,$accent,$warn);
+$primary: mat-palette($mat-red, 700);
+$accent: mat-palette($mat-grey, 800);
+$warn: mat-palette($mat-lime, 400);
+$theme: mat-dark-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
@@ -47,15 +47,25 @@ body {
 .scroll-bar {
   background-color: rgba(0, 0, 0, 0.4) !important;
 }
+
 .scroll-thumbs {
   transition: height 150ms ease-out;
-  background-color: rgba(161, 27, 27, 0.4) !important;
+  background-color: rgba(white, 0.1) !important;
+
   &:hover,
   &:active {
-    background-color: rgba(161, 27, 27, 0.7) !important;
+    background-color: rgba(white, 0.3) !important;
   }
 }
 
 mat-form-field {
-  margin-left: 22px; 
+  margin-left: 22px;
+}
+
+.ng-scrollbar-horizontal {
+  margin-right: 12px;
+}
+
+.ng-scrollbar-vertical {
+  margin-bottom: 12px;
 }

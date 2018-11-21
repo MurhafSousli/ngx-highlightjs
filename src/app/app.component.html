@@ -19,7 +19,7 @@
           <mat-icon>visibility</mat-icon>Preview
         </mat-card-header>
         <mat-card-content>
-          <ng-scrollbar #highlightScrollbar [trackX]="true" viewClass="scroll-view" barClass="scroll-bar" thumbClass="scroll-thumbs">
+          <ng-scrollbar #highlightScrollbar [trackX]="true" viewClass="hljs" barClass="scroll-bar" thumbClass="scroll-thumbs">
             <pre><code [highlight]="code"></code></pre>
           </ng-scrollbar>
         </mat-card-content>
@@ -41,7 +41,7 @@
           <mat-icon>code</mat-icon>Editor
         </mat-card-header>
         <mat-card-content>
-          <ng-scrollbar #textScrollbar [trackX]="true" viewClass="scroll-view" barClass="scroll-bar" thumbClass="scroll-thumbs">
+          <ng-scrollbar #textScrollbar [trackX]="true" viewClass="hljs" barClass="scroll-bar" thumbClass="scroll-thumbs">
             <textarea cdkTextareaAutosize #autosize="cdkTextareaAutosize" class="hljs" [(ngModel)]="code"></textarea>
           </ng-scrollbar>
         </mat-card-content>
