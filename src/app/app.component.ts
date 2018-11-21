@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { NgScrollbar } from 'ngx-scrollbar';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { animationFrameScheduler } from 'rxjs';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 @Component({
   selector: 'app-root',
@@ -56,6 +57,29 @@ export class AppModule { }`;
 
   code: string;
 
+  theme = 'atom-one-dark';
+
+  styles = [
+    'vs',
+    'rainbow',
+    'dracula',
+    'androidstudio',
+    'agate',
+    'zenburn',
+    'agate',
+    'color-brewer',
+    'atom-one-dark',
+    'atom-one-light',
+    'github',
+    'solarized-light',
+    'solarized-dark',
+    'railscasts',
+    'tomorrow',
+    'monokai-sublime',
+    'mono-blue',
+    'default',
+  ];
+
   @ViewChild('textScrollbar') textScrollbar: NgScrollbar;
   @ViewChild('highlightScrollbar') highlightScrollbar: NgScrollbar;
   @ViewChild(CdkTextareaAutosize) textareaAutosize: CdkTextareaAutosize;
@@ -71,6 +95,19 @@ export class AppModule { }`;
       this.textScrollbar.update();
       this.highlightScrollbar.update();
     }, 300);
+  }
+
+  changeTheme() {
+    let disablePreviousTheme;
+    document.head.querySelectorAll('.codestyle').forEach((linkElement: HTMLLinkElement) => {
+      const disabled = linkElement.href.substr(linkElement.href.lastIndexOf('/') + 1) !== `${this.theme}.css`;
+      if (!linkElement.disabled) {
+        disablePreviousTheme = linkElement;
+      } else {
+        linkElement.disabled = disabled;
+      }
+    });
+    animationFrameScheduler.schedule(() => disablePreviousTheme.disabled = true);
   }
 
 }

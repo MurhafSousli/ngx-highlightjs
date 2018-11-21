@@ -3,6 +3,8 @@
 @import '~normalize.css';
 @import '~@angular/material/theming';
 
+// @import '~highlight.js/styles/github.css';
+
 @include mat-core();
 
 $primary: mat-palette($mat-red,700);
@@ -52,4 +54,8 @@ body {
   &:active {
     background-color: rgba(161, 27, 27, 0.7) !important;
   }
+}
+
+mat-form-field {
+  margin-left: 22px; 
 }

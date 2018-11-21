@@ -14,21 +14,29 @@
     <!-- PREVIEW -->
 
     <div class="grid" fxLayout fxLayout.lt-md="column">
-      <mat-card fxFlex="0 1 auto" fxFlex.lt-md="0 0 auto" color="accent">
+      <mat-card fxFlex="0 1 auto" fxFlex.lt-md="0 0 auto" color="accent" ngStyle.gt-lg="height: 500px">
         <mat-card-header>
           <mat-icon>visibility</mat-icon>Preview
         </mat-card-header>
         <mat-card-content>
           <ng-scrollbar #highlightScrollbar [trackX]="true" viewClass="scroll-view" barClass="scroll-bar" thumbClass="scroll-thumbs">
-            <pre><code highlight [textContent]="code"></code></pre>
+            <pre><code [highlight]="code"></code></pre>
           </ng-scrollbar>
         </mat-card-content>
+
+        <mat-card-footer>
+          <mat-form-field>
+            <mat-select placeholder="Theme" [(value)]="theme" (valueChange)="changeTheme()">
+              <mat-option *ngFor="let style of styles" [value]="style">{{style}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-footer>
       </mat-card>
 
 
       <!-- EDITOR -->
 
-      <mat-card fxFlex="0 1 auto">
+      <mat-card fxFlex="0 1 auto" ngStyle.gt-lg="height: 500px">
         <mat-card-header>
           <mat-icon>code</mat-icon>Editor
         </mat-card-header>
