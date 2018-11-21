@@ -3,7 +3,7 @@ import { InjectionToken } from '@angular/core';
 export const HIGHLIGHT_OPTIONS = new InjectionToken<HighlightOptions>('HIGHLIGHT_OPTIONS');
 
 export interface HighlightOptions {
-  languages?: any[];
+  languages?: Function;
   config?: HighlightConfig;
 }
 
