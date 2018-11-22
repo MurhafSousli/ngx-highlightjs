@@ -99,8 +99,7 @@ _[List of all available themes from highlight.js](https://github.com/isagalaev/h
 Highlight host element
 
 ```html
-<!-- Highlight directly -->
-<pre><code highlight="someCode"></code></pre>
+<pre><code [highlight]="someCode"></code></pre>
 ```
 
 Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
