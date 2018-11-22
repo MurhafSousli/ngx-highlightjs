@@ -8,6 +8,7 @@
 [![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/dt/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/dm/ngx-highlightjs.svg)](https://www.npmjs.com/package/ngx-highlightjs)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/ngx-highlightjs.svg)](https://bundlephobia.com/result?p=ngx-highlightjs)
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 Instant code highlighting, auto-detect language, super easy to use
@@ -52,15 +53,23 @@ import xml from 'highlight.js/lib/languages/xml';
 import scss from 'highlight.js/lib/languages/scss';
 import typescript from 'highlight.js/lib/languages/typescript';
 
+/** 
+ * Import every language you wish to highlight here
+ * NOTE: The name of each language must match the file name its imported from
+ */
+export function hljsLanguages() {
+  return [
+    {name: 'typescript', func: typescript},
+    {name: 'scss', func: scss},
+    {name: 'xml', func: xml}
+  ];
+}
+
 @NgModule({
   imports: [
     // ...
     HighlightModule.forRoot({
-      languages: [
-        { name: 'typescript', func: typescript },
-        { name: 'scss', func: scss },
-        { name: 'xml', func: xml }
-      ]
+      languages: hljsLanguages
     })
   ]
 })
