@@ -1,12 +1,8 @@
 {
     "extends": "../../tslint.json",
     "rules": {
-        "directive-selector": [
-            true,
-            "attribute",
-            "lib",
-            "camelCase"
-        ],
+        "use-host-property-decorator": false,
+        "directive-selector": false,
         "component-selector": [
             true,
             "element",

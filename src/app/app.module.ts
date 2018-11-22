@@ -1,17 +1,29 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { HighlightModule } from 'ngx-highlightjs';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { MaterialModule } from './material/material.module';
 
 import { AppComponent } from './app.component';
-
 import { HeaderComponent } from './header/header.component';
+
+import { HighlightModule } from 'ngx-highlightjs';
+
+import typescript from 'highlight.js/lib/languages/typescript';
+import scss from 'highlight.js/lib/languages/scss';
+import xml from 'highlight.js/lib/languages/xml';
+
+export function highlightLanguages() {
+  return [
+    {name: 'typescript', func: typescript},
+    {name: 'scss', func: scss},
+    {name: 'xml', func: xml}
+  ];
+}
 
 @NgModule({
   declarations: [
@@ -21,7 +33,9 @@ import { HeaderComponent } from './header/header.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HighlightModule.forRoot({ theme: 'agate' }),
+    HighlightModule.forRoot({
+      languages: highlightLanguages
+    }),
     FormsModule,
     MaterialModule,
     TextFieldModule,
@@ -30,4 +44,5 @@ import { HeaderComponent } from './header/header.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

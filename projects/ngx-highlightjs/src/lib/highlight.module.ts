@@ -1,18 +1,18 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { HighlightDirective } from './highlight.directive';
-import { HighlightOptions } from './highlight.model';
-import { OPTIONS } from './highlight.token';
+import { Highlight } from './highlight';
+import { HighlightChildren } from './highlight-children';
+import { HighlightOptions, HIGHLIGHT_OPTIONS } from './highlight.model';
 
 @NgModule({
-  declarations: [HighlightDirective],
-  exports: [HighlightDirective]
+  declarations: [Highlight, HighlightChildren],
+  exports: [Highlight, HighlightChildren]
 })
 export class HighlightModule {
-  static forRoot(options?: HighlightOptions): ModuleWithProviders {
+  static forRoot(options: HighlightOptions): ModuleWithProviders {
     return {
       ngModule: HighlightModule,
       providers: [
-        {provide: OPTIONS, useValue: options}
+        {provide: HIGHLIGHT_OPTIONS, useValue: options}
       ]
     };
   }

@@ -6,7 +6,7 @@
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 1.5em;
 }
 
 a {
@@ -17,9 +17,14 @@ a {
   height: 100%;
   position: relative;
   display: flex;
-  flex: 0 0 230px;
+  flex: 0 0 200px;
   justify-content: center;
   align-items: center;
+}
+
+.ng-logo {
+  width: 180px;
+  height: 180px;
 }
 
 .intro {
