@@ -4,6 +4,7 @@
 </p>
 
 [![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-highlightjs/)
+[![npm](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
 [![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/dt/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
