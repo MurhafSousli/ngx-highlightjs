@@ -16,12 +16,16 @@ import { HighlightModule } from 'ngx-highlightjs';
 import typescript from 'highlight.js/lib/languages/typescript';
 import scss from 'highlight.js/lib/languages/scss';
 import xml from 'highlight.js/lib/languages/xml';
+import shell from 'highlight.js/lib/languages/shell';
+import powershell from 'highlight.js/lib/languages/powershell';
 
 export function highlightLanguages() {
   return [
     {name: 'typescript', func: typescript},
     {name: 'scss', func: scss},
-    {name: 'xml', func: xml}
+    {name: 'xml', func: xml},
+    {name: 'shell', func: shell},
+    {name: 'powershell', func: powershell}
   ];
 }
 
