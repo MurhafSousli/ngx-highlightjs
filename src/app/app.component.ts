@@ -11,31 +11,49 @@ import { NgScrollbar } from 'ngx-scrollbar';
 })
 export class AppComponent implements OnInit {
 
-  bashCode = '$ npm install --save ngx-highlightjs';
+  bashCode = `// Install with NPM
+npm install -S ngx-highlightjs highlight.js
+
+// Install with YARN
+yarn add ngx-highlightjs highlight.js`;
 
   tsCode = `import { HighlightModule } from 'ngx-highlightjs';
 
+import typescript from 'highlight.js/lib/languages/typescript';
+import scss from 'highlight.js/lib/languages/scss';
+import xml from 'highlight.js/lib/languages/xml';
+
+export function hljsLanguages() {
+  return [
+    {name: 'typescript', func: typescript},
+    {name: 'scss', func: scss},
+    {name: 'xml', func: xml}
+  ];
+}
+
 @NgModule({
   imports: [
-    HighlightModule.forRoot({ theme: 'agate' })
+    HighlightModule.forRoot({
+      languages: hljsLanguages
+    })
   ]
 })
 export class AppModule { }`;
 
-  htmlCode = `<!-- Highlight element directly -->
-<pre><code highlight [code]="someCode"></code></pre>
-<pre><code highlight [textContent]="someCode"></code></pre>
-<pre><code highlight>import { HighlightModule } from 'ngx-highlightjs';</code></pre>
+  htmlCode = `<!-- Simple usage -->
 
-<!-- Highlight all child elements of type <pre><code> -->
-<div highlight="all">
+<!-- Highlight element directly -->
+<pre><code [highlight]="someCode"></code></pre>
+
+<!-- Highlight all child elements with selector '<code>' -->
+<div highlightChildren>
   <pre><code>import { HighlightModule } from 'ngx-highlightjs';</code></pre>
   <pre><code [textContent]="tsCode"></code></pre>
   <pre><code [textContent]="cssCode"></code></pre>
 </div>
 
-<!-- Highlight custom child elements -->
-<div highlight="section code">
+<!-- Highlight custom child elements with selector 'section code' -->
+<div highlightChildren="section code">
   <section><code [textContent]="pythonCode"></code></section>
   <section><code>import { HighlightModule } from 'ngx-highlightjs';</code></section>
 </div>`;

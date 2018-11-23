@@ -45,7 +45,7 @@ $ yarn add ngx-highlightjs highlight.js
 
 ## Usage
 
-1. Import `HighlightModule` library from any module:
+### Import `HighlightModule` library from any module:
 
 ```ts
 import { HighlightModule } from 'ngx-highlightjs';
@@ -54,7 +54,7 @@ import xml from 'highlight.js/lib/languages/xml';
 import scss from 'highlight.js/lib/languages/scss';
 import typescript from 'highlight.js/lib/languages/typescript';
 
-/** 
+/**
  * Import every language you wish to highlight here
  * NOTE: The name of each language must match the file name its imported from
  */
@@ -84,9 +84,7 @@ export class AppModule { }
 - **languages**: The set of languages to register.
 - **config**: Configures global options, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
 
- > **Note:** name of each language must match the file name its imported.
-
-2. Import highlighting theme
+### Import highlighting theme
 
 ```scss
 @import '~highlight.js/styles/github.css';
