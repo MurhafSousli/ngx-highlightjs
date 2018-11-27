@@ -9,7 +9,7 @@ export class HighlightJS {
   constructor(@Optional() @Inject(HIGHLIGHT_OPTIONS) options: HighlightOptions) {
     if (options) {
       // Register HighlightJS languages
-      options.languages().map((language: HighlightLanguage) =>
+      options.languages.map((language: HighlightLanguage) =>
         this.registerLanguage(language.name, language.func)
       );
       if (options.config) {
