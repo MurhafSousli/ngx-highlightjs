@@ -106,7 +106,7 @@ Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 
 - **[highlight]**: (string), Accept code string to highlight, default `null`
 
-- **[language]**: (string[]), an array of language names and aliases restricting auto detection to only these languages, default: `null`
+- **[languages]**: (string[]), an array of language names and aliases restricting auto detection to only these languages, default: `null`
 
 - **(highlighted)**: Stream that emits `HighlightResult` object when element is highlighted.
 
