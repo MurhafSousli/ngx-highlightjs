@@ -45,7 +45,9 @@ $ yarn add ngx-highlightjs highlight.js
 
 ## Usage
 
-### Import `HighlightModule` library from any module:
+### OPTION 1: Import `HighlightModule` in the root module
+
+ > Note: this will include the whole library in your main bundle
 
 ```ts
 import { HighlightModule } from 'ngx-highlightjs';
@@ -77,18 +79,85 @@ export function hljsLanguages() {
 export class AppModule { }
 ```
 
-`HighlightModule.forRoot(options)` Should be called at least once to register highlighting languages.
-
-`forRoot(options)` Accepts options parameter which have the following properties:
+`forRoot(options: HighlightOptions)` Accepts options parameter which have the following properties:
 
 - **languages**: The set of languages to register.
 - **config**: Configures global options, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
 
+### OPTION 2: Import `HighlightModule` in a feature module
+
+You probably don't want to load this library in the root module, you can lazy load it by importing it in your feature module, however Highlight.js languages has to be registered in the root module.
+
+```ts
+import { HighlightModule } from 'ngx-highlightjs';
+
+import xml from 'highlight.js/lib/languages/xml';
+import scss from 'highlight.js/lib/languages/scss';
+import typescript from 'highlight.js/lib/languages/typescript';
+
+/**
+ * Import every language you wish to highlight here
+ * NOTE: The name of each language must match the file name its imported from
+ */
+export function hljsLanguages() {
+  return [
+    {name: 'typescript', func: typescript},
+    {name: 'scss', func: scss},
+    {name: 'xml', func: xml}
+  ];
+}
+
+@NgModule({
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        languages: hljsLanguages,
+        config: { ... }            // <= Optional
+      }
+    }
+  ]
+})
+export class AppModule { }
+```
+
+After Highlight.js languages are registered, just import `HighlightModule` in the feature module
+
+```ts
+@NgModule({
+  imports: [
+    // ...
+    HighlightModule
+  ]
+})
+export class FeatureModule { }
+```
+
+
 ### Import highlighting theme
 
-```scss
+```css
 @import '~highlight.js/styles/github.css';
 ```
+
+You can also lazy load the theme by importing it in your lazy loaded component stylesheet, 
+
+```ts
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'lazy-loaded',
+  templateUrl: './lazy-loaded.component.html',
+  styleUrls: [`
+    @import '~highlight.js/styles/github.css';
+  `],
+  encapsulation: ViewEncapsulation.None         // <= Add this
+})
+export class LazyLoadedComponent  {
+}
+```
+
+ > Note: if you have multiple components that use `HighlightModule`, then it is better to import the theme in the global styles `src/styles.css` 
 
 _[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
