@@ -86,7 +86,7 @@ export class AppModule { }
 
 ### OPTION 2: Import `HighlightModule` in a feature module
 
-You probably don't want to load this library in the root module, you can lazy load it by importing it in your feature module, however Highlight.js languages has to be registered in the root module.
+You probably don't want to load this library in the root module, you can lazy load it by importing it in your feature module, however Highlight.js languages has to be registered in the root module
 
 ```ts
 import { HighlightModule } from 'ngx-highlightjs';
@@ -136,11 +136,22 @@ export class FeatureModule { }
 
 ### Import highlighting theme
 
+Import highlight.js theme from the node_modules directory in `angular.json`
+
+```
+"styles": [
+  "styles.css",
+  "../node_modules/leaflet/dist/leaflet.css",
+]
+```
+
+Or import it in `src/style.scss`
+
 ```css
 @import '~highlight.js/styles/github.css';
 ```
 
-You can also lazy load the theme by importing it in your lazy loaded component stylesheet, 
+You can also lazy load the theme by importing it in your lazy loaded component stylesheet
 
 ```ts
 import { Component, ViewEncapsulation } from '@angular/core';
