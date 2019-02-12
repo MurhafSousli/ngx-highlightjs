@@ -11,11 +11,11 @@ import { NgScrollbar } from 'ngx-scrollbar';
 })
 export class AppComponent implements OnInit {
 
-  bashCode = `// Install with NPM
-npm install -S ngx-highlightjs highlight.js
+  bashCode = `# Install with NPM
+$ npm install -S ngx-highlightjs highlight.js
 
-// Install with YARN
-yarn add ngx-highlightjs highlight.js`;
+# Install with YARN
+$ yarn add ngx-highlightjs highlight.js`;
 
   tsCode = `import { HighlightModule } from 'ngx-highlightjs';
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.2
+
+- fix(HighlightChildren): Highlight children not working inside `[innerHtml]`, closes [#67](https://github.com/MurhafSousli/ngx-highlightjs/issues/67) in [969f3b3](https://github.com/MurhafSousli/ngx-highlightjs/pull/73/commits/969f3b343f4a1015aa89dfca4625d64e4b1a28fd).
+
 ## 3.0.0
 
 ### Breaking Changes
