@@ -141,7 +141,7 @@ Import highlight.js theme from the node_modules directory in `angular.json`
 ```
 "styles": [
   "styles.css",
-  "../node_modules/leaflet/dist/leaflet.css",
+  "../node_modules/highlight.js/styles/github.css",
 ]
 ```
 
