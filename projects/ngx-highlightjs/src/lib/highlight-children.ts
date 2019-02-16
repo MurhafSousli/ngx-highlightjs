@@ -60,6 +60,8 @@ export class HighlightChildren implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._observer.disconnect();
+    if (this._observer) {
+      this._observer.disconnect();
+    }
   }
 }
