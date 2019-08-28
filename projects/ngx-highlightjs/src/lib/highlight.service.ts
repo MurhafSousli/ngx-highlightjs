@@ -3,11 +3,10 @@ import { HighlightConfig, HighlightResult, HighlightLanguage, HighlightOptions, 
 import hljs from 'highlight.js/lib/highlight.js';
 
 function exposeHljsGlobally() {
-  if(!(window as any).eval || !window.document) {
+  if(typeof window === 'undefined') {
     return false;
   }
-  (window.document as any).hljs = hljs;
-  (window as any).eval('var hljs = document.hljs');
+  (window as any).hljs = hljs;
   return true;
 }
 exposeHljsGlobally()
