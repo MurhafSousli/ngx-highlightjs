@@ -2,15 +2,15 @@ import { Injectable, Inject, Optional } from '@angular/core';
 import { HighlightConfig, HighlightResult, HighlightLanguage, HighlightOptions, HIGHLIGHT_OPTIONS } from './highlight.model';
 import hljs from 'highlight.js/lib/highlight.js';
 
-function exposeHlJsGlobally() {
-  if(!window || !window.eval || !document) {
+function exposeHljsGlobally() {
+  if(!(window as any).eval || !window.document) {
     return false;
   }
-  (document as any).hljs = hljs;
+  (window.document as any).hljs = hljs;
   (window as any).eval('var hljs = document.hljs');
   return true;
 }
-exposeHlJsGlobally()
+exposeHljsGlobally()
 
 @Injectable({
   providedIn: 'root'
