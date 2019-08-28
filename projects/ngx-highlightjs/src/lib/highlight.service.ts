@@ -2,8 +2,15 @@ import { Injectable, Inject, Optional } from '@angular/core';
 import { HighlightConfig, HighlightResult, HighlightLanguage, HighlightOptions, HIGHLIGHT_OPTIONS } from './highlight.model';
 import hljs from 'highlight.js/lib/highlight.js';
 
-(document as any).hljs = hljs;
-(window as any).eval('var hljs = document.hljs');
+function exposeHlJsGlobally() {
+  if(!window || !window.eval || !document) {
+    return false;
+  }
+  (document as any).hljs = hljs;
+  (window as any).eval('var hljs = document.hljs');
+  return true;
+}
+exposeHlJsGlobally()
 
 @Injectable({
   providedIn: 'root'
@@ -110,3 +117,5 @@ export class HighlightJS {
     return hljs.getLanguage(name);
   }
 }
+
+
