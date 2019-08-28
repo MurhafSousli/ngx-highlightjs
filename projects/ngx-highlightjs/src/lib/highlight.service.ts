@@ -2,6 +2,9 @@ import { Injectable, Inject, Optional } from '@angular/core';
 import { HighlightConfig, HighlightResult, HighlightLanguage, HighlightOptions, HIGHLIGHT_OPTIONS } from './highlight.model';
 import hljs from 'highlight.js/lib/highlight.js';
 
+(document as any).hljs = hljs;
+(window as any).eval('var hljs = document.hljs');
+
 @Injectable({
   providedIn: 'root'
 })
