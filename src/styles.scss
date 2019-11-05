@@ -1,9 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://fonts.googleapis.com/css?family=Roboto:500,700");
 @import '~normalize.css';
 @import '~@angular/material/theming';
-
-// @import '~highlight.js/styles/github.css';
 
 @include mat-core();
 
@@ -27,6 +26,10 @@ body {
   flex-direction: column;
 }
 
+.ng-scrollbar {
+  --scrollbar-thumb-color: red;
+}
+
 .grid {
   width: 100%;
   height: 100%;
@@ -42,20 +45,6 @@ body {
 
 .scroll-view {
   background-color: mat-color($primary, A100);
-}
-
-.scroll-bar {
-  background-color: rgba(0, 0, 0, 0.4) !important;
-}
-
-.scroll-thumbs {
-  transition: height 150ms ease-out;
-  background-color: rgba(white, 0.1) !important;
-
-  &:hover,
-  &:active {
-    background-color: rgba(white, 0.3) !important;
-  }
 }
 
 mat-form-field {

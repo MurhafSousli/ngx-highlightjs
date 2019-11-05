@@ -98,9 +98,9 @@ export class AppModule { }`;
     'default',
   ];
 
-  @ViewChild('textScrollbar') textScrollbar: NgScrollbar;
-  @ViewChild('highlightScrollbar') highlightScrollbar: NgScrollbar;
-  @ViewChild(CdkTextareaAutosize) textareaAutosize: CdkTextareaAutosize;
+  @ViewChild('textScrollbar', { static: true }) textScrollbar: NgScrollbar;
+  @ViewChild('highlightScrollbar', { static: true }) highlightScrollbar: NgScrollbar;
+  @ViewChild(CdkTextareaAutosize, { static: true }) textareaAutosize: CdkTextareaAutosize;
 
   ngOnInit() {
     this.setCode(this.tsCode);
@@ -112,7 +112,7 @@ export class AppModule { }`;
     setTimeout(() => {
       this.textScrollbar.update();
       this.highlightScrollbar.update();
-    }, 300);
+    }, 200);
   }
 
   changeTheme() {
