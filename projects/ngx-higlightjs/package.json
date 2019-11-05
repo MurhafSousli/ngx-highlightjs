@@ -1,6 +1,6 @@
 {
   "name": "ngx-highlightjs",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "description": "Instant code highlighting, auto-detect language, super easy to use.",
   "homepage": "http://github.com/murhafsousli/ngx-highlightjs",
   "author": {
@@ -24,8 +24,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": ">=6.0.0",
-    "@angular/common": ">=6.0.0",
-    "highlight.js": ">=9.0.0"
+    "highlight.js": "^9.0.0",
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0"
   }
 }
