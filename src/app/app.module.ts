@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
 // import { HighlightModule } from 'ngx-highlightjs';
-import { HighlightModule } from '../../projects/ngx-higlightjs/src/public-api';
+import { HighlightModule } from '../../projects/ngx-highlightjs/src/public-api';
 
 @NgModule({
   declarations: [

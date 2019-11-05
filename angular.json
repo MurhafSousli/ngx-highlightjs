@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-highlight-demo": {
+    "ngx-highlightjs-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -120,33 +120,33 @@
         }
       }
     },
-    "ngx-higlightjs": {
+    "ngx-highlightjs": {
       "projectType": "library",
-      "root": "projects/ngx-higlightjs",
-      "sourceRoot": "projects/ngx-higlightjs/src",
+      "root": "projects/ngx-highlightjs",
+      "sourceRoot": "projects/ngx-highlightjs/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ngx-higlightjs/tsconfig.lib.json",
-            "project": "projects/ngx-higlightjs/ng-package.json"
+            "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.json",
+            "project": "projects/ngx-highlightjs/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-higlightjs/src/test.ts",
-            "tsConfig": "projects/ngx-higlightjs/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-higlightjs/karma.conf.js"
+            "main": "projects/ngx-highlightjs/src/test.ts",
+            "tsConfig": "projects/ngx-highlightjs/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-highlightjs/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-higlightjs/tsconfig.lib.json",
-              "projects/ngx-higlightjs/tsconfig.spec.json"
+              "projects/ngx-highlightjs/tsconfig.lib.json",
+              "projects/ngx-highlightjs/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -155,5 +155,5 @@
         }
       }
     }},
-  "defaultProject": "ngx-highlight-demo"
+  "defaultProject": "ngx-highlightjs-demo"
 }
