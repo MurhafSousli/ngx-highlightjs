@@ -28,6 +28,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build-lib": "ng build ngx-highlightjs",
+    "test-lib": "ng test ngx-highlightjs",
     "link-lib": "npm link dist/ngx-highlightjs && npm link ngx-highlightjs",
     "publish-lib": "npm publish dist/ngx-highlightjs"
   },
