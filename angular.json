@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-highlight-demo",
+            "outputPath": "dist/ngx-highlightjs-demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-highlight-demo:build"
+            "browserTarget": "ngx-highlightjs-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-highlight-demo:build:production"
+              "browserTarget": "ngx-highlightjs-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-highlight-demo:build"
+            "browserTarget": "ngx-highlightjs-demo:build"
           }
         },
         "test": {
@@ -110,11 +110,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-highlight-demo:serve"
+            "devServerTarget": "ngx-highlightjs-demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-highlight-demo:serve:production"
+              "devServerTarget": "ngx-highlightjs-demo:serve:production"
             }
           }
         }
