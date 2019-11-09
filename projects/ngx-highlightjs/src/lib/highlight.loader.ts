@@ -5,6 +5,7 @@ import { catchError, tap, map, switchMap, filter, auditTime } from 'rxjs/operato
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { HIGHLIGHT_OPTIONS, HighlightLibrary, HighlightOptions } from './highlight.model';
 
+// @dynamic
 @Injectable({
   providedIn: 'root'
 })
