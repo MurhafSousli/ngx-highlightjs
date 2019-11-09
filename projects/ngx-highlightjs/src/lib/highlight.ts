@@ -30,8 +30,9 @@ export class Highlight implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      changes['code'] &&
-      changes['code'].currentValue !== changes['code'].previousValue
+      changes.code &&
+      changes.code.currentValue &&
+      changes.code.currentValue !== changes.code.previousValue
     ) {
       this.highlightElement(this.code, this.languages);
     }
