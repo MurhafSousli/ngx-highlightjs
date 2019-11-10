@@ -1,6 +1,6 @@
 import { Injectable, Inject, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { HighlightConfig, HighlightResult, HighlightLibrary, HighlightOptions, HIGHLIGHT_OPTIONS } from './highlight.model';
 import { HighlightLoader } from './highlight.loader';
 
@@ -129,6 +129,14 @@ export class HighlightJS {
   getLanguage(name: string): Observable<any> {
     return this._loader.ready.pipe(
       map((hljs: HighlightLibrary) => hljs.getLanguage(name))
+    );
+  }
+
+  lineNumbersBlock(el: HTMLElement): Observable<void> {
+    return this._loader.ready.pipe(
+      filter((hljs: HighlightLibrary) => !!hljs.lineNumbersBlock),
+      tap((hljs: HighlightLibrary) => hljs.lineNumbersBlock(el)),
+      map(() => null)
     );
   }
 }

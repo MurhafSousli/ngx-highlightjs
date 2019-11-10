@@ -1,18 +1,26 @@
-import { Directive, Input, Output, OnChanges, SimpleChanges, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import {
+  Directive,
+  Input,
+  Output,
+  Inject,
+  Optional,
+  OnChanges,
+  SimpleChanges,
+  EventEmitter,
+  ElementRef
+} from '@angular/core';
 import { HighlightJS } from './highlight.service';
-import { HighlightResult } from './highlight.model';
+import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightResult } from './highlight.model';
+import { animationFrameScheduler } from 'rxjs';
 
 @Directive({
-  host: {
-    '[class.hljs]': 'true',
-    '[innerHTML]': 'highlightedCode || code'
-  },
+  host: { '[class.hljs]': 'true' },
   selector: '[highlight]'
 })
 export class Highlight implements OnChanges {
 
   // Highlighted Code
-  highlightedCode!: string;
+  private readonly _nativeElement: HTMLElement;
 
   // Highlight code input
   @Input('highlight') code!: string;
@@ -21,10 +29,16 @@ export class Highlight implements OnChanges {
   // The subset can also be set with configure, but the local parameter overrides the option if set.
   @Input() languages!: string[];
 
+  // Show line numbers
+  @Input() lineNumbers!: boolean;
+
   // Stream that emits when code string is highlighted
   @Output() highlighted = new EventEmitter<HighlightResult>();
 
-  constructor(private _hljs: HighlightJS, private _cd: ChangeDetectorRef) {
+  constructor(el: ElementRef,
+              private _hljs: HighlightJS,
+              @Optional() @Inject(HIGHLIGHT_OPTIONS) private _options: HighlightOptions) {
+    this._nativeElement = el.nativeElement;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -44,11 +58,24 @@ export class Highlight implements OnChanges {
    * The subset can also be set with configure, but the local parameter overrides the option if set.
    */
   highlightElement(code: string, languages?: string[]): void {
+    // Set code text before highlighting
+    this.setCode(code);
     this._hljs.highlightAuto(code, languages).subscribe((res: any) => {
-      this.highlightedCode = res.value;
-      this._cd.detectChanges();
+      // Set highlighted code
+      this.setCode(res.value);
+      // Check if user want to show line numbers
+      if (this.lineNumbers && this._options.lineNumbers) {
+        animationFrameScheduler.schedule(() =>
+          this._hljs.lineNumbersBlock(this._nativeElement).subscribe()
+        );
+      }
+      // Forward highlight response to the highlighted output
       this.highlighted.emit(res);
     });
+  }
+
+  private setCode(content: string) {
+    animationFrameScheduler.schedule(() => this._nativeElement.innerHTML = content);
   }
 }
 

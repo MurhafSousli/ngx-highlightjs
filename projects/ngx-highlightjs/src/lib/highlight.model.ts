@@ -67,6 +67,12 @@ export interface HighlightLibrary {
    * @return The language object if found, undefined otherwise.
    */
   getLanguage(name: string): any;
+
+  /**
+   * Add line numbers to code element
+   * @param el Code element
+   */
+  lineNumbersBlock(el: Element): void;
 }
 
 export interface HighlightConfig {
@@ -89,10 +95,8 @@ export interface HighlightResult {
 }
 
 export interface HighlightOptions {
-  languages?: string[];
   config?: HighlightConfig;
-  // TODO: http code response mapper
-  token: (res: any) => string;
+  lineNumbers?: boolean;
 }
 
 export const HIGHLIGHT_OPTIONS = new InjectionToken<HighlightOptions>('HIGHLIGHT_OPTIONS');
