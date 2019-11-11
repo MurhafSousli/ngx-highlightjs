@@ -14,7 +14,9 @@ import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightResult } from './highligh
 import { animationFrameScheduler } from 'rxjs';
 
 @Directive({
-  host: { '[class.hljs]': 'true' },
+  host: {
+    '[class.hljs]': 'true'
+  },
   selector: '[highlight]'
 })
 export class Highlight implements OnChanges {

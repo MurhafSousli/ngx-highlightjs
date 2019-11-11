@@ -132,6 +132,10 @@ export class HighlightJS {
     );
   }
 
+  /**
+   * Display line numbers
+   * @param el Code element
+   */
   lineNumbersBlock(el: HTMLElement): Observable<void> {
     return this._loader.ready.pipe(
       filter((hljs: HighlightLibrary) => !!hljs.lineNumbersBlock),

@@ -12,6 +12,7 @@
       "kebab-case"
     ],
     "variable-name": false,
-    "directive-class-suffix": false
+    "directive-class-suffix": false,
+    "no-host-metadata-property": false
   }
 }
