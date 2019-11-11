@@ -23,9 +23,13 @@
     "code"
   ],
   "license": "MIT",
+  "dependencies": {
+    "highlight.js": "*",
+    "highlightjs-line-numbers.js": "*"
+  },
   "peerDependencies": {
-    "highlight.js": "^9.0.0",
     "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0"
+    "@angular/core": "^8.0.0",
+    "rxjs": "^6.0.0"
   }
 }
