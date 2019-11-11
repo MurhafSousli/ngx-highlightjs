@@ -12,7 +12,7 @@ export class CodeLoader {
   }
 
   /**
-   * Get extra code
+   * Get plus code
    * @param id Gist ID
    */
   getCodeFromGist(id: string): Observable<Gist> {
