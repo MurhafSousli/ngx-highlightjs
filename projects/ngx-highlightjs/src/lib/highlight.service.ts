@@ -106,9 +106,9 @@ export class HighlightJS {
    * @param language A function that returns an object which represents the language definition.
    * The function is passed the hljs object to be able to use common regular expressions defined within it.
    */
-  registerLanguage(name: string, language: () => any): Observable<void> {
+  registerLanguage(name: string, language: () => any): Observable<HighlightLibrary> {
     return this._loader.ready.pipe(
-      map((hljs: HighlightLibrary) => hljs.registerLanguage(name, language))
+      tap((hljs: HighlightLibrary) => hljs.registerLanguage(name, language))
     );
   }
 
@@ -136,11 +136,10 @@ export class HighlightJS {
    * Display line numbers
    * @param el Code element
    */
-  lineNumbersBlock(el: HTMLElement): Observable<void> {
+  lineNumbersBlock(el: HTMLElement): Observable<any> {
     return this._loader.ready.pipe(
       filter((hljs: HighlightLibrary) => !!hljs.lineNumbersBlock),
-      tap((hljs: HighlightLibrary) => hljs.lineNumbersBlock(el)),
-      map(() => null)
+      tap((hljs: HighlightLibrary) => hljs.lineNumbersBlock(el))
     );
   }
 }

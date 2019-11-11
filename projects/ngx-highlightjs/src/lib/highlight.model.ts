@@ -96,6 +96,7 @@ export interface HighlightResult {
 
 export interface HighlightOptions {
   config?: HighlightConfig;
+  languages?: { [name: string]: () => Promise<any> };
   lineNumbers?: boolean;
 }
 

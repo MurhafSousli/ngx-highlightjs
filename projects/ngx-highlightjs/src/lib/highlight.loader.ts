@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID, Optional } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, from, EMPTY } from 'rxjs';
+import { BehaviorSubject, Observable, from, EMPTY, zip } from 'rxjs';
 import { catchError, tap, map, switchMap, filter, take } from 'rxjs/operators';
 import { HIGHLIGHT_OPTIONS, HighlightLibrary, HighlightOptions } from './highlight.model';
 
@@ -24,13 +24,13 @@ export class HighlightLoader {
       this._ready.next(doc.defaultView.hljs);
     } else {
       // Load hljs library
-      this._loadHighlightLibrary().pipe(
+      this._loadLibrary().pipe(
         switchMap((hljs: HighlightLibrary) => {
           if (this._options.lineNumbers) {
             // Make hljs available on window object (required for the line numbers library)
             doc.defaultView.hljs = hljs;
             // Load line numbers library
-            return this._loadLineNumbers().pipe(tap(() => this._ready.next(hljs)));
+            return loadLineNumbers().pipe(tap(() => this._ready.next(hljs)));
           } else {
             this._ready.next(hljs);
             return EMPTY;
@@ -47,23 +47,59 @@ export class HighlightLoader {
   /**
    * Lazy-Load highlight.js library
    */
-  private _loadHighlightLibrary(): Observable<HighlightLibrary> {
-    return this.importModule(import('highlight.js'));
+  private _loadLibrary(): Observable<HighlightLibrary> {
+    const core = loadCoreLibrary().pipe(
+      switchMap((hljs: HighlightLibrary) =>
+        this._loadLanguages(hljs).pipe(map(() => hljs))
+      )
+    );
+    const all = loadAllLibrary();
+    return (this._options && this._options.languages && Object.keys(this._options.languages).length) ? core : all;
   }
 
   /**
-   * Lazy-Load highlight.js library
+   * Lazy-load highlight.js languages
    */
-  private _loadLineNumbers(): Observable<HighlightLibrary> {
-    return this.importModule(import('highlightjs-line-numbers.js'));
-  }
-
-  private importModule(loader: Promise<any>): Observable<any> {
-    return from(loader).pipe(
-      filter((module: any) => !!module && !!module.default),
-      map((module: any) => module.default)
+  private _loadLanguages(hljs: HighlightLibrary): Observable<any> {
+    const languages = Object.entries(this._options.languages).map(([langName, langLoader]) =>
+      importModule(langLoader()).pipe(
+        tap((langFunc: any) => {
+          console.log('register lang', langName, langFunc);
+          hljs.registerLanguage(langName, langFunc);
+        })
+      )
     );
+    return zip(...languages);
   }
+}
 
+/**
+ * Import highlight.js library with all languages
+ */
+function loadAllLibrary(): Observable<HighlightLibrary> {
+  return importModule(import('highlight.js'));
+}
 
+/**
+ * Import highlight.js core library
+ */
+function loadCoreLibrary(): Observable<HighlightLibrary> {
+  return importModule(import('highlight.js/lib/highlight'));
+}
+
+/**
+ * Import line numbers library
+ */
+function loadLineNumbers(): Observable<any> {
+  return importModule(import('highlightjs-line-numbers.js'));
+}
+
+/**
+ * Map loader response to module object
+ */
+function importModule(moduleLoader: Promise<any>): Observable<any> {
+  return from(moduleLoader).pipe(
+    filter((module: any) => !!module && !!module.default),
+    map((module: any) => module.default)
+  );
 }
