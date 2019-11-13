@@ -26,7 +26,7 @@ export class HighlightLoader {
       // Load hljs library
       this._loadLibrary().pipe(
         switchMap((hljs: HighlightLibrary) => {
-          if (this._options.lineNumbers) {
+          if (this._options && this._options.lineNumbers) {
             // Make hljs available on window object (required for the line numbers library)
             doc.defaultView.hljs = hljs;
             // Load line numbers library
@@ -47,14 +47,10 @@ export class HighlightLoader {
   /**
    * Lazy-Load highlight.js library
    */
-  private _loadLibrary(): Observable<HighlightLibrary> {
-    const core = loadCoreLibrary().pipe(
-      switchMap((hljs: HighlightLibrary) =>
-        this._loadLanguages(hljs).pipe(map(() => hljs))
-      )
-    );
-    const all = loadAllLibrary();
-    return (this._options && this._options.languages && Object.keys(this._options.languages).length) ? core : all;
+  private _loadLibrary(): Observable<any> {
+    return (this._options && this._options.languages && Object.keys(this._options.languages).length)
+      ? from(loadCoreLibrary()).pipe(switchMap((hljs: any) => this._loadLanguages(hljs)))
+      : from(loadAllLibrary());
   }
 
   /**
@@ -63,21 +59,11 @@ export class HighlightLoader {
   private _loadLanguages(hljs: HighlightLibrary): Observable<any> {
     const languages = Object.entries(this._options.languages).map(([langName, langLoader]) =>
       importModule(langLoader()).pipe(
-        tap((langFunc: any) => {
-          console.log('register lang', langName, langFunc);
-          hljs.registerLanguage(langName, langFunc);
-        })
+        tap((langFunc: any) => hljs.registerLanguage(langName, langFunc))
       )
     );
-    return zip(...languages);
+    return zip(...languages).pipe(map(() => hljs));
   }
-}
-
-/**
- * Import highlight.js library with all languages
- */
-function loadAllLibrary(): Observable<HighlightLibrary> {
-  return importModule(import('highlight.js'));
 }
 
 /**
@@ -85,6 +71,13 @@ function loadAllLibrary(): Observable<HighlightLibrary> {
  */
 function loadCoreLibrary(): Observable<HighlightLibrary> {
   return importModule(import('highlight.js/lib/highlight'));
+}
+
+/**
+ * Import highlight.js library with all languages
+ */
+function loadAllLibrary(): Observable<HighlightLibrary> {
+  return importModule(import('highlight.js'));
 }
 
 /**
@@ -97,9 +90,9 @@ function loadLineNumbers(): Observable<any> {
 /**
  * Map loader response to module object
  */
-function importModule(moduleLoader: Promise<any>): Observable<any> {
+const importModule = (moduleLoader: Promise<any>): Observable<any> => {
   return from(moduleLoader).pipe(
     filter((module: any) => !!module && !!module.default),
     map((module: any) => module.default)
   );
-}
+};
