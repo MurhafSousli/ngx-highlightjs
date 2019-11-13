@@ -66,10 +66,21 @@ export class Highlight implements OnChanges {
       // Set highlighted code
       this.setCode(res.value);
       // Check if user want to show line numbers
-      if (this.lineNumbers && this._options.lineNumbers) {
-        animationFrameScheduler.schedule(() =>
-          this._hljs.lineNumbersBlock(this._nativeElement).subscribe()
-        );
+      if (this.lineNumbers && this._options && this._options.lineNumbers) {
+        animationFrameScheduler.schedule(() => {
+          // Add line numbers
+          this._hljs.lineNumbersBlock(this._nativeElement).subscribe();
+          // If code lines is only 1, the library will not add numbers
+          // Observe changes to add 'hljs-line-numbers' class only when line numbers is added to the code element
+          let obs = new MutationObserver(() => {
+            if (this._nativeElement.firstElementChild.tagName.toUpperCase() === 'TABLE') {
+              this._nativeElement.classList.add('hljs-line-numbers');
+            }
+            obs.disconnect();
+            obs = null;
+          });
+          obs.observe(this._nativeElement, { childList: true });
+        });
       }
       // Forward highlight response to the highlighted output
       this.highlighted.emit(res);
