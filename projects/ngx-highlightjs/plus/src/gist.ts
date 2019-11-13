@@ -11,8 +11,10 @@ export class GistDirective {
   }
 
   @Input()
-  private set gist(value: any) {
-    this._loader.getCodeFromGist(value).subscribe((gist: Gist) => this.gistLoad.emit(gist));
+  private set gist(value: string) {
+    if (value) {
+      this._loader.getCodeFromGist(value).subscribe((gist: Gist) => this.gistLoad.emit(gist));
+    }
   }
 
   @Output() gistLoad = new EventEmitter<Gist>();
