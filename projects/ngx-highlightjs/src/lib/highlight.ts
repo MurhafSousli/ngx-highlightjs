@@ -9,9 +9,9 @@ import {
   EventEmitter,
   ElementRef
 } from '@angular/core';
+import { animationFrameScheduler } from 'rxjs';
 import { HighlightJS } from './highlight.service';
 import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightResult } from './highlight.model';
-import { animationFrameScheduler } from 'rxjs';
 
 @Directive({
   host: {
@@ -23,6 +23,9 @@ export class Highlight implements OnChanges {
 
   // Highlighted Code
   private readonly _nativeElement: HTMLElement;
+
+  // Temp observer to observe when line numbers has been added to code element
+  private _lineNumbersObs: any;
 
   // Highlight code input
   @Input('highlight') code!: string;
@@ -67,24 +70,36 @@ export class Highlight implements OnChanges {
       this.setCode(res.value);
       // Check if user want to show line numbers
       if (this.lineNumbers && this._options && this._options.lineNumbers) {
-        animationFrameScheduler.schedule(() => {
-          // Add line numbers
-          this._hljs.lineNumbersBlock(this._nativeElement).subscribe();
-          // If code lines is only 1, the library will not add numbers
-          // Observe changes to add 'hljs-line-numbers' class only when line numbers is added to the code element
-          let obs = new MutationObserver(() => {
-            if (this._nativeElement.firstElementChild.tagName.toUpperCase() === 'TABLE') {
-              this._nativeElement.classList.add('hljs-line-numbers');
-            }
-            obs.disconnect();
-            obs = null;
-          });
-          obs.observe(this._nativeElement, { childList: true });
-        });
+        this.addLineNumbers();
       }
       // Forward highlight response to the highlighted output
       this.highlighted.emit(res);
     });
+  }
+
+  private addLineNumbers() {
+    // Clean up line numbers observer
+    this.destroyLineNumbersObserver();
+    animationFrameScheduler.schedule(() => {
+      // Add line numbers
+      this._hljs.lineNumbersBlock(this._nativeElement).subscribe();
+      // If lines count is 1, the line numbers library will not add numbers
+      // Observe changes to add 'hljs-line-numbers' class only when line numbers is added to the code element
+      this._lineNumbersObs = new MutationObserver(() => {
+        if (this._nativeElement.firstElementChild.tagName.toUpperCase() === 'TABLE') {
+          this._nativeElement.classList.add('hljs-line-numbers');
+        }
+        this.destroyLineNumbersObserver();
+      });
+      this._lineNumbersObs.observe(this._nativeElement, { childList: true });
+    });
+  }
+
+  private destroyLineNumbersObserver() {
+    if (this._lineNumbersObs) {
+      this._lineNumbersObs.disconnect();
+      this._lineNumbersObs = null;
+    }
   }
 
   private setCode(content: string) {
