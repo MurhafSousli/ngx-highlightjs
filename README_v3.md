@@ -29,54 +29,91 @@ ___
 
 ## Installation
 
-Install with **NPM**
+**NPM**
 
 ```bash
-npm i ngx-highlightjs
+$ npm install -S ngx-highlightjs highlight.js
+```
+
+**YARN**
+
+```bash
+$ yarn add ngx-highlightjs highlight.js
 ```
 
 <a name="usage"/>
 
 ## Usage
 
-### Import `HighlightModule` in the root module
+### OPTION 1: Import `HighlightModule` in the root module
 
-```typescript
+ > Note: this will include the whole library in your main bundle
+
+```ts
 import { HighlightModule } from 'ngx-highlightjs';
+
+import xml from 'highlight.js/lib/languages/xml';
+import scss from 'highlight.js/lib/languages/scss';
+import typescript from 'highlight.js/lib/languages/typescript';
+
+/**
+ * Import every language you wish to highlight here
+ * NOTE: The name of each language must match the file name its imported from
+ */
+export function hljsLanguages() {
+  return [
+    {name: 'typescript', func: typescript},
+    {name: 'scss', func: scss},
+    {name: 'xml', func: xml}
+  ];
+}
 
 @NgModule({
   imports: [
-    HighlightModule
+    // ...
+    HighlightModule.forRoot({
+      languages: hljsLanguages
+    })
   ]
 })
 export class AppModule { }
 ```
 
- > Note: By default this will load highlight.js bundle library including all languages.
+`forRoot(options: HighlightOptions)` Accepts options parameter which have the following properties:
 
-To avoid import everything from highlight.js library, import each language you want to highlight manually.
+- **languages**: The set of languages to register.
+- **config**: Configures global options, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
 
-To do so, use the injection token `HIGHLIGHT_OPTIONS` to provide options:
+### OPTION 2: Import `HighlightModule` in a feature module
 
-```typescript
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+You probably don't want to load this library in the root module, you can lazy load it by importing it in your feature module, however Highlight.js languages has to be registered in the root module
+
+```ts
+import { HighlightModule } from 'ngx-highlightjs';
+
+import xml from 'highlight.js/lib/languages/xml';
+import scss from 'highlight.js/lib/languages/scss';
+import typescript from 'highlight.js/lib/languages/typescript';
+
+/**
+ * Import every language you wish to highlight here
+ * NOTE: The name of each language must match the file name its imported from
+ */
+export function hljsLanguages() {
+  return [
+    {name: 'typescript', func: typescript},
+    {name: 'scss', func: scss},
+    {name: 'xml', func: xml}
+  ];
+}
 
 @NgModule({
-  imports: [
-    HighlightModule
-  ],
   providers: [
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        // Lazy load each highlighting language
-        languages: {
-          typescript: () => import('highlight.js/lib/languages/typescript'),
-          css: () => import('highlight.js/lib/languages/css'),
-          xml: () => import('highlight.js/lib/languages/xml')
-        },
-        // (Optional) Lazy load line numbers library
-        lineNumbers: true
+        languages: hljsLanguages,
+        config: { ... }            // <= Optional
       }
     }
   ]
@@ -84,9 +121,18 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 export class AppModule { }
 ```
 
-- **languages**: The set of languages to register.
-- **lineNumber**: Add lines number to code elements.
-- **config**: Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
+After Highlight.js languages are registered, just import `HighlightModule` in the feature module
+
+```ts
+@NgModule({
+  imports: [
+    // ...
+    HighlightModule
+  ]
+})
+export class FeatureModule { }
+```
+
 
 ### Import highlighting theme
 
@@ -105,17 +151,36 @@ Or import it in `src/style.scss`
 @import '~highlight.js/styles/github.css';
 ```
 
-_[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
+You can also lazy load the theme by importing it in your lazy loaded component stylesheet
 
-### Use highlight directive
+```ts
+import { Component, ViewEncapsulation } from '@angular/core';
 
-The following line will highlight the given code and append it to the host element
-
-```html
-<pre><code [highlight]="code"></code></pre>
+@Component({
+  selector: 'lazy-loaded',
+  templateUrl: './lazy-loaded.component.html',
+  styleUrls: [`
+    @import '~highlight.js/styles/github.css';
+  `],
+  encapsulation: ViewEncapsulation.None         // <= Add this
+})
+export class LazyLoadedComponent  {
+}
 ```
 
-[Demo stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
+ > Note: if you have multiple components that use `HighlightModule`, then it is better to import the theme in the global styles `src/styles.css` 
+
+_[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
+
+## `highlight` directive
+
+Highlight host element
+
+```html
+<pre><code [highlight]="someCode"></code></pre>
+```
+
+Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 
 ## Options
 
@@ -125,66 +190,34 @@ The following line will highlight the given code and append it to the host eleme
 
 - **(highlighted)**: Stream that emits `HighlightResult` object when element is highlighted.
 
-## Plus package
+## `highlightChildren` directive
 
-In version >= 4, a new sub-package were added with the following features:
-
-- Highlight gists using gists API
-- Highlight code directly from URL
-
-### Usage
-
-```typescript
-import { HighlightPlusModule } from 'ngx-highlightjs/plus';
- 
-@NgModule({
-  imports: [
-    HighlightPlusModule
-  ]
-})
-export class AppModule {
-}
-```
-
-### Highlight a gist file
-
-1 - Use `[gist]` directive with the gist id to get the response through the output `(gistLoaded)`.
-2 - Once `(gistLoaded)` emits, you will get access to the gist response.
-3 - Use `gistContent` pipe to extract the file content from gist response using gist file name.
-
-**Example:**
+Highlight children code elements
 
 ```html
-<pre [gist]="gistId" (gistLoaded)="gist = $event">
-  <code [highlight]="gist | gistContent: 'main.js'"></code>
-</pre>
+<!-- Highlight child elements with 'pre code' selector -->
+<div highlightChildren>
+  <pre><code [textContent]="htmlCode"></code></pre>
+  <pre><code [textContent]="tsCode"></code></pre>
+  <pre><code [textContent]="cssCode"></code></pre>
+</div>
 ```
 
-### Highlight all gist files
+Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-children)
 
-To loop over `gist?.files`, use `keyvalue` pipe to pass file name into `gistContent` pipe.
-
-**Example:**
+- Highlight children custom elements by selector
 
 ```html
-<ng-container [gist]="gistId" (gistLoaded)="gist = $event">
-  <pre *ngFor="let file of gist?.files | keyvalue">
-    <code [highlight]="gist | gistContent: file.key"></code>
-  </pre>
-</ng-container>
+<!-- Highlight child elements with custom selector -->
+<div highlightChildren="section p">
+  <section><p [textContent]="pythonCode"></p></section>
+  <section><p [textContent]="swiftCode"></p></section>
+</div>
 ```
 
-### Highlight code from URL directly
+## `HighlightJS` service
 
-Use the pipe `codeFromUrl` with the `async` pipe together to get the code text from a raw URL.
-
-**Example:**
-
-```html
-<pre>
-  <code [highlight]="codeUrl | codeFromUrl | async"></code>
-</pre>
-``` 
+Use this service if you wish to access the [Official HighlightJS API](http://highlightjs.readthedocs.io/en/latest/api.html#).
 
 <a name="development"/>
 
@@ -193,7 +226,7 @@ Use the pipe `codeFromUrl` with the `async` pipe together to get the code text f
 This project uses Angular CLI to build the package.
 
 ```bash
-$ ng build ngx-highlightjs
+$ ng build ngx-highlightjs --prod
 ```
 
 <a name="issues"/>
