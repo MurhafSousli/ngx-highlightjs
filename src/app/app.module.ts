@@ -3,31 +3,56 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TextFieldModule } from '@angular/cdk/text-field';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-
 import { MaterialModule } from './material/material.module';
+
+import { HighlightPlusModule, GIST_OPTIONS } from '../../projects/ngx-highlightjs/plus/src/public_api';
+import { HIGHLIGHT_OPTIONS } from '../../projects/ngx-highlightjs/src/public-api';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { GistComponent } from './gist/gist.component';
+import { CodeComponent } from './code/code.component';
 
-// import { HighlightModule } from 'ngx-highlightjs';
-import { HighlightModule } from '../../projects/ngx-highlightjs/src/public-api';
+export function getHighlightLanguages() {
+  return {
+    typescript: () => import('highlight.js/lib/languages/typescript'),
+    css: () => import('highlight.js/lib/languages/css'),
+    xml: () => import('highlight.js/lib/languages/xml')
+  };
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    GistComponent,
+    CodeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HighlightModule,
     FormsModule,
     MaterialModule,
-    TextFieldModule,
     FlexLayoutModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    HighlightPlusModule
+  ],
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        lineNumbers: true,
+        languages: getHighlightLanguages()
+      }
+    },
+    {
+      provide: GIST_OPTIONS,
+      useValue: {
+        // clientId:
+        // clientSecret:
+      }
+    }
   ],
   bootstrap: [AppComponent]
 })

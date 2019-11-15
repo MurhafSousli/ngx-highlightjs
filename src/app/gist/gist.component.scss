@@ -1,0 +1,94 @@
+.loading-label {
+  margin: 2em 0;
+  text-align: center;
+  font-weight: 300;
+}
+
+.mat-card {
+  padding: 0;
+  margin-bottom: 3em;
+}
+
+.mat-card-header {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.mat-card-content {
+  position: relative;
+  overflow: hidden;
+  padding: 1px;
+  margin-bottom: 0;
+}
+
+.mat-card-footer {
+  padding: 10px !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: row-reverse;
+
+  .gist-url {
+    display: flex;
+    align-items: center;
+    font-weight: 300;
+    font-size: 13px;
+    color: white;
+    text-decoration: unset;
+  }
+
+  .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    //color: #d32f2f;
+  }
+}
+
+.mat-icon {
+  margin: 0 3px;
+}
+
+.code-wrapper {
+  border-radius: 3px 3px 0 0;
+}
+
+::ng-deep {
+  .hljs {
+    padding: 0;
+    border: none;
+    transition: border ease 1s;
+  }
+
+  .hljs-ln {
+    padding: 10px 0;
+
+    tr {
+      &:first-child td {
+        padding-top: 10px !important;
+      }
+
+      &:last-child td {
+        padding-bottom: 10px !important;
+      }
+    }
+  }
+
+  /* for block of numbers */
+  td.hljs-ln-numbers {
+    user-select: none;
+    text-align: center;
+    color: #cccccc6b;
+    border-right: 1px solid #cccccc1c;
+    vertical-align: top;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+  }
+
+  /* for block of code */
+  td.hljs-ln-code {
+    padding-left: 10px !important;
+  }
+}

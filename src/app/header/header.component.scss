@@ -1,12 +1,27 @@
+@import '~@angular/material/theming';
+
 :host {
   flex: 1;
   color: white;
   display: flex;
   align-items: center;
+  background: mat-color(mat-palette($mat-red, 900));
+  padding: 3em 0;
+  font-weight: 300;
+}
+
+.grid {
+  width: 100%;
+  height: 100%;
+  max-width: 1255px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
-  font-size: 1.5em;
+  font-size: 1.6em;
+  font-weight: 300;
 }
 
 a {
@@ -31,10 +46,15 @@ a {
   padding: 1em;
 }
 
+.stackblitz img {
+  margin-right: 5px;
+}
+
 ::ng-deep {
   .buttons span {
     margin-right: 5px;
   }
+
   .badges a {
     margin-right: 5px;
   }

@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-@import url("https://fonts.googleapis.com/css?family=Roboto:500,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,500,700");
 @import '~normalize.css';
 @import '~@angular/material/theming';
 
@@ -18,47 +18,22 @@ $theme: mat-dark-theme($primary, $accent, $warn);
 }
 
 body {
-  background: url(assets/bg.png) repeat;
-  min-height: 100vh;
+  height: 100vh;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+
+  //background: #d8d8d8;
+  background: mat-color(mat-palette($mat-red, 900));
 }
 
-.ng-scrollbar {
-  --scrollbar-thumb-color: red;
+h3 {
+  color: white;
+  font-weight: 300;
+  margin: 3em 0 1.5em;
 }
 
-.grid {
-  width: 100%;
-  height: 100%;
-  max-width: 1255px;
-  margin: auto;
-  align-items: center;
-  justify-content: center;
-}
-
-.code-shortcuts .mat-toolbar-row {
-  justify-content: center;
-}
-
-.scroll-view {
-  background-color: mat-color($primary, A100);
-}
-
-mat-form-field {
-  margin-left: 22px;
-}
-
-.ng-scrollbar-horizontal {
-  margin-right: 12px;
-}
-
-.ng-scrollbar-vertical {
-  margin-bottom: 12px;
-}
-
-.hljs {
-  padding: 0;
+.ng-scroll-content {
+  //max-width: 100%;
 }
