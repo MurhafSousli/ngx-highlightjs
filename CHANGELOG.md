@@ -1,14 +1,21 @@
 # Changelog
 
-## 4.0.0-beta.0
+## 4.0.0
 
-- feat: Lazy-load **hljs** library and the selected languages, closes [#89](https://github.com/MurhafSousli/ngx-highlightjs/issues/89) in [8cdba13](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/8cdba13d72e563a2189b816d41f959e3dc18be21).
+- feat: Lazy-load **hljs** library, closes [#89](https://github.com/MurhafSousli/ngx-highlightjs/issues/89) in [8cdba13](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/8cdba13d72e563a2189b816d41f959e3dc18be21).
+- feat: Lazy-load languages scripts, in [952f33c](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/952f33cd2c297f1d249d3c04c89e3d206cea9207).
+- feat: Gist directive, closes [#90](https://github.com/MurhafSousli/ngx-highlightjs/issues/90) in [8b4c8fc](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/8b4c8fc5090e58f1ec5161613d3b1b3ab2ad57af).
+- feat: Highlight code directly from URL, closes [#91](https://github.com/MurhafSousli/ngx-highlightjs/issues/91) in [5fa3c59](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/5fa3c59bfeb5b399e0951edba7eb15838dda0f0a).
+- feat: Line numbers, closes [#35](https://github.com/MurhafSousli/ngx-highlightjs/issues/35) in [c19b878](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/c19b8780816854b994b5073892f86d51a4d0aa58).
+- enhance: Move `highlight.js` package from **peerDependencies** to **dependencies**
 - fix: Check if [highlight] input got undefined value, closes [#81](https://github.com/MurhafSousli/ngx-highlightjs/issues/81) in [f2b14bd](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/f2b14bd97d02510eed1f522182db4ba06001dc47).
 - fix: Add test files, closes [#79](https://github.com/MurhafSousli/ngx-highlightjs/issues/79) in [2913d05](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/2913d05fe3f0b0ba5b1fcdb6fede66af2a966201).
 
 ### Breaking Changes
 
-- Since **hljs** library is lazy-loaded, all **hljs** functions in `HighlightJS` service are now returning observables.
+- Since the core library `highlight.js` will be lazy-loaded, all **hljs** functions in `HighlightJS` will return observables to make sure the library is loaded before execution.
+- `HighlightChildren` directive has been deprecated.
+- The global options languages property `NgScrollOptions.languages` type has changed.
 
 ## 3.0.3
 
