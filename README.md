@@ -39,7 +39,7 @@ npm i ngx-highlightjs
 
 ## Usage
 
-### Import `HighlightModule` in the root module
+### Import `HighlightModule` in your app
 
 ```typescript
 import { HighlightModule } from 'ngx-highlightjs';
@@ -52,15 +52,29 @@ import { HighlightModule } from 'ngx-highlightjs';
 export class AppModule { }
 ```
 
- > Note: By default this will load highlight.js bundle library including all languages.
+ > Note: By default this will lazy-load highlight.js bundle library including all languages.
 
-To avoid import everything from highlight.js library, import each language you want to highlight manually.
+To avoid import everything from highlight.js library, you should import each language you want to highlight manually.
+
+### Import highlighting languages
 
 To do so, use the injection token `HIGHLIGHT_OPTIONS` to provide options:
 
 ```typescript
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
+/**
+ * Import specific languages to avoid importing everything
+ * The following will lazy load highlight.js core script (~9.6KB) + the selected languages bundle (each lang. ~1kb)
+ */
+export function getHighlightLanguages() {
+  return {
+    typescript: () => import('highlight.js/lib/languages/typescript'),
+    css: () => import('highlight.js/lib/languages/css'),
+    xml: () => import('highlight.js/lib/languages/xml')
+  };
+}
+ 
 @NgModule({
   imports: [
     HighlightModule
@@ -69,23 +83,17 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        // Lazy load each highlighting language
-        languages: {
-          typescript: () => import('highlight.js/lib/languages/typescript'),
-          css: () => import('highlight.js/lib/languages/css'),
-          xml: () => import('highlight.js/lib/languages/xml')
-        },
-        // (Optional) Lazy load line numbers library
-        lineNumbers: true
+        languages: getHighlightLanguages()
       }
     }
-  ]
+  ],
 })
-export class AppModule { }
+export class AppModule {
+}
 ```
 
 - **languages**: The set of languages to register.
-- **lineNumber**: Add lines number to code elements.
+- **lineNumber**: Lazy-load lines numbers library which adds line numbers to the highlighted code element.
 - **config**: Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
 
 ### Import highlighting theme
@@ -121,7 +129,9 @@ The following line will highlight the given code and append it to the host eleme
 
 - **[highlight]**: (string), Accept code string to highlight, default `null`
 
-- **[languages]**: (string[]), an array of language names and aliases restricting auto detection to only these languages, default: `null`
+- **[languages]**: (string[]), An array of language names and aliases restricting auto detection to only these languages, default: `null`
+
+- **[lineNumbers]**: (boolean), A flag that indicates adding line numbers to highlighted code element
 
 - **(highlighted)**: Stream that emits `HighlightResult` object when element is highlighted.
 
