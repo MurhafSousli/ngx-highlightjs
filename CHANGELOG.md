@@ -16,6 +16,7 @@
 - Since the core library `highlight.js` will be lazy-loaded, all **hljs** functions in `HighlightJS` will return observables to make sure the library is loaded before execution.
 - `HighlightChildren` directive has been deprecated.
 - The global options languages property `NgScrollOptions.languages` type has changed.
+- `HighlightModule.forRoot()` is deprecated, the highlight global options can be set using the injection token `HIGHLIGHT_OPTIONS`
 
 ## 3.0.3
 

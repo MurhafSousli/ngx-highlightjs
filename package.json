@@ -26,7 +26,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "build-lib": "ng build ngx-highlightjs",
     "test-lib": "ng test ngx-highlightjs",
     "link-lib": "npm link dist/ngx-highlightjs && npm link ngx-highlightjs",
@@ -46,6 +46,7 @@
     "@angular/platform-browser-dynamic": "~8.2.13",
     "@angular/router": "~8.2.13",
     "highlight.js": "^9.16.2",
+    "highlightjs-line-numbers.js": "^2.7.0",
     "ngx-scrollbar": "^7.0.0",
     "normalize.css": "^8.0.1",
     "rxjs": "~6.4.0",
