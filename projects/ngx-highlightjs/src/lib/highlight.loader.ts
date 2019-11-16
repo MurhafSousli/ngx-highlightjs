@@ -49,7 +49,7 @@ export class HighlightLoader {
    */
   private _loadLibrary(): Observable<any> {
     return (this._options && this._options.languages && Object.keys(this._options.languages).length)
-      ? from(loadCoreLibrary()).pipe(switchMap((hljs: any) => this._loadLanguages(hljs)))
+      ? from(loadCoreLibrary()).pipe(switchMap((hljs: HighlightLibrary) => this._loadLanguages(hljs)))
       : from(loadAllLibrary());
   }
 
