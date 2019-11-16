@@ -88,7 +88,6 @@ export interface HighlightConfig {
 
 export interface HighlightResult {
   language?: string;
-  r?: number;
   second_best?: any;
   top?: any;
   value?: string;
