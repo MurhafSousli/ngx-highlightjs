@@ -1,5 +1,5 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { Component, DebugElement, Input } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, Input, OnInit } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import * as hljs from 'highlight.js';
@@ -9,8 +9,11 @@ import { HighlightLoader } from './highlight.loader';
 @Component({
   template: `<code [highlight]="code"></code>`
 })
-class TestHighlightComponent {
+class TestHighlightComponent implements OnInit {
   @Input() code: string;
+
+  ngOnInit(): void {
+  }
 }
 
 // Fake Highlight Loader
@@ -23,6 +26,7 @@ describe('Highlight Directive', () => {
   let directiveElement: DebugElement;
   let directiveInstance: Highlight;
   let fixture: ComponentFixture<TestHighlightComponent>;
+  let loader: HighlightLoader;
   const testCode = 'console.log("test")';
 
   beforeEach(async(() => {
@@ -30,6 +34,7 @@ describe('Highlight Directive', () => {
       declarations: [Highlight, TestHighlightComponent],
       providers: [{ provide: HighlightLoader, useValue: highlightLoaderStub }]
     }).compileComponents();
+    loader = TestBed.get(HighlightLoader);
   }));
 
   beforeEach(() => {
@@ -51,7 +56,9 @@ describe('Highlight Directive', () => {
   it('should highlight given text', fakeAsync(() => {
     component.code = testCode;
     fixture.detectChanges();
-    const highlightedCode = hljs.highlightAuto(testCode).value;
+    let highlightedCode;
+    loader.ready.subscribe((lib) => highlightedCode = lib.highlightAuto(testCode, null).value);
+    tick(500);
     expect(directiveElement.nativeElement.innerHTML).toBe(highlightedCode);
   }));
 });

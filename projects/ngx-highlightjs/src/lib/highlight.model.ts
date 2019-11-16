@@ -91,6 +91,7 @@ export interface HighlightResult {
   second_best?: any;
   top?: any;
   value?: string;
+  relevance?: number;
 }
 
 export interface HighlightOptions {
