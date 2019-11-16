@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-// import { HighlightModule } from '../../src/public-api';
 import { HighlightModule } from 'ngx-highlightjs';
+// Uncomment the following line for development
+// import { HighlightModule } from '../../src/public-api';
 import { GistFilePipe, GistDirective } from './gist';
 import { CodeFromUrlPipe } from './code-from-url';
 
