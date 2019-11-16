@@ -15,4 +15,3 @@ install:
 
 script:
   - npm run build-lib
-  - npm run test-lib
