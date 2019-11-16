@@ -17,7 +17,7 @@ ___
 
 ## Table of Contents
 
-- [Live Demo](https://MurhafSousli.github.io/ngx-highlightjs/) | [Stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
+- [Live Demo](https://ngx-highlight.netlify.com/) | [Stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Development](#development)
@@ -158,9 +158,9 @@ export class AppModule {
 
 ### Highlight a gist file
 
-1 - Use `[gist]` directive with the gist id to get the response through the output `(gistLoaded)`.
-2 - Once `(gistLoaded)` emits, you will get access to the gist response.
-3 - Use `gistContent` pipe to extract the file content from gist response using gist file name.
+1. Use `[gist]` directive with the gist id to get the response through the output `(gistLoaded)`.
+2. Once `(gistLoaded)` emits, you will get access to the gist response.
+3. Use `gistContent` pipe to extract the file content from gist response using gist file name.
 
 **Example:**
 
