@@ -1,0 +1,34 @@
+:host {
+  display: block;
+  overflow: auto;
+}
+
+//.ng-scrollbar {
+//  --scrollbar-thumb-color: orange;
+//  --scrollbar-track-color: rgba(0, 0, 0, 0.2);
+//
+//  ::ng-deep {
+//    .scrollbar-control {
+//      background-color: #545454;
+//    }
+//  }
+//}
+
+pre {
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 0;
+  word-wrap: break-word;
+
+  code {
+    flex: 1;
+    line-height: 1.8em;
+    font-size: 14px;
+    min-height: 100%;
+    padding: 1em 1.2em;
+
+    &.hljs-line-numbers {
+      padding: 0;
+    }
+  }
+}

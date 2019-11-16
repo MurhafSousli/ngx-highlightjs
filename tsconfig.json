@@ -2,24 +2,29 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
     ],
     "paths": {
-      "ngx-highlightjs": [
-        "dist/ngx-highlightjs"
+      "ngx-higlightjs": [
+        "dist/ngx-higlightjs"
+      ],
+      "ngx-higlightjs/*": [
+        "dist/ngx-higlightjs/*"
       ]
     }
   }

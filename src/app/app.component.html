@@ -1,62 +1,36 @@
 <div class="wrapper">
-  <mat-toolbar color="primary">
+  <mat-toolbar color="primary" class="mat-elevation-z6">
     ngx-highlightjs
     <span style="flex: 1"></span>
     <a mat-button class="btn-icon" href="https://github.com/MurhafSousli/ngx-highlightjs">
       <img src="assets/github-logo.svg"> GITHUB
     </a>
   </mat-toolbar>
+  <ng-scrollbar>
 
-  <app-header></app-header>
+    <app-header></app-header>
 
-  <div class="container">
+    <div class="container">
 
-    <!-- PREVIEW -->
+      <mat-form-field color="accent">
+        <mat-select placeholder="Theme" [(value)]="theme" (valueChange)="changeTheme()">
+          <mat-option *ngFor="let style of styles" [value]="style">{{style}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <div class="grid" fxLayout fxLayout.lt-md="column">
-      <mat-card fxFlex="0 1 auto" fxFlex.lt-md="0 0 auto" color="accent" ngStyle.gt-lg="height: 500px">
-        <mat-card-header>
-          <mat-icon>visibility</mat-icon>Preview
-        </mat-card-header>
-        <mat-card-content>
-          <ng-scrollbar #highlightScrollbar [trackX]="true" [compact]="true" viewClass="hljs" barClass="scroll-bar" thumbClass="scroll-thumbs">
-            <pre><code [highlight]="code"></code></pre>
-          </ng-scrollbar>
-        </mat-card-content>
+      <h3>Ngx-Highlight Usage</h3>
+      <!-- PREVIEW -->
+      <app-gist id="de9decbcd2539d5ba399aedc598bcaa6"></app-gist>
 
-        <mat-card-footer>
-          <mat-form-field>
-            <mat-select placeholder="Theme" [(value)]="theme" (valueChange)="changeTheme()">
-              <mat-option *ngFor="let style of styles" [value]="style">{{style}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-card-footer>
-      </mat-card>
+      <h3>Ngx-Highlight Plus Usage</h3>
+      <app-gist [id]="gistId"></app-gist>
 
-
-      <!-- EDITOR -->
-
-      <mat-card fxFlex="0 1 auto" ngStyle.gt-lg="height: 500px">
-        <mat-card-header>
-          <mat-icon>code</mat-icon>Editor
-        </mat-card-header>
-        <mat-card-content>
-          <ng-scrollbar #textScrollbar viewClass="hljs" [compact]="true" barClass="scroll-bar" thumbClass="scroll-thumbs">
-            <textarea cdkTextareaAutosize #autosize="cdkTextareaAutosize" class="hljs" [(ngModel)]="code"></textarea>
-          </ng-scrollbar>
-        </mat-card-content>
-
-        <mat-card-footer>
-
-          <mat-chip-list>
-            <mat-chip color="primary" selected="true" (click)="setCode(tsCode)">TYPESCRIPT</mat-chip>
-            <mat-chip color="primary" selected="true" (click)="setCode(htmlCode)">HTML</mat-chip>
-            <mat-chip color="primary" selected="true" (click)="setCode(scssCode)">SCSS</mat-chip>
-            <mat-chip color="primary" selected="true" (click)="setCode(bashCode)">SHELL</mat-chip>
-          </mat-chip-list>
-        </mat-card-footer>
-      </mat-card>
+      <div class="footer">
+        <div class="author">Made with
+          <mat-icon>favorite</mat-icon>
+          by Murhaf Sousli
+        </div>
+      </div>
     </div>
-
-  </div>
+  </ng-scrollbar>
 </div>

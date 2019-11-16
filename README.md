@@ -3,14 +3,14 @@
   <h1 align="center">Angular Highlight.js</h1>
 </p>
 
-[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-highlightjs/)
-[![npm](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-highlightjs)
+[![Demo](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://ngx-highlight.netlify.com/)
+[![Stackblitz](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
-[![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://www.npmjs.com/package/ngx-highlightjs)
-[![npm](https://img.shields.io/npm/dt/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
-[![npm](https://img.shields.io/npm/dm/ngx-highlightjs.svg)](https://www.npmjs.com/package/ngx-highlightjs)
+[![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://travis-ci.org/MurhafSousli/ngx-highlightjs)
+[![Downloads](https://img.shields.io/npm/dt/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
+[![Monthly Downloads](https://img.shields.io/npm/dm/ngx-highlightjs.svg)](https://www.npmjs.com/package/ngx-highlightjs)
 [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/ngx-highlightjs.svg)](https://bundlephobia.com/result?p=ngx-highlightjs)
-[![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
+[![License](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 Instant code highlighting, auto-detect language, super easy to use
 ___
@@ -29,110 +29,72 @@ ___
 
 ## Installation
 
-**NPM**
+Install with **NPM**
 
 ```bash
-$ npm install -S ngx-highlightjs highlight.js
-```
-
-**YARN**
-
-```bash
-$ yarn add ngx-highlightjs highlight.js
+npm i ngx-highlightjs
 ```
 
 <a name="usage"/>
 
 ## Usage
 
-### OPTION 1: Import `HighlightModule` in the root module
+### Import `HighlightModule` in your app
 
- > Note: this will include the whole library in your main bundle
-
-```ts
+```typescript
 import { HighlightModule } from 'ngx-highlightjs';
-
-import xml from 'highlight.js/lib/languages/xml';
-import scss from 'highlight.js/lib/languages/scss';
-import typescript from 'highlight.js/lib/languages/typescript';
-
-/**
- * Import every language you wish to highlight here
- * NOTE: The name of each language must match the file name its imported from
- */
-export function hljsLanguages() {
-  return [
-    {name: 'typescript', func: typescript},
-    {name: 'scss', func: scss},
-    {name: 'xml', func: xml}
-  ];
-}
 
 @NgModule({
   imports: [
-    // ...
-    HighlightModule.forRoot({
-      languages: hljsLanguages
-    })
+    HighlightModule
   ]
 })
 export class AppModule { }
 ```
 
-`forRoot(options: HighlightOptions)` Accepts options parameter which have the following properties:
+ > Note: By default this will lazy-load highlight.js bundle library including all languages.
 
-- **languages**: The set of languages to register.
-- **config**: Configures global options, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
+To avoid import everything from highlight.js library, you should import each language you want to highlight manually.
 
-### OPTION 2: Import `HighlightModule` in a feature module
+### Import highlighting languages
 
-You probably don't want to load this library in the root module, you can lazy load it by importing it in your feature module, however Highlight.js languages has to be registered in the root module
+To do so, use the injection token `HIGHLIGHT_OPTIONS` to provide options:
 
-```ts
-import { HighlightModule } from 'ngx-highlightjs';
-
-import xml from 'highlight.js/lib/languages/xml';
-import scss from 'highlight.js/lib/languages/scss';
-import typescript from 'highlight.js/lib/languages/typescript';
+```typescript
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
 /**
- * Import every language you wish to highlight here
- * NOTE: The name of each language must match the file name its imported from
+ * Import specific languages to avoid importing everything
+ * The following will lazy load highlight.js core script (~9.6KB) + the selected languages bundle (each lang. ~1kb)
  */
-export function hljsLanguages() {
-  return [
-    {name: 'typescript', func: typescript},
-    {name: 'scss', func: scss},
-    {name: 'xml', func: xml}
-  ];
+export function getHighlightLanguages() {
+  return {
+    typescript: () => import('highlight.js/lib/languages/typescript'),
+    css: () => import('highlight.js/lib/languages/css'),
+    xml: () => import('highlight.js/lib/languages/xml')
+  };
 }
-
+ 
 @NgModule({
+  imports: [
+    HighlightModule
+  ],
   providers: [
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        languages: hljsLanguages,
-        config: { ... }            // <= Optional
+        languages: getHighlightLanguages()
       }
     }
-  ]
+  ],
 })
-export class AppModule { }
+export class AppModule {
+}
 ```
 
-After Highlight.js languages are registered, just import `HighlightModule` in the feature module
-
-```ts
-@NgModule({
-  imports: [
-    // ...
-    HighlightModule
-  ]
-})
-export class FeatureModule { }
-```
-
+- **languages**: The set of languages to register.
+- **lineNumber**: Lazy-load lines numbers library which adds line numbers to the highlighted code element.
+- **config**: Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
 
 ### Import highlighting theme
 
@@ -151,73 +113,88 @@ Or import it in `src/style.scss`
 @import '~highlight.js/styles/github.css';
 ```
 
-You can also lazy load the theme by importing it in your lazy loaded component stylesheet
-
-```ts
-import { Component, ViewEncapsulation } from '@angular/core';
-
-@Component({
-  selector: 'lazy-loaded',
-  templateUrl: './lazy-loaded.component.html',
-  styleUrls: [`
-    @import '~highlight.js/styles/github.css';
-  `],
-  encapsulation: ViewEncapsulation.None         // <= Add this
-})
-export class LazyLoadedComponent  {
-}
-```
-
- > Note: if you have multiple components that use `HighlightModule`, then it is better to import the theme in the global styles `src/styles.css` 
-
 _[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
-## `highlight` directive
+### Use highlight directive
 
-Highlight host element
+The following line will highlight the given code and append it to the host element
 
 ```html
-<pre><code [highlight]="someCode"></code></pre>
+<pre><code [highlight]="code"></code></pre>
 ```
 
-Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
+[Demo stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 
 ## Options
 
 - **[highlight]**: (string), Accept code string to highlight, default `null`
 
-- **[languages]**: (string[]), an array of language names and aliases restricting auto detection to only these languages, default: `null`
+- **[languages]**: (string[]), An array of language names and aliases restricting auto detection to only these languages, default: `null`
+
+- **[lineNumbers]**: (boolean), A flag that indicates adding line numbers to highlighted code element
 
 - **(highlighted)**: Stream that emits `HighlightResult` object when element is highlighted.
 
-## `highlightChildren` directive
+## Plus package
 
-Highlight children code elements
+In version >= 4, a new sub-package were added with the following features:
 
-```html
-<!-- Highlight child elements with 'pre code' selector -->
-<div highlightChildren>
-  <pre><code [textContent]="htmlCode"></code></pre>
-  <pre><code [textContent]="tsCode"></code></pre>
-  <pre><code [textContent]="cssCode"></code></pre>
-</div>
+- Highlight gists using gists API
+- Highlight code directly from URL
+
+### Usage
+
+```typescript
+import { HighlightPlusModule } from 'ngx-highlightjs/plus';
+ 
+@NgModule({
+  imports: [
+    HighlightPlusModule
+  ]
+})
+export class AppModule {
+}
 ```
 
-Check this [stackblitz](https://stackblitz.com/edit/ngx-highlightjs-children)
+### Highlight a gist file
 
-- Highlight children custom elements by selector
+1 - Use `[gist]` directive with the gist id to get the response through the output `(gistLoaded)`.
+2 - Once `(gistLoaded)` emits, you will get access to the gist response.
+3 - Use `gistContent` pipe to extract the file content from gist response using gist file name.
+
+**Example:**
 
 ```html
-<!-- Highlight child elements with custom selector -->
-<div highlightChildren="section p">
-  <section><p [textContent]="pythonCode"></p></section>
-  <section><p [textContent]="swiftCode"></p></section>
-</div>
+<pre [gist]="gistId" (gistLoaded)="gist = $event">
+  <code [highlight]="gist | gistContent: 'main.js'"></code>
+</pre>
 ```
 
-## `HighlightJS` service
+### Highlight all gist files
 
-Use this service if you wish to access the [Official HighlightJS API](http://highlightjs.readthedocs.io/en/latest/api.html#).
+To loop over `gist?.files`, use `keyvalue` pipe to pass file name into `gistContent` pipe.
+
+**Example:**
+
+```html
+<ng-container [gist]="gistId" (gistLoaded)="gist = $event">
+  <pre *ngFor="let file of gist?.files | keyvalue">
+    <code [highlight]="gist | gistContent: file.key"></code>
+  </pre>
+</ng-container>
+```
+
+### Highlight code from URL directly
+
+Use the pipe `codeFromUrl` with the `async` pipe together to get the code text from a raw URL.
+
+**Example:**
+
+```html
+<pre>
+  <code [highlight]="codeUrl | codeFromUrl | async"></code>
+</pre>
+``` 
 
 <a name="development"/>
 
@@ -226,7 +203,7 @@ Use this service if you wish to access the [Official HighlightJS API](http://hig
 This project uses Angular CLI to build the package.
 
 ```bash
-$ ng build ngx-highlightjs --prod
+$ ng build ngx-highlightjs
 ```
 
 <a name="issues"/>
@@ -248,6 +225,7 @@ If you identify any errors in the library, or have an idea for an improvement, p
 
 ## More plugins
 
+- [ngx-scrollbar](https://github.com/MurhafSousli/ngx-ngx-scrollbar)
 - [ngx-sharebuttons](https://github.com/MurhafSousli/ngx-sharebuttons)
 - [ngx-gallery](https://github.com/MurhafSousli/ngx-gallery)
 - [ngx-progressbar](https://github.com/MurhafSousli/ngx-progressbar)

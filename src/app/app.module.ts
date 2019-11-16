@@ -3,46 +3,56 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TextFieldModule } from '@angular/cdk/text-field';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-
 import { MaterialModule } from './material/material.module';
+
+import { HighlightPlusModule, GIST_OPTIONS } from '../../projects/ngx-highlightjs/plus/src/public_api';
+import { HIGHLIGHT_OPTIONS } from '../../projects/ngx-highlightjs/src/public-api';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { GistComponent } from './gist/gist.component';
+import { CodeComponent } from './code/code.component';
 
-import { HighlightModule } from 'ngx-highlightjs';
-
-import typescript from 'highlight.js/lib/languages/typescript';
-import scss from 'highlight.js/lib/languages/scss';
-import xml from 'highlight.js/lib/languages/xml';
-import shell from 'highlight.js/lib/languages/shell';
-
-export function highlightLanguages() {
-  return [
-    {name: 'typescript', func: typescript},
-    {name: 'scss', func: scss},
-    {name: 'xml', func: xml},
-    {name: 'shell', func: shell}
-  ];
+export function getHighlightLanguages() {
+  return {
+    typescript: () => import('highlight.js/lib/languages/typescript'),
+    css: () => import('highlight.js/lib/languages/css'),
+    xml: () => import('highlight.js/lib/languages/xml')
+  };
 }
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    GistComponent,
+    CodeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HighlightModule.forRoot({
-      languages: highlightLanguages
-    }),
     FormsModule,
     MaterialModule,
-    TextFieldModule,
     FlexLayoutModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    HighlightPlusModule
+  ],
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        lineNumbers: true,
+        languages: getHighlightLanguages()
+      }
+    },
+    {
+      provide: GIST_OPTIONS,
+      useValue: {
+        // clientId:
+        // clientSecret:
+      }
+    }
   ],
   bootstrap: [AppComponent]
 })

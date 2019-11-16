@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { animationFrameScheduler } from 'rxjs';
-import { NgScrollbar } from 'ngx-scrollbar';
+import { Gist } from '../../projects/ngx-highlightjs/plus/src/gist.model';
 
 @Component({
   selector: 'app-root',
@@ -9,74 +8,19 @@ import { NgScrollbar } from 'ngx-scrollbar';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  bashCode = `# Install with NPM
-$ npm install -S ngx-highlightjs highlight.js
+  libLoaded: boolean;
 
-# Install with YARN
-$ yarn add ngx-highlightjs highlight.js`;
+  gist!: Gist;
 
-  tsCode = `import { HighlightModule } from 'ngx-highlightjs';
+  codeUrl = 'https://raw.githubusercontent.com/MurhafSousli/ngx-highlightjs/master/README.md';
 
-import typescript from 'highlight.js/lib/languages/typescript';
-import scss from 'highlight.js/lib/languages/scss';
-import xml from 'highlight.js/lib/languages/xml';
+  // Gist id
+  gistId = '6fd1b8fe940ded9f792335addb60c809';
 
-export function hljsLanguages() {
-  return [
-    {name: 'typescript', func: typescript},
-    {name: 'scss', func: scss},
-    {name: 'xml', func: xml}
-  ];
-}
-
-@NgModule({
-  imports: [
-    HighlightModule.forRoot({
-      languages: hljsLanguages
-    })
-  ]
-})
-export class AppModule { }`;
-
-  htmlCode = `<!-- Simple usage -->
-
-<!-- Highlight element directly -->
-<pre><code [highlight]="someCode"></code></pre>
-
-<!-- Highlight all child elements with selector '<code>' -->
-<div highlightChildren>
-  <pre><code>import { HighlightModule } from 'ngx-highlightjs';</code></pre>
-  <pre><code [textContent]="tsCode"></code></pre>
-  <pre><code [textContent]="cssCode"></code></pre>
-</div>
-
-<!-- Highlight custom child elements with selector 'section code' -->
-<div highlightChildren="section code">
-  <section><code [textContent]="pythonCode"></code></section>
-  <section><code>import { HighlightModule } from 'ngx-highlightjs';</code></section>
-</div>`;
-
-  scssCode = `pre {
-  display: flex;
-  height: 100%;
-  word-wrap: normal;
-  margin: 0;
-  overflow-y: auto;
-  code {
-      flex: 1;
-      padding: 24px;
-      line-height: 1.8em;
-      display: block;
-      font-size: 0.9em;
-  }
-}`;
-
-  code: string;
-
-  theme = 'atom-one-dark';
-
+  // Themes
+  theme = 'androidstudio';
   styles = [
     'vs',
     'rainbow',
@@ -97,23 +41,6 @@ export class AppModule { }`;
     'mono-blue',
     'default',
   ];
-
-  @ViewChild('textScrollbar') textScrollbar: NgScrollbar;
-  @ViewChild('highlightScrollbar') highlightScrollbar: NgScrollbar;
-  @ViewChild(CdkTextareaAutosize) textareaAutosize: CdkTextareaAutosize;
-
-  ngOnInit() {
-    this.setCode(this.tsCode);
-  }
-
-  setCode(code: string) {
-    this.code = code;
-    this.textareaAutosize.resizeToFitContent();
-    setTimeout(() => {
-      this.textScrollbar.update();
-      this.highlightScrollbar.update();
-    }, 300);
-  }
 
   changeTheme() {
     let disablePreviousTheme;

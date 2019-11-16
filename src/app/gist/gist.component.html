@@ -1,0 +1,26 @@
+<mat-card *ngIf="(state$ | async) as state" color="accent">
+  <!--        <mat-card-header>-->
+  <!--          <mat-icon>visibility</mat-icon>-->
+  <!--          Preview-->
+  <!--        </mat-card-header>-->
+  <mat-card-content>
+    <div class="code-wrapper hljs" [gist]="id" (gistLoad)="onGistLoad($event)">
+      <mat-tab-group *ngIf="state.loaded" dynamicHeight>
+        <mat-tab *ngFor="let file of state.gist?.files | keyvalue" [label]="file.value.filename">
+          <app-code [code]="state.gist | gistFile: file.key" [lineNumbers]="true"></app-code>
+        </mat-tab>
+      </mat-tab-group>
+
+      <div *ngIf="!state.loaded" class="loading">
+        <h3 class="loading-label">{{state.text}}</h3>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <a class="gist-url" [href]="state?.gist?.html_url" target="_blank">
+      <mat-icon>link</mat-icon>
+      Open gist on Github
+    </a>
+  </mat-card-footer>
+</mat-card>

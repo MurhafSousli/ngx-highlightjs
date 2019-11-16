@@ -1,13 +1,18 @@
 {
-    "extends": "../../tslint.json",
-    "rules": {
-        "use-host-property-decorator": false,
-        "directive-selector": false,
-        "component-selector": [
-            true,
-            "element",
-            "lib",
-            "kebab-case"
-        ]
-    }
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "kebab-case"
+    ],
+    "variable-name": false,
+    "directive-class-suffix": false,
+    "no-host-metadata-property": false
+  }
 }

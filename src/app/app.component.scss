@@ -6,91 +6,28 @@
 }
 
 .container {
-  flex: 1;
-  margin: 1em;
+  margin: 1em auto;
+  padding: 0 1em;
   position: relative;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 800px;
+  width: 100%;
 }
 
-mat-chip-list {
-  display: flex;
+.ng-scrollbar {
+  flex: 1;
+  --scrollbar-thumb-color: orange;
+  --scrollbar-track-color: rgba(0, 0, 0, 0.2);
+  --scrollbar-size: 7px;
+  --scrollbar-padding: 5px;
+  --scrollbar-hover-size: 10px;
+}
+
+.mat-toolbar {
+  z-index: 999;
+}
+
+.mat-toolbar-row {
   justify-content: center;
-}
-
-mat-chip {
-  cursor: pointer;
-}
-
-mat-card {
-  display: flex;
-  flex-direction: column;
-  height: 290px;
-  min-width: 250px;
-  max-width: 600px;
-  width: 100%;
-  padding: 0 !important;
-  margin: 1em;
-}
-
-mat-card-header {
-  margin: 0 !important;
-  padding: 0 !important;
-  display: flex;
-  align-items: center;
-  height: 40px;
-}
-
-mat-card-content {
-  flex: 1;
-  position: relative;
-  margin-bottom: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-mat-card-footer {
-  padding: 10px !important;
-  margin: 0 !important;
-}
-
-ng-scrollbar {
-  flex: 1;
-}
-
-textarea {
-  position: absolute;
-  font-family: monospace, monospace;
-  min-height: calc(100% - 48px);
-  min-width: calc(100% - 48px);
-  font-size: 1em;
-  font-weight: 100;
-  line-height: 1.6em;
-  border: none;
-  outline: none;
-  padding: 24px;   
-  box-sizing: content-box;
-  overflow: hidden;
-}
-
-pre {
-  position: absolute;
-  word-wrap: normal;
-  margin-top: 0;
-  margin-bottom: 0;
-  width: 100%;
-  height: 100%;
-  code {
-    line-height: 1.8em;
-    display: block;
-    font-size: 1em;
-    padding: 24px;
-    overflow: hidden;
-    min-height: 100%;
-  }
 }
 
 .btn-icon img {
@@ -99,6 +36,18 @@ pre {
   margin-right: 7px;
 }
 
-mat-icon {
-  margin-right: 0.5em;
+.footer {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.3);
+  margin: 8em 0 3em;
+
+  .author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .mat-icon {
+      margin: 0 3px;
+    }
+  }
 }
