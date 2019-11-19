@@ -64,7 +64,7 @@ export class Highlight implements OnChanges {
    */
   highlightElement(code: string, languages?: string[]): void {
     // Set code text before highlighting
-    this.setCode(code);
+    this.setCode(this.escapeHtml(code));
     this._hljs.highlightAuto(code, languages).subscribe((res: any) => {
       // Set highlighted code
       this.setCode(res.value);
@@ -104,6 +104,20 @@ export class Highlight implements OnChanges {
 
   private setCode(content: string) {
     animationFrameScheduler.schedule(() => this._nativeElement.innerHTML = content);
+  }
+
+  private escapeHtml(content: string) {
+    const entityMap = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+      '`': '&#x60;',
+      '=': '&#x3D;'
+    };
+    return String(content).replace(/[&<>"'`=\/]/g, s => entityMap[s]);
   }
 }
 
