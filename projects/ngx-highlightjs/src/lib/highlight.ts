@@ -103,7 +103,7 @@ export class Highlight implements OnChanges {
   }
 
   private setCode(content: string) {
-    animationFrameScheduler.schedule(() => this._nativeElement.innerHTML = content);
+    animationFrameScheduler.schedule(() => this._nativeElement.textContent = content);
   }
 }
 
