@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.2
+
+- fix: use `element.textContent` to set the code before highlighting, closes [#105](https://github.com/MurhafSousli/ngx-highlightjs/issues/105) in [34afad7](https://github.com/MurhafSousli/ngx-highlightjs/commit/34afad7db4d0945e2f0022fcdf17b3fb87f01c69).
+
 ## 4.0.1
 
 - fix: Change `r` property name to `relevance` in `HighlightResult` interface, closes [#84](https://github.com/MurhafSousli/ngx-highlightjs/issues/84) in [ce53661](https://github.com/MurhafSousli/ngx-highlightjs/commit/ce536614179a97dbd26a35bd40dd5226f8d6a408).
