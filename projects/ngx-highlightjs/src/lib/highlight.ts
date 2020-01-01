@@ -67,10 +67,10 @@ export class Highlight implements OnChanges {
    */
   highlightElement(code: string, languages?: string[]): void {
     // Set code text before highlighting
-    this.setCode(code);
+    this.setTextContent(code);
     this._hljs.highlightAuto(code, languages).subscribe((res: any) => {
       // Set highlighted code
-      this.setCode(res.value);
+      this.setInnerHTML(res.value);
       // Check if user want to show line numbers
       if (this.lineNumbers && this._options && this._options.lineNumbers) {
         this.addLineNumbers();
@@ -105,7 +105,13 @@ export class Highlight implements OnChanges {
     }
   }
 
-  private setCode(content: string) {
+  private setTextContent(content: string) {
+    animationFrameScheduler.schedule(() =>
+      this._nativeElement.textContent = content
+    );
+  }
+
+  private setInnerHTML(content: string) {
     animationFrameScheduler.schedule(() =>
       this._nativeElement.innerHTML = this._sanitizer.sanitize(SecurityContext.HTML, content)
     );
