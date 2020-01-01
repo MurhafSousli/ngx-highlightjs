@@ -7,8 +7,10 @@ import {
   OnChanges,
   SimpleChanges,
   EventEmitter,
-  ElementRef
+  ElementRef,
+  SecurityContext
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { animationFrameScheduler } from 'rxjs';
 import { HighlightJS } from './highlight.service';
 import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightResult } from './highlight.model';
@@ -42,6 +44,7 @@ export class Highlight implements OnChanges {
 
   constructor(el: ElementRef,
               private _hljs: HighlightJS,
+              private _sanitizer: DomSanitizer,
               @Optional() @Inject(HIGHLIGHT_OPTIONS) private _options: HighlightOptions) {
     this._nativeElement = el.nativeElement;
   }
@@ -103,7 +106,9 @@ export class Highlight implements OnChanges {
   }
 
   private setCode(content: string) {
-    animationFrameScheduler.schedule(() => this._nativeElement.innerHTML = content);
+    animationFrameScheduler.schedule(() =>
+      this._nativeElement.innerHTML = this._sanitizer.sanitize(SecurityContext.HTML, content)
+    );
   }
 }
 
