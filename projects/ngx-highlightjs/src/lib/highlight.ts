@@ -89,7 +89,7 @@ export class Highlight implements OnChanges {
       // If lines count is 1, the line numbers library will not add numbers
       // Observe changes to add 'hljs-line-numbers' class only when line numbers is added to the code element
       this._lineNumbersObs = new MutationObserver(() => {
-        if (this._nativeElement.firstElementChild.tagName.toUpperCase() === 'TABLE') {
+        if (this._nativeElement.firstElementChild && this._nativeElement.firstElementChild.tagName.toUpperCase() === 'TABLE') {
           this._nativeElement.classList.add('hljs-line-numbers');
         }
         this.destroyLineNumbersObserver();
