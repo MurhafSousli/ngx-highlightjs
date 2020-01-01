@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.1
+
+- fix: Change `r` property name to `relevance` in `HighlightResult` interface, closes [#84](https://github.com/MurhafSousli/ngx-highlightjs/issues/84) in [ce53661](https://github.com/MurhafSousli/ngx-highlightjs/commit/ce536614179a97dbd26a35bd40dd5226f8d6a408).
+- fix: Sanitize highlighted code before appending it to the DOM, closes [#101](https://github.com/MurhafSousli/ngx-highlightjs/issues/101) in [9afe6b6](https://github.com/MurhafSousli/ngx-highlightjs/pull/103/commits/9afe6b661255c4e8d6569dec3370843eb34d16de).
+- fix: Check if `nativeElement.firstChildElement` is not null before calling line numbers lib, in [494c976](https://github.com/MurhafSousli/ngx-highlightjs/pull/104/commits/494c97616fc6e1b9e965e3910a51214d86837a39).
+
 ## 4.0.0
 
 - feat: Lazy-load **hljs** library, closes [#89](https://github.com/MurhafSousli/ngx-highlightjs/issues/89) in [8cdba13](https://github.com/MurhafSousli/ngx-highlightjs/pull/88/commits/8cdba13d72e563a2189b816d41f959e3dc18be21).
