@@ -93,7 +93,7 @@ export class AppModule {
 ```
 
 - **languages**: The set of languages to register.
-- **lineNumber**: Lazy-load lines numbers library which adds line numbers to the highlighted code element.
+- **lineNumbers**: Lazy-load lines numbers library which adds line numbers to the highlighted code element.
 - **config**: Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
 
 ### Import highlighting theme
