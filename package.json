@@ -30,7 +30,8 @@
     "build-lib": "ng build ngx-highlightjs --prod",
     "test-lib": "ng test ngx-highlightjs",
     "link-lib": "npm link dist/ngx-highlightjs && npm link ngx-highlightjs",
-    "publish-lib": "npm publish dist/ngx-highlightjs"
+    "publish-lib": "npm publish dist/ngx-highlightjs",
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
   },
   "private": true,
   "dependencies": {
@@ -47,7 +48,7 @@
     "@angular/router": "~9.0.2",
     "highlight.js": "^9.16.2",
     "highlightjs-line-numbers.js": "^2.7.0",
-    "ngx-scrollbar": "^7.0.0",
+    "ngx-scrollbar": "^7.2.0",
     "normalize.css": "^8.0.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
