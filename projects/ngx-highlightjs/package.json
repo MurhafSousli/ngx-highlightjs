@@ -29,8 +29,8 @@
     "highlightjs-line-numbers.js": "*"
   },
   "peerDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "rxjs": "^6.0.0"
+    "@angular/common": ">=8.0.0",
+    "@angular/core": ">=8.0.0",
+    "rxjs": ">=6.0.0"
   }
 }
