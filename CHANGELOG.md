@@ -1,10 +1,9 @@
 # Changelog
 
-## 4.1.0
+## 4.1.0-beta
 
-Nothing changed!
-
-- Upgrade to Angular 9 in [#113](https://github.com/MurhafSousli/ngx-highlightjs/pull/113)
+- Upgrade to Angular 9 in [#113](https://github.com/MurhafSousli/ngx-highlightjs/pull/113).
+- fix: Remove warning when the package is installed in Angular 9 in [6d491be](https://github.com/MurhafSousli/ngx-highlightjs/pull/117/commits/6d491befcd7495d6be37fca7cb5325c7c11a017b).
 
 ## 4.0.2
 
