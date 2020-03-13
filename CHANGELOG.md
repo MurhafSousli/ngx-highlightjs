@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.0
+
+Nothing changed!
+
+- Upgrade to Angular 9 in [#113](https://github.com/MurhafSousli/ngx-highlightjs/pull/113)
+
 ## 4.0.2
 
 - fix: use `element.textContent` to set the code before highlighting, closes [#105](https://github.com/MurhafSousli/ngx-highlightjs/issues/105) in [34afad7](https://github.com/MurhafSousli/ngx-highlightjs/commit/34afad7db4d0945e2f0022fcdf17b3fb87f01c69).
