@@ -1,6 +1,6 @@
 {
   "name": "ngx-highlightjs",
-  "version": "4.0.2",
+  "version": "4.1.0-beta",
   "description": "Instant code highlighting, auto-detect language, super easy to use.",
   "homepage": "http://github.com/murhafsousli/ngx-highlightjs",
   "author": {
@@ -29,8 +29,8 @@
     "highlightjs-line-numbers.js": "*"
   },
   "peerDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "rxjs": "^6.0.0"
+    "@angular/common": ">=8.0.0",
+    "@angular/core": ">=8.0.0",
+    "rxjs": ">=6.0.0"
   }
 }

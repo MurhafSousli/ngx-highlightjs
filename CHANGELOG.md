@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.1.0-beta
+
+- Upgrade to Angular 9 in [#113](https://github.com/MurhafSousli/ngx-highlightjs/pull/113).
+- fix: Remove warning when the package is installed in Angular 9 in [6d491be](https://github.com/MurhafSousli/ngx-highlightjs/pull/117/commits/6d491befcd7495d6be37fca7cb5325c7c11a017b).
+
 ## 4.0.2
 
 - fix: use `element.textContent` to set the code before highlighting, closes [#105](https://github.com/MurhafSousli/ngx-highlightjs/issues/105) in [34afad7](https://github.com/MurhafSousli/ngx-highlightjs/commit/34afad7db4d0945e2f0022fcdf17b3fb87f01c69).
