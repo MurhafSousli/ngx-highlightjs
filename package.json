@@ -40,7 +40,7 @@
     "@angular/common": "~10.1.0",
     "@angular/compiler": "~10.1.0",
     "@angular/core": "~10.1.0",
-    "@angular/flex-layout": "^9.0.0-beta.29",
+    "@angular/flex-layout": "^10.0.0-beta.32",
     "@angular/forms": "~10.1.0",
     "@angular/material": "^10.1.0",
     "@angular/platform-browser": "~10.1.0",
