@@ -52,10 +52,10 @@ export class Highlight implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes.code &&
-      changes.code.currentValue &&
+      typeof changes.code.currentValue !== 'undefined' &&
       changes.code.currentValue !== changes.code.previousValue
     ) {
-      this.highlightElement(this.code || '', this.languages);
+      this.highlightElement(this.code, this.languages);
     }
   }
 
