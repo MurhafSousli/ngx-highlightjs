@@ -97,7 +97,9 @@ export interface HighlightResult {
 export interface HighlightOptions {
   config?: HighlightConfig;
   languages?: { [name: string]: () => Promise<any> };
-  lineNumbers?: boolean;
+  coreLibraryLoader?: () => Promise<any>;
+  fullLibraryLoader?: () => Promise<any>;
+  lineNumbersLoader?: () => Promise<any>;
 }
 
 export const HIGHLIGHT_OPTIONS = new InjectionToken<HighlightOptions>('HIGHLIGHT_OPTIONS');

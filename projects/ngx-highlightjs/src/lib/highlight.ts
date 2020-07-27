@@ -72,7 +72,7 @@ export class Highlight implements OnChanges {
       // Set highlighted code
       this.setInnerHTML(res.value);
       // Check if user want to show line numbers
-      if (this.lineNumbers && this._options && this._options.lineNumbers) {
+      if (this.lineNumbers && this._options && this._options.lineNumbersLoader) {
         this.addLineNumbers();
       }
       // Forward highlight response to the highlighted output
