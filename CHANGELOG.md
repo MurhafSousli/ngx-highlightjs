@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.1
+
+- Upgrade project to Angular 10.
+- fix: Remove the default behavior of adding highlight.js to the bundle directory, closes [#122](https://github.com/MurhafSousli/ngx-highlightjs/issues/122) in [339ff18](https://github.com/MurhafSousli/ngx-highlightjs/pull/135/commits/339ff18f85852000e17d0e20c416d3836d29ab7d).
+- fix: Setting the highlighted code to empty string will not reflect the value change, closes [#199](https://github.com/MurhafSousli/ngx-highlightjs/issues/119) in [9ee1942](https://github.com/MurhafSousli/ngx-highlightjs/pull/136/commits/9ee1942e0d1cb61e8854e1a6e263509d099e52f0).
+
 ## 4.1.0-beta
 
 - Upgrade to Angular 9 in [#113](https://github.com/MurhafSousli/ngx-highlightjs/pull/113).
