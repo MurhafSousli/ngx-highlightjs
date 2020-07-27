@@ -42,12 +42,20 @@ npm i ngx-highlightjs
 ### Import `HighlightModule` in your app
 
 ```typescript
-import { HighlightModule } from 'ngx-highlightjs';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
 @NgModule({
   imports: [
     HighlightModule
-  ]
+  ],
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        fullLibraryLoader: () => import('highlight.js/lib/highlight'),
+      }
+    }
+  ],
 })
 export class AppModule { }
 ```
@@ -62,18 +70,6 @@ To do so, use the injection token `HIGHLIGHT_OPTIONS` to provide options:
 
 ```typescript
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-
-/**
- * Import specific languages to avoid importing everything
- * The following will lazy load highlight.js core script (~9.6KB) + the selected languages bundle (each lang. ~1kb)
- */
-export function getHighlightLanguages() {
-  return {
-    typescript: () => import('highlight.js/lib/languages/typescript'),
-    css: () => import('highlight.js/lib/languages/css'),
-    xml: () => import('highlight.js/lib/languages/xml')
-  };
-}
  
 @NgModule({
   imports: [
@@ -83,17 +79,23 @@ export function getHighlightLanguages() {
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        languages: getHighlightLanguages()
+        coreLibraryLoader: () => import('highlight.js/lib/highlight'),
+        lineNumbersLoader: () => import('highlightjs-line-numbers.js'), // Optional, only if you want the line numbers
+        languages: {
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          css: () => import('highlight.js/lib/languages/css'),
+          xml: () => import('highlight.js/lib/languages/xml')}
       }
     }
   ],
 })
-export class AppModule {
-}
+export class AppModule { }
 ```
 
+- **fullLibraryLoader**: A function that returns a promise that loads `highlight.js` full script.
+- **coreLibraryLoader**: A function that returns a promise that loads `highlight.js` core script.
+- **lineNumbersLoader**: A function that returns a promise that loads `line-numbers` core script which adds line numbers to the highlight code.
 - **languages**: The set of languages to register.
-- **lineNumbers**: Lazy-load lines numbers library which adds line numbers to the highlighted code element.
 - **config**: Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
 
 ### Import highlighting theme
@@ -134,6 +136,28 @@ The following line will highlight the given code and append it to the host eleme
 - **[lineNumbers]**: (boolean), A flag that indicates adding line numbers to highlighted code element
 
 - **(highlighted)**: Stream that emits `HighlightResult` object when element is highlighted.
+
+
+### NOTE
+
+In Angular 10, when building your project, you might get a warning `WARNING in ... CommonJS or AMD dependencies can cause optimization bailouts.`
+
+To avoid this warning, add the following in your `angular.json`
+```json
+{
+  "projects": {
+    "project-name": {
+      "architect": {
+        "build": {
+          "allowedCommonJsDependencies": [
+            "highlight.js"
+          ]
+        }
+      }
+    }
+  }
+}
+```
 
 ## Plus package
 
