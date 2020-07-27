@@ -55,7 +55,7 @@ export class Highlight implements OnChanges {
       changes.code.currentValue &&
       changes.code.currentValue !== changes.code.previousValue
     ) {
-      this.highlightElement(this.code, this.languages);
+      this.highlightElement(this.code || '', this.languages);
     }
   }
 
