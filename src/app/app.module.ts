@@ -14,14 +14,6 @@ import { HeaderComponent } from './header/header.component';
 import { GistComponent } from './gist/gist.component';
 import { CodeComponent } from './code/code.component';
 
-export function getHighlightLanguages() {
-  return {
-    typescript: () => import('highlight.js/lib/languages/typescript'),
-    css: () => import('highlight.js/lib/languages/css'),
-    xml: () => import('highlight.js/lib/languages/xml')
-  };
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,8 +34,14 @@ export function getHighlightLanguages() {
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        lineNumbers: true,
-        languages: getHighlightLanguages()
+        // fullLibraryLoader: () => import('highlight.js'),
+        lineNumbersLoader: () => import('highlightjs-line-numbers.js'),
+        coreLibraryLoader: () => import('highlight.js/lib/highlight'),
+        languages: {
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          css: () => import('highlight.js/lib/languages/css'),
+          xml: () => import('highlight.js/lib/languages/xml')
+        }
       }
     },
     {
