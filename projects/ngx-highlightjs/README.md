@@ -52,7 +52,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        fullLibraryLoader: () => import('highlight.js/lib/highlight'),
+        fullLibraryLoader: () => import('highlight.js'),
       }
     }
   ],
@@ -60,13 +60,11 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 export class AppModule { }
 ```
 
- > Note: By default this will lazy-load highlight.js bundle library including all languages.
+ > Note: This will add highlight.js library including all languages to your bundle.
 
 To avoid import everything from highlight.js library, you should import each language you want to highlight manually.
 
-### Import highlighting languages
-
-To do so, use the injection token `HIGHLIGHT_OPTIONS` to provide options:
+### Import only the core library and the needed highlighting languages
 
 ```typescript
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
