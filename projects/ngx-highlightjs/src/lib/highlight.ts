@@ -51,6 +51,7 @@ export class Highlight implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
+      this.code &&
       changes.code &&
       typeof changes.code.currentValue !== 'undefined' &&
       changes.code.currentValue !== changes.code.previousValue
