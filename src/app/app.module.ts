@@ -36,7 +36,7 @@ import { CodeComponent } from './code/code.component';
       useValue: {
         // fullLibraryLoader: () => import('highlight.js'),
         lineNumbersLoader: () => import('highlightjs-line-numbers.js'),
-        coreLibraryLoader: () => import('highlight.js/lib/highlight'),
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
           css: () => import('highlight.js/lib/languages/css'),
