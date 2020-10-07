@@ -77,7 +77,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        coreLibraryLoader: () => import('highlight.js/lib/highlight'),
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
         lineNumbersLoader: () => import('highlightjs-line-numbers.js'), // Optional, only if you want the line numbers
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
@@ -95,6 +95,9 @@ export class AppModule { }
 - **lineNumbersLoader**: A function that returns a promise that loads `line-numbers` script which adds line numbers to the highlight code.
 - **languages**: The set of languages to register.
 - **config**: Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
+
+
+ > **NOTE:** Since the update of highlight.js@v10.x.x, should use `coreLibraryLoader: () => import('highlight.js/lib/core')` instead of `coreLibraryLoader: () => import('highlight.js/lib/highlight')`
 
 ### Import highlighting theme
 
