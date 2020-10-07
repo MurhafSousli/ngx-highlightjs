@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.2
+
+- fix: codeFromUrl display error message in the console even though it works, closes [#141](https://github.com/MurhafSousli/ngx-highlightjs/issues/141) in [d60dc10](https://github.com/MurhafSousli/ngx-highlightjs/pull/142/commits/d60dc10b5c5ce9d269214b2a7f6f6e9f3d02eaed).
+
 ## 4.1.1
 
 - Upgrade project to Angular 10.

@@ -27,7 +27,7 @@ describe('Highlight Directive', () => {
   let directiveInstance: Highlight;
   let fixture: ComponentFixture<TestHighlightComponent>;
   let loader: HighlightLoader;
-  const testCode = 'console.log("test")';
+  const testCode = 'console.log(&quot;test&quot;)';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
