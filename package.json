@@ -60,7 +60,6 @@
     "@angular/cli": "^10.1.4",
     "@angular/compiler-cli": "^10.1.4",
     "@angular/language-service": "^10.1.4",
-    "@types/highlight.js": "^9.12.3",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
