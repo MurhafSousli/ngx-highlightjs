@@ -150,15 +150,18 @@ To avoid this warning, add the following in your `angular.json`
     "project-name": {
       "architect": {
         "build": {
-          "allowedCommonJsDependencies": [
-            "highlight.js"
-          ]
+          "options": {
+            "allowedCommonJsDependencies": [
+              "highlight.js"
+            ]
+          }
         }
       }
     }
   }
 }
 ```
+Read more about [CommonJS dependencies configuration](https://angular.io/guide/build#configuring-commonjs-dependencies)
 
 ## Plus package
 
