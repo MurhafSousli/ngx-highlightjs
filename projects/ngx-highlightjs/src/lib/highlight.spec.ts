@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { Component, DebugElement, Input, OnInit } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
@@ -29,7 +29,7 @@ describe('Highlight Directive', () => {
   let loader: HighlightLoader;
   const testCode = 'console.log(&quot;test&quot;)';
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [Highlight, TestHighlightComponent],
       providers: [{ provide: HighlightLoader, useValue: highlightLoaderStub }]
