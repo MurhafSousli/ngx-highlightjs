@@ -25,12 +25,13 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve ngx-highlightjs-demo",
     "build-demo": "ng build ngx-highlightjs-demo --prod",
     "build-lib": "ng build ngx-highlightjs --prod",
     "test-lib": "ng test ngx-highlightjs",
     "link-lib": "npm link dist/ngx-highlightjs && npm link ngx-highlightjs",
-    "publish-lib": "npm publish dist/ngx-highlightjs"
+    "publish-lib": "npm publish dist/ngx-highlightjs",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
