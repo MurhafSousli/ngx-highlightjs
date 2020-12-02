@@ -10,9 +10,10 @@ import { HIGHLIGHT_OPTIONS, HighlightLibrary, HighlightOptions } from './highlig
 })
 export class HighlightLoader {
   // Stream that emits when hljs library is loaded and ready to use
-  private readonly _ready = new BehaviorSubject(null);
-  readonly ready = this._ready.asObservable().pipe(
-    filter((hljs: HighlightLibrary) => !!hljs),
+  private readonly _ready = new BehaviorSubject<HighlightLibrary | null>(null);
+  readonly ready: Observable<HighlightLibrary> = this._ready.asObservable().pipe(
+    filter((hljs: HighlightLibrary | null) => !!hljs),
+    map((hljs: HighlightLibrary | null) => hljs as HighlightLibrary),
     take(1)
   );
 
@@ -75,7 +76,7 @@ export class HighlightLoader {
    * Lazy-load highlight.js languages
    */
   private _loadLanguages(hljs: HighlightLibrary): Observable<any> {
-    const languages = Object.entries(this._options.languages).map(([langName, langLoader]) =>
+    const languages = Object.entries(this._options.languages!).map(([langName, langLoader]) =>
       importModule(langLoader()).pipe(
         tap((langFunc: any) => hljs.registerLanguage(langName, langFunc))
       )
@@ -88,14 +89,14 @@ export class HighlightLoader {
    * Import highlight.js core library
    */
   private loadCoreLibrary(): Observable<HighlightLibrary> {
-    return importModule(this._options.coreLibraryLoader());
+    return importModule(this._options.coreLibraryLoader!());
   }
 
   /**
    * Import highlight.js library with all languages
    */
   private loadFullLibrary(): Observable<HighlightLibrary> {
-    return importModule(this._options.fullLibraryLoader());
+    return importModule(this._options.fullLibraryLoader!());
   }
 
 
@@ -103,7 +104,7 @@ export class HighlightLoader {
    * Import line numbers library
    */
   private loadLineNumbers(): Observable<any> {
-    return importModule(this._options.lineNumbersLoader());
+    return importModule(this._options.lineNumbersLoader!());
   }
 }
 

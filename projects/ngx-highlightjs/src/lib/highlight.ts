@@ -66,7 +66,7 @@ export class Highlight implements OnChanges {
    * @param languages An optional array of language names and aliases restricting detection to only those languages.
    * The subset can also be set with configure, but the local parameter overrides the option if set.
    */
-  highlightElement(code: string, languages?: string[]): void {
+  highlightElement(code: string, languages: string[]): void {
     // Set code text before highlighting
     this.setTextContent(code);
     this._hljs.highlightAuto(code, languages).subscribe((res: any) => {
@@ -114,7 +114,7 @@ export class Highlight implements OnChanges {
 
   private setInnerHTML(content: string) {
     animationFrameScheduler.schedule(() =>
-      this._nativeElement.innerHTML = this._sanitizer.sanitize(SecurityContext.HTML, content)
+      this._nativeElement.innerHTML = this._sanitizer.sanitize(SecurityContext.HTML, content) || ''
     );
   }
 }
