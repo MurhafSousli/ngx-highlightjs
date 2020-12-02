@@ -29,6 +29,7 @@
     "build-demo": "ng build ngx-highlightjs-demo --prod",
     "build-lib": "ng build ngx-highlightjs --prod",
     "test-lib": "ng test ngx-highlightjs",
+    "test-lib-headless": "ng test ngx-highlightjs --watch=false --no-progress --browsers=ChromeHeadless",
     "link-lib": "npm link dist/ngx-highlightjs && npm link ngx-highlightjs",
     "publish-lib": "npm publish dist/ngx-highlightjs",
     "e2e": "ng e2e"
