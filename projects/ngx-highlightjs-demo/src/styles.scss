@@ -23,8 +23,6 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-
-  //background: #d8d8d8;
   background: mat-color(mat-palette($mat-red, 900));
 }
 
@@ -32,8 +30,4 @@ h3 {
   color: white;
   font-weight: 300;
   margin: 3em 0 1.5em;
-}
-
-.ng-scroll-content {
-  //max-width: 100%;
 }

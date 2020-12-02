@@ -9,7 +9,7 @@ import { HighlightLoader } from './highlight.loader';
 })
 export class HighlightJS {
 
-  private _hljs!: HighlightLibrary;
+  private _hljs: HighlightLibrary | null = null;
 
   // A reference for hljs library
   get hljs(): HighlightLibrary | null {

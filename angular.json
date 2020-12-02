@@ -3,6 +3,46 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "ngx-highlightjs": {
+      "projectType": "library",
+      "root": "projects/ngx-highlightjs",
+      "sourceRoot": "projects/ngx-highlightjs/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.json",
+            "project": "projects/ngx-highlightjs/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-highlightjs/src/test.ts",
+            "tsConfig": "projects/ngx-highlightjs/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-highlightjs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-highlightjs/tsconfig.lib.json",
+              "projects/ngx-highlightjs/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "ngx-highlightjs-demo": {
       "projectType": "application",
       "schematics": {
@@ -10,40 +50,42 @@
           "style": "scss"
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/ngx-highlightjs-demo",
+      "sourceRoot": "projects/ngx-highlightjs-demo/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/ngx-highlightjs-demo",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "index": "projects/ngx-highlightjs-demo/src/index.html",
+            "main": "projects/ngx-highlightjs-demo/src/main.ts",
+            "polyfills": "projects/ngx-highlightjs-demo/src/polyfills.ts",
+            "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/ngx-highlightjs-demo/src/favicon.ico",
+              "projects/ngx-highlightjs-demo/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/ngx-highlightjs-demo/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "highlight.js"
+            ]
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "projects/ngx-highlightjs-demo/src/environments/environment.ts",
+                  "with": "projects/ngx-highlightjs-demo/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -56,7 +98,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -82,16 +125,16 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "projects/ngx-highlightjs-demo/src/test.ts",
+            "polyfills": "projects/ngx-highlightjs-demo/src/polyfills.ts",
+            "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-highlightjs-demo/karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/ngx-highlightjs-demo/src/favicon.ico",
+              "projects/ngx-highlightjs-demo/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/ngx-highlightjs-demo/src/styles.scss"
             ],
             "scripts": []
           }
@@ -100,9 +143,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "projects/ngx-highlightjs-demo/tsconfig.app.json",
+              "projects/ngx-highlightjs-demo/tsconfig.spec.json",
+              "projects/ngx-highlightjs-demo/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -112,7 +155,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
+            "protractorConfig": "projects/ngx-highlightjs-demo/e2e/protractor.conf.js",
             "devServerTarget": "ngx-highlightjs-demo:serve"
           },
           "configurations": {
@@ -122,46 +165,7 @@
           }
         }
       }
-    },
-    "ngx-highlightjs": {
-      "projectType": "library",
-      "root": "projects/ngx-highlightjs",
-      "sourceRoot": "projects/ngx-highlightjs/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.json",
-            "project": "projects/ngx-highlightjs/ng-package.json"
-          }
-        ,          "configurations": {
-            "production": {
-              "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.prod.json"
-            }
-          }
-},
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ngx-highlightjs/src/test.ts",
-            "tsConfig": "projects/ngx-highlightjs/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-highlightjs/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngx-highlightjs/tsconfig.lib.json",
-              "projects/ngx-highlightjs/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    }},
+    }
+  },
   "defaultProject": "ngx-highlightjs-demo"
 }

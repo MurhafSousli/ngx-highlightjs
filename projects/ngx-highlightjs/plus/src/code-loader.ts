@@ -16,7 +16,7 @@ export class CodeLoader {
    * @param id Gist ID
    */
   getCodeFromGist(id: string): Observable<Gist> {
-    let params: HttpParams;
+    let params!: HttpParams;
     if (this.isOAuthProvided()) {
       params = new HttpParams().set('client_id', this._options.clientId).set('client_secret', this._options.clientSecret);
     }
