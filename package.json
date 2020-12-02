@@ -26,12 +26,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build-demo": "ng build ngx-highlightjs-demo --prod",
     "build-lib": "ng build ngx-highlightjs --prod",
     "test-lib": "ng test ngx-highlightjs",
     "link-lib": "npm link dist/ngx-highlightjs && npm link ngx-highlightjs",
-    "publish-lib": "npm publish dist/ngx-highlightjs",
-    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
+    "publish-lib": "npm publish dist/ngx-highlightjs"
   },
   "private": true,
   "dependencies": {
