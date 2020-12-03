@@ -6,6 +6,7 @@
 [![Demo](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://ngx-highlight.netlify.com/)
 [![Stackblitz](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
+[![tests](https://github.com/MurhafSousli/ngx-highlightjs/workflows/tests/badge.svg)](https://github.com/MurhafSousli/ngx-highlightjs/actions?query=workflow%3Atests)
 [![Build Status](https://travis-ci.org/MurhafSousli/ngx-highlightjs.svg?branch=master)](https://travis-ci.org/MurhafSousli/ngx-highlightjs)
 [![Downloads](https://img.shields.io/npm/dt/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
 [![Monthly Downloads](https://img.shields.io/npm/dm/ngx-highlightjs.svg)](https://www.npmjs.com/package/ngx-highlightjs)
@@ -82,7 +83,8 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
           css: () => import('highlight.js/lib/languages/css'),
-          xml: () => import('highlight.js/lib/languages/xml')}
+          xml: () => import('highlight.js/lib/languages/xml')
+        }
       }
     }
   ],
@@ -90,11 +92,15 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 export class AppModule { }
 ```
 
-- **fullLibraryLoader**: A function that returns a promise that loads `highlight.js` full script.
-- **coreLibraryLoader**: A function that returns a promise that loads `highlight.js` core script.
-- **lineNumbersLoader**: A function that returns a promise that loads `line-numbers` script which adds line numbers to the highlight code.
-- **languages**: The set of languages to register.
-- **config**: Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-options).
+### HighlightOptions API
+
+| Name              | Description                                                                                                             |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------|
+| fullLibraryLoader | A function that returns a promise that loads `highlight.js` full script                                                 |
+| coreLibraryLoader | A function that returns a promise that loads `highlight.js` core script                                                 |
+| lineNumbersLoader | A function that returns a promise that loads `line-numbers` script which adds line numbers to the highlight code        |
+| languages         | The set of languages to register.                                                                                       |
+| config            | Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-option) |
 
 
  > **NOTE:** Since the update of highlight.js@v10.x.x, should use `coreLibraryLoader: () => import('highlight.js/lib/core')` instead of `coreLibraryLoader: () => import('highlight.js/lib/highlight')`
@@ -130,13 +136,12 @@ The following line will highlight the given code and append it to the host eleme
 
 ## Options
 
-- **[highlight]**: (string), Accept code string to highlight, default `null`
-
-- **[languages]**: (string[]), An array of language names and aliases restricting auto detection to only these languages, default: `null`
-
-- **[lineNumbers]**: (boolean), A flag that indicates adding line numbers to highlighted code element
-
-- **(highlighted)**: Stream that emits `HighlightResult` object when element is highlighted.
+| Name              | Type            | Description                                                                                                |
+|-------------------|-----------------|------------------------------------------------------------------------------------------------------------|
+| **[highlight]**   | string          | Accept code string to highlight, default `null`                                                            |
+| **[languages]**   | string[]        | An array of language names and aliases restricting auto detection to only these languages, default: `null` |
+| **[lineNumbers]** | boolean         | A flag that indicates adding line numbers to highlighted code element                                      |
+| **(highlighted)** | HighlightResult | Stream that emits the result object when element is highlighted                                            |
 
 
 ### NOTE
@@ -150,15 +155,18 @@ To avoid this warning, add the following in your `angular.json`
     "project-name": {
       "architect": {
         "build": {
-          "allowedCommonJsDependencies": [
-            "highlight.js"
-          ]
+          "options": {
+            "allowedCommonJsDependencies": [
+              "highlight.js"
+            ]
+          }
         }
       }
     }
   }
 }
 ```
+Read more about [CommonJS dependencies configuration](https://angular.io/guide/build#configuring-commonjs-dependencies)
 
 ## Plus package
 
