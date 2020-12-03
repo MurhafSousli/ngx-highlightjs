@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.1.3
+
+- Upgrade to Angular 11
+- Build the library in strict mode
+
+### Breaking changes:
+
+- refactor: Highlight directive => function `highlightElement(code: string, languages: string[])`: the languages param is not optional anymore.
+
 ## 4.1.2
 
 - fix: codeFromUrl display error message in the console even though it works, closes [#141](https://github.com/MurhafSousli/ngx-highlightjs/issues/141) in [d60dc10](https://github.com/MurhafSousli/ngx-highlightjs/pull/142/commits/d60dc10b5c5ce9d269214b2a7f6f6e9f3d02eaed).
