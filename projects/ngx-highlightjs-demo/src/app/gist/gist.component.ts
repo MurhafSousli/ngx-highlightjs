@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HighlightLoader } from 'ngx-highlightjs';
-import { Gist } from 'ngx-highlightjs/plus';
-// import { Gist } from '../../../projects/ngx-highlightjs/plus/src/public_api';
-// import { HighlightLoader } from '../../../projects/ngx-highlightjs/src/public-api';
+// import { HighlightLoader } from 'ngx-highlightjs';
+// import { Gist } from 'ngx-highlightjs/plus';
+import { Gist } from '../../../../ngx-highlightjs/plus/src/public_api';
+import { HighlightLoader } from '../../../../ngx-highlightjs/src/public-api';
 
 @Component({
   selector: 'app-gist',
