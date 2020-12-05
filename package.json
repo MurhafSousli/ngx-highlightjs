@@ -47,7 +47,7 @@
     "@angular/platform-browser": "~11.0.2",
     "@angular/platform-browser-dynamic": "~11.0.2",
     "@angular/router": "~11.0.2",
-    "highlight.js": "^10.4.0",
+    "highlight.js": "^10.4.1",
     "highlightjs-line-numbers.js": "^2.8.0",
     "ngx-scrollbar": "^7.4.1",
     "normalize.css": "^8.0.1",
