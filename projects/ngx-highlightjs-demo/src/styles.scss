@@ -1,17 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@use '~@angular/material' as mat;
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,500,700");
 @import '~normalize.css';
-@import '~@angular/material/theming';
 
-@include mat-core();
+@include mat.core();
 
-$primary: mat-palette($mat-red, 700);
-$accent: mat-palette($mat-grey, 800);
-$warn: mat-palette($mat-lime, 400);
-$theme: mat-dark-theme($primary, $accent, $warn);
+$primary: mat.define-palette(mat.$red-palette, 700);
+$accent: mat.define-palette(mat.$grey-palette, 800);
+$warn: mat.define-palette(mat.$lime-palette, 400);
+$theme: mat.define-dark-theme($primary, $accent, $warn);
 
-@include angular-material-theme($theme);
+@include mat.all-component-themes($theme);
 
 * {
   box-sizing: border-box;
@@ -23,7 +23,7 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  background: mat-color(mat-palette($mat-red, 900));
+  background: mat.get-color-from-palette(mat.define-palette(mat.$red-palette, 900));
 }
 
 h3 {
