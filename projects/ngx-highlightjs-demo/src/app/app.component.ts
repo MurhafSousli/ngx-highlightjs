@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { animationFrameScheduler } from 'rxjs';
+// import { Gist } from '../../../ngx-highlightjs/plus/src/gist.model';
 import { Gist } from 'ngx-highlightjs/plus';
-// import { Gist } from '../../projects/ngx-highlightjs/plus/src/gist.model';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,6 @@ import { Gist } from 'ngx-highlightjs/plus';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-
-  libLoaded: boolean;
 
   gist!: Gist;
 
