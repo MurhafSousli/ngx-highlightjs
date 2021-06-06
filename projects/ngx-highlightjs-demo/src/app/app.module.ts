@@ -6,10 +6,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from './material/material.module';
 
-import { HighlightPlusModule, GIST_OPTIONS } from '../../../ngx-highlightjs/plus/src/public_api';
-import { HIGHLIGHT_OPTIONS } from '../../../ngx-highlightjs/src/public-api';
-// import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-// import { HighlightPlusModule, GIST_OPTIONS } from 'ngx-highlightjs/plus';
+// import { HighlightPlusModule, GIST_OPTIONS } from '../../../ngx-highlightjs/plus/src/public_api';
+// import { HIGHLIGHT_OPTIONS } from '../../../ngx-highlightjs/src/public-api';
+import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { HighlightPlusModule, GIST_OPTIONS } from 'ngx-highlightjs/plus';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
