@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.1.4
+
+- Upgrade to Angular 12
+- Set peer dependency of hljs to v10
+
 ## 4.1.3
 
 - Upgrade to Angular 11
