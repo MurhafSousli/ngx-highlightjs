@@ -26,6 +26,6 @@ What behavior did you actually see?
 #### Environment
 
 - Angular:
-- ngx-scrollbar:
+- ngx-highlightjs:
 - Browser(s):
 - Operating System (e.g. Windows, macOS, Ubuntu): 
