@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angul
 import { Component, DebugElement, Input, OnInit } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
-import * as hljs from 'highlight.js';
+import hljs from 'highlight.js';
 import { Highlight } from './highlight';
 import { HighlightLoader } from './highlight.loader';
 import { HighlightLibrary } from './highlight.model';

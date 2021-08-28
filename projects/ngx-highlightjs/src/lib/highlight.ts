@@ -4,16 +4,16 @@ import {
   Output,
   Inject,
   Optional,
+  EventEmitter,
   OnChanges,
   SimpleChanges,
-  EventEmitter,
   ElementRef,
   SecurityContext
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { animationFrameScheduler } from 'rxjs';
 import { HighlightJS } from './highlight.service';
-import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightResult } from './highlight.model';
+import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightAutoResult } from './highlight.model';
 
 @Directive({
   host: {
@@ -40,7 +40,7 @@ export class Highlight implements OnChanges {
   @Input() lineNumbers!: boolean;
 
   // Stream that emits when code string is highlighted
-  @Output() highlighted = new EventEmitter<HighlightResult>();
+  @Output() highlighted = new EventEmitter<HighlightAutoResult>();
 
   constructor(el: ElementRef,
               private _hljs: HighlightJS,
@@ -52,8 +52,7 @@ export class Highlight implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (
       this.code &&
-      changes.code &&
-      typeof changes.code.currentValue !== 'undefined' &&
+      changes?.code?.currentValue &&
       changes.code.currentValue !== changes.code.previousValue
     ) {
       this.highlightElement(this.code, this.languages);
@@ -69,9 +68,9 @@ export class Highlight implements OnChanges {
   highlightElement(code: string, languages: string[]): void {
     // Set code text before highlighting
     this.setTextContent(code);
-    this._hljs.highlightAuto(code, languages).subscribe((res: any) => {
+    this._hljs.highlightAuto(code, languages).subscribe((res: HighlightAutoResult) => {
       // Set highlighted code
-      this.setInnerHTML(res.value);
+      this.setInnerHTML(res.value || null);
       // Check if user want to show line numbers
       if (this.lineNumbers && this._options && this._options.lineNumbersLoader) {
         this.addLineNumbers();
@@ -112,7 +111,7 @@ export class Highlight implements OnChanges {
     );
   }
 
-  private setInnerHTML(content: string) {
+  private setInnerHTML(content: string | null) {
     animationFrameScheduler.schedule(() =>
       this._nativeElement.innerHTML = this._sanitizer.sanitize(SecurityContext.HTML, content) || ''
     );
