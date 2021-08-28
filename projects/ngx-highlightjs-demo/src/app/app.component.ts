@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { animationFrameScheduler } from 'rxjs';
-// import { Gist } from '../../../ngx-highlightjs/plus/src/gist.model';
 import { Gist } from 'ngx-highlightjs/plus';
 
 @Component({
