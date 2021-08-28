@@ -18,7 +18,7 @@ export class HighlightJS {
 
   constructor(private _loader: HighlightLoader, @Optional() @Inject(HIGHLIGHT_OPTIONS) options: HighlightOptions) {
     // Load highlight.js library on init
-    _loader.ready.pipe().subscribe((hljs: HighlightLibrary) => {
+    _loader.ready.subscribe((hljs: HighlightLibrary) => {
       this._hljs = hljs;
       if (options && options.config) {
         // Set global config if present
