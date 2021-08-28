@@ -1,10 +1,11 @@
-import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { Component, DebugElement, Input, OnInit } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
-import * as hljs from 'highlight.js';
+import hljs from 'highlight.js';
 import { Highlight } from './highlight';
 import { HighlightLoader } from './highlight.loader';
+import { HighlightLibrary } from './highlight.model';
 
 @Component({
   template: `<code [highlight]="code"></code>`
@@ -34,7 +35,7 @@ describe('Highlight Directive', () => {
       declarations: [Highlight, TestHighlightComponent],
       providers: [{ provide: HighlightLoader, useValue: highlightLoaderStub }]
     }).compileComponents();
-    loader = TestBed.get(HighlightLoader);
+    loader = TestBed.inject(HighlightLoader);
   }));
 
   beforeEach(() => {
@@ -57,7 +58,7 @@ describe('Highlight Directive', () => {
     component.code = testCode;
     fixture.detectChanges();
     let highlightedCode;
-    loader.ready.subscribe((lib) => highlightedCode = lib.highlightAuto(testCode, null).value);
+    loader.ready.subscribe((lib: HighlightLibrary) => highlightedCode = lib.highlightAuto(testCode, null).value);
     tick(500);
     expect(directiveElement.nativeElement.innerHTML).toBe(highlightedCode);
   }));

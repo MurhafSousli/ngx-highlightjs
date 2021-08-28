@@ -10,15 +10,7 @@
     "lib": [
       "dom",
       "es2018"
-    ],
-    "strict": true
-  },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableResourceInlining": true
+    ]
   },
   "exclude": [
     "src/test.ts",

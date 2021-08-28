@@ -1,7 +1,14 @@
 import { Injectable, Inject, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { HighlightConfig, HighlightResult, HighlightLibrary, HighlightOptions, HIGHLIGHT_OPTIONS } from './highlight.model';
+import {
+  HighlightConfig,
+  HighlightResult,
+  HighlightLibrary,
+  HighlightOptions,
+  HIGHLIGHT_OPTIONS,
+  HighlightAutoResult
+} from './highlight.model';
 import { HighlightLoader } from './highlight.loader';
 
 @Injectable({
@@ -18,7 +25,7 @@ export class HighlightJS {
 
   constructor(private _loader: HighlightLoader, @Optional() @Inject(HIGHLIGHT_OPTIONS) options: HighlightOptions) {
     // Load highlight.js library on init
-    _loader.ready.pipe().subscribe((hljs: HighlightLibrary) => {
+    _loader.ready.subscribe((hljs: HighlightLibrary) => {
       this._hljs = hljs;
       if (options && options.config) {
         // Set global config if present
@@ -31,17 +38,14 @@ export class HighlightJS {
   }
 
   /**
-   * Core highlighting function.
-   * @param name Accepts a language name, or an alias
-   * @param value A string with the code to highlight.
-   * @param ignore_illegals When present and evaluates to a true value, forces highlighting to finish
-   * even in case of detecting illegal syntax for the language instead of throwing an exception.
-   * @param continuation An optional mode stack representing unfinished parsing.
-   * When present, the function will restart parsing from this state instead of initializing a new one
+   * Core highlighting function. Accepts the code to highlight (string) and a list of options (object)
+   * @param code Accepts the code to highlight
+   * @param language must be present and specify the language name or alias of the grammar to be used for highlighting
+   * @param ignoreIllegals (optional) when set to true it forces highlighting to finish even in case of detecting illegal syntax for the language instead of throwing an exception.
    */
-  highlight(name: string, value: string, ignore_illegals: boolean, continuation?: any): Observable<HighlightResult> {
+  highlight(code: string, { language, ignoreIllegals }: { language: string, ignoreIllegals: boolean }): Observable<HighlightResult> {
     return this._loader.ready.pipe(
-      map((hljs: HighlightLibrary) => hljs.highlight(name, value, ignore_illegals, continuation))
+      map((hljs: HighlightLibrary) => hljs.highlight(code, { language, ignoreIllegals }))
     );
   }
 
@@ -51,37 +55,36 @@ export class HighlightJS {
    * @param languageSubset An optional array of language names and aliases restricting detection to only those languages.
    * The subset can also be set with configure, but the local parameter overrides the option if set.
    */
-  highlightAuto(value: string, languageSubset: string[]): Observable<HighlightResult> {
+  highlightAuto(value: string, languageSubset: string[]): Observable<HighlightAutoResult> {
     return this._loader.ready.pipe(
       map((hljs: HighlightLibrary) => hljs.highlightAuto(value, languageSubset))
     );
   }
 
   /**
-   * Post-processing of the highlighted markup.
-   * Currently consists of replacing indentation TAB characters and using <br> tags instead of new-line characters.
-   * Options are set globally with configure.
-   * @param value Accepts a string with the highlighted markup
-   */
-  fixMarkup(value: string): Observable<string> {
-    return this._loader.ready.pipe(
-      map((hljs: HighlightLibrary) => hljs.fixMarkup(value))
-    );
-  }
-
-  /**
    * Applies highlighting to a DOM node containing code.
-   * The function uses language detection by default but you can specify the language in the class attribute of the DOM node.
-   * See the class reference for all available language names and aliases.
-   * @param block The element to apply highlight on.
+   * This function is the one to use to apply highlighting dynamically after page load or within initialization code of third-party JavaScript frameworks.
+   * The function uses language detection by default but you can specify the language in the class attribute of the DOM node. See the scopes reference for all available language names and scopes.
+   * @param element
    */
-  highlightBlock(block: HTMLElement): Observable<void> {
+  highlightElement(element: HTMLElement): Observable<any> {
     return this._loader.ready.pipe(
-      map((hljs: HighlightLibrary) => hljs.highlightBlock(block))
+      map((hljs: HighlightLibrary) => hljs.highlightElement(element))
     );
   }
 
   /**
+   * Applies highlighting to all elements on a page matching the configured cssSelector. The default cssSelector value is 'pre code',
+   * which highlights all code blocks. This can be called before or after the page’s onload event has fired.
+   */
+  highlightAll(): Observable<any> {
+    return this._loader.ready.pipe(
+      map((hljs: HighlightLibrary) => hljs.highlightAll())
+    );
+  }
+
+  /**
+   * @deprecated in version 12
    * Configures global options:
    * @param config HighlightJs configuration argument
    */
@@ -92,30 +95,43 @@ export class HighlightJS {
   }
 
   /**
-   * Applies highlighting to all <pre><code>..</code></pre> blocks on a page.
+   * Adds new language to the library under the specified name. Used mostly internally.
+   * @param languageName A string with the name of the language being registered
+   * @param languageDefinition A function that returns an object which represents the language definition.
+   * The function is passed the hljs object to be able to use common regular expressions defined within it.
    */
-  initHighlighting(): Observable<void> {
+  registerLanguage(languageName: string, languageDefinition: () => any): Observable<HighlightLibrary> {
     return this._loader.ready.pipe(
-      map((hljs: HighlightLibrary) => hljs.initHighlighting())
+      tap((hljs: HighlightLibrary) => hljs.registerLanguage(languageName, languageDefinition))
     );
   }
 
   /**
-   * Adds new language to the library under the specified name. Used mostly internally.
-   * @param name A string with the name of the language being registered
-   * @param language A function that returns an object which represents the language definition.
-   * The function is passed the hljs object to be able to use common regular expressions defined within it.
+   * Removes a language and its aliases from the library. Used mostly internall
+   * @param languageName: a string with the name of the language being removed.
    */
-  registerLanguage(name: string, language: () => any): Observable<HighlightLibrary> {
+  unregisterLanguage(languageName: string): Observable<any> {
     return this._loader.ready.pipe(
-      tap((hljs: HighlightLibrary) => hljs.registerLanguage(name, language))
+      tap((hljs: HighlightLibrary) => hljs.unregisterLanguage(languageName))
     );
   }
+
+  /**
+   * Adds new language alias or aliases to the library for the specified language name defined under languageName key.
+   * @param alias: A string or array with the name of alias being registered
+   * @param languageName: the language name as specified by registerLanguage.
+   */
+  registerAliases(alias: string | string[], { languageName }: { languageName: string }): Observable<any> {
+    return this._loader.ready.pipe(
+      tap((hljs: HighlightLibrary) => hljs.registerAliases(alias, { languageName }))
+    );
+  }
+
 
   /**
    * @return The languages names list.
    */
-  listLanguages(): Observable<string[]> {
+  listLanguages(): Observable<string[] | undefined> {
     return this._loader.ready.pipe(
       map((hljs: HighlightLibrary) => hljs.listLanguages())
     );
@@ -129,6 +145,24 @@ export class HighlightJS {
   getLanguage(name: string): Observable<any> {
     return this._loader.ready.pipe(
       map((hljs: HighlightLibrary) => hljs.getLanguage(name))
+    );
+  }
+
+  /**
+   * Enables safe mode. This is the default mode, providing the most reliable experience for production usage.
+   */
+  safeMode(): Observable<any> {
+    return this._loader.ready.pipe(
+      map((hljs: HighlightLibrary) => hljs.safeMode())
+    );
+  }
+
+  /**
+   * Enables debug/development mode.
+   */
+  debugMode(): Observable<any> {
+    return this._loader.ready.pipe(
+      map((hljs: HighlightLibrary) => hljs.debugMode())
     );
   }
 
