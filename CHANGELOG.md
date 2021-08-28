@@ -3,6 +3,7 @@
 ## 5.0.0
 
 - Upgrade usage to highlight.js v11, you can find the breaking changes from the official page [here](https://highlightjs.readthedocs.io/en/latest/upgrade-11.html).
+- Build the library with partial compilationMode.
 - feat: Add the missing functions from v11 in `HighlightJS` service.
 - Remove deprecated function in v11, such as `initHighlighting()`, `highlightBlock()`, `fixMarkup()` from `HighlightJS` service.
 
