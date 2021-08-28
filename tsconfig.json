@@ -26,5 +26,9 @@
         "projects/ngx-higlightjs/plus/src/public_api"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }
