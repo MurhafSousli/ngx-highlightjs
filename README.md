@@ -140,7 +140,7 @@ The following line will highlight the given code and append it to the host eleme
 | **[highlight]**   | string          | Accept code string to highlight, default `null`                                                            |
 | **[languages]**   | string[]        | An array of language names and aliases restricting auto detection to only these languages, default: `null` |
 | **[lineNumbers]** | boolean         | A flag that indicates adding line numbers to highlighted code element                                      |
-| **(highlighted)** | HighlightResult | Stream that emits the result object when element is highlighted                                            |
+| **(highlighted)** | HighlightAutoResult | Stream that emits the result object when element is highlighted                                            |
 
 
 ### NOTE

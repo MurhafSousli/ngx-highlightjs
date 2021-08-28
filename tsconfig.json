@@ -20,11 +20,15 @@
     ],
     "paths": {
       "ngx-higlightjs": [
-        "dist/ngx-higlightjs"
+        "projects/ngx-higlightjs/src/public-api"
       ],
-      "ngx-higlightjs/*": [
-        "dist/ngx-higlightjs/*"
+      "ngx-higlightjs/plus": [
+        "projects/ngx-higlightjs/plus/src/public_api"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

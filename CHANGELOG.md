@@ -1,9 +1,23 @@
 # Changelog
 
+## 5.0.0
+
+- Upgrade usage to highlight.js v11, you can find the breaking changes from the official page [here](https://highlightjs.readthedocs.io/en/latest/upgrade-11.html).
+- Build the library with partial compilationMode.
+- feat: Add the missing functions from v11 in `HighlightJS` service.
+- Remove deprecated function in v11, such as `initHighlighting()`, `highlightBlock()`, `fixMarkup()` from `HighlightJS` service.
+
+### Breaking changes
+
+- refactor: `(highlighted)` output has been updated to highlight.js v11, the result object has a new interface `HighlightAutoResult`.
+- refactor: `HighlightJS.configure(config)` has been updated the config interface to highlight.js v11.
+
 ## 4.1.4
 
 - Upgrade to Angular 12
-- Set peer dependency of hljs to v10
+- Set peer dependency of highlight.js to v10
+
+ > The library is still compatible with the new version of highlight.js v11 but the highlighting function will be deprecated in their next release
 
 ## 4.1.3
 
