@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { animationFrameScheduler } from 'rxjs';
 import { Gist } from 'ngx-highlightjs/plus';
+import { HighlightLoader } from 'ngx-highlightjs';
 
 @Component({
   selector: 'app-root',
@@ -40,17 +40,11 @@ export class AppComponent {
     'default',
   ];
 
+  constructor(private hljsLoader: HighlightLoader) {
+  }
+
   changeTheme() {
-    let disablePreviousTheme;
-    document.head.querySelectorAll('.codestyle').forEach((linkElement: HTMLLinkElement) => {
-      const disabled = linkElement.href.substr(linkElement.href.lastIndexOf('/') + 1) !== `${this.theme}.css`;
-      if (!linkElement.disabled) {
-        disablePreviousTheme = linkElement;
-      } else {
-        linkElement.disabled = disabled;
-      }
-    });
-    animationFrameScheduler.schedule(() => disablePreviousTheme.disabled = true);
+    this.hljsLoader.setTheme(`assets/styles/${ this.theme }.css`);
   }
 
 }

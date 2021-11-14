@@ -41,7 +41,8 @@ import { CodeComponent } from './code/code.component';
           typescript: () => import('highlight.js/lib/languages/typescript'),
           css: () => import('highlight.js/lib/languages/css'),
           xml: () => import('highlight.js/lib/languages/xml')
-        }
+        },
+        themePath: 'assets/styles/androidstudio.css'
       }
     },
     {
