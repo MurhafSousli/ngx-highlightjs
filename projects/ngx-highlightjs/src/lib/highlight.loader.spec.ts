@@ -1,9 +1,9 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { HighlightJS } from './highlight.service';
 import { BehaviorSubject } from 'rxjs';
-import * as  hljs from 'highlight.js';
+import * as hljs from 'highlight.js';
 import { HighlightLoader } from './highlight.loader';
+import { HighlightLibrary } from './highlight.model';
 
 
 // Fake Highlight Loader
@@ -22,8 +22,10 @@ describe('HighlightService', () => {
     loader = TestBed.inject(HighlightLoader);
   }));
 
-  it('should be created', () => {
-    const service: HighlightJS = TestBed.inject(HighlightJS);
-    expect(service).toBeTruthy();
+  it('should load the library', (done: DoneFn) => {
+    loader.ready.subscribe((hljs: HighlightLibrary) => {
+      expect(hljs).toBeTruthy();
+      done();
+    });
   });
 });
