@@ -83,7 +83,8 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
           typescript: () => import('highlight.js/lib/languages/typescript'),
           css: () => import('highlight.js/lib/languages/css'),
           xml: () => import('highlight.js/lib/languages/xml')
-        }
+        },
+        themePath: 'path-to-theme.css' // Optional, and useful if you want to change the theme dynamically
       }
     }
   ],
@@ -98,15 +99,56 @@ export class AppModule { }
 | fullLibraryLoader | A function that returns a promise that loads `highlight.js` full script                                                 |
 | coreLibraryLoader | A function that returns a promise that loads `highlight.js` core script                                                 |
 | lineNumbersLoader | A function that returns a promise that loads `line-numbers` script which adds line numbers to the highlight code        |
-| languages         | The set of languages to register.                                                                                       |
+| languages         | The set of languages to register                                                                                        |
 | config            | Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-option) |
-
+| themePath         | The path to highlighting theme CSS file                                                                                 |
 
  > **NOTE:** Since the update of highlight.js@v10.x.x, should use `coreLibraryLoader: () => import('highlight.js/lib/core')` instead of `coreLibraryLoader: () => import('highlight.js/lib/highlight')`
 
 ### Import highlighting theme
 
-Import highlight.js theme from the node_modules directory in `angular.json`
+**In version >=6.1.0**, A new way is available to load the theme dynamically! this is **OPTIONAL**, you can still use the traditional way.
+
+**Dynamic way**
+
+Set the theme path in the global config, this makes it possible to change the theme on the fly, which is useful if you have light and dark theme in your app.
+
+```ts
+ providers: [
+  {
+    provide: HIGHLIGHT_OPTIONS,
+    useValue: {
+      // ...
+      themePath: 'assets/styles/solarized-dark.css'
+    }
+  }
+]
+```
+If you want to import it from the app dist folder, then copy the themes you want to your `assets` directory, or you can just use a CDN link to the theme.
+
+When switching between the app themes you need to call the `setTheme(path)` from the `HighlightLoader` service.
+
+```ts
+import { HighlightLoader } from 'ngx-highlightjs';
+
+export class AppComponent {
+
+  constructor(private hljsLoader: HighlightLoader) {
+  }
+
+  // Assume you have a callback function when your app theme is changed
+  onAppThemeChange(appTheme: 'dark' | 'light') {
+    this.hljsLoader.setTheme(appTheme === 'dark' ? 'assets/styles/solarized-dark.css' : 'assets/styles/solarized-light.css');
+  }
+}
+```
+
+ > You can still use the traditional way
+
+
+**Traditional way**
+
+To import highlight.js theme from the node_modules directory in `angular.json`
 
 ```
 "styles": [
@@ -115,7 +157,7 @@ Import highlight.js theme from the node_modules directory in `angular.json`
 ]
 ```
 
-Or import it in `src/style.scss`
+Or directly in `src/style.scss`
 
 ```css
 @import '~highlight.js/styles/github.css';

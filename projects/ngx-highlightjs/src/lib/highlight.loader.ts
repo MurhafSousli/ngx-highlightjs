@@ -17,31 +17,40 @@ export class HighlightLoader {
     take(1)
   );
 
-  constructor(@Inject(DOCUMENT) doc: any,
+  private _themeLinkElement: HTMLLinkElement;
+
+  constructor(@Inject(DOCUMENT) private doc: any,
               @Inject(PLATFORM_ID) platformId: object,
               @Optional() @Inject(HIGHLIGHT_OPTIONS) private _options: HighlightOptions) {
-    // Check if hljs is already available
-    if (isPlatformBrowser(platformId) && doc.defaultView.hljs) {
-      this._ready.next(doc.defaultView.hljs);
-    } else {
-      // Load hljs library
-      this._loadLibrary().pipe(
-        switchMap((hljs: HighlightLibrary) => {
-          if (this._options && this._options.lineNumbersLoader) {
-            // Make hljs available on window object (required for the line numbers library)
-            doc.defaultView.hljs = hljs;
-            // Load line numbers library
-            return this.loadLineNumbers().pipe(tap(() => this._ready.next(hljs)));
-          } else {
-            this._ready.next(hljs);
+    if (isPlatformBrowser(platformId)) {
+      // Check if hljs is already available
+      if (doc.defaultView.hljs) {
+        this._ready.next(doc.defaultView.hljs);
+      } else {
+        // Load hljs library
+        this._loadLibrary().pipe(
+          switchMap((hljs: HighlightLibrary) => {
+            if (this._options && this._options.lineNumbersLoader) {
+              // Make hljs available on window object (required for the line numbers library)
+              doc.defaultView.hljs = hljs;
+              // Load line numbers library
+              return this.loadLineNumbers().pipe(tap(() => this._ready.next(hljs)));
+            } else {
+              this._ready.next(hljs);
+              return EMPTY;
+            }
+          }),
+          catchError((e: any) => {
+            console.error('[HLJS] ', e);
             return EMPTY;
-          }
-        }),
-        catchError((e: any) => {
-          console.error('[HLJS] ', e);
-          return EMPTY;
-        })
-      ).subscribe();
+          })
+        ).subscribe();
+      }
+
+      // Load highlighting theme
+      if (this._options.themePath) {
+        this.loadTheme(this._options.themePath);
+      }
     }
   }
 
@@ -99,12 +108,30 @@ export class HighlightLoader {
     return importModule(this._options.fullLibraryLoader!());
   }
 
-
   /**
    * Import line numbers library
    */
   private loadLineNumbers(): Observable<any> {
     return importModule(this._options.lineNumbersLoader!());
+  }
+
+  /**
+   * Reload theme styles
+   */
+  setTheme(path: string): void {
+    this._themeLinkElement.href = path;
+  }
+
+  /**
+   * Load theme
+   */
+  private loadTheme(path: string): void {
+    this._themeLinkElement = this.doc.createElement('link');
+    this._themeLinkElement.href = path;
+    this._themeLinkElement.type = 'text/css';
+    this._themeLinkElement.rel = 'stylesheet';
+    this._themeLinkElement.media = 'screen,print';
+    this.doc.head.appendChild(this._themeLinkElement);
   }
 }
 
