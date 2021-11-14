@@ -129,6 +129,7 @@ export interface HighlightOptions {
   coreLibraryLoader?: () => Promise<any>;
   fullLibraryLoader?: () => Promise<any>;
   lineNumbersLoader?: () => Promise<any>;
+  themePath?: string;
 }
 
 export const HIGHLIGHT_OPTIONS = new InjectionToken<HighlightOptions>('HIGHLIGHT_OPTIONS');

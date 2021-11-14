@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.1.0
+
+- feat: Load highlighting theme dynamically, ability to switch between themes easily, closes [#194](https://github.com/MurhafSousli/ngx-highlightjs/issues/194) in [9422d29](https://github.com/MurhafSousli/ngx-highlightjs/commit/9422d295ab7254e5cf908c35e984efd2c801e8ec).
+
 ## 6.0.0
 
 - Upgrade library to Angular 13
