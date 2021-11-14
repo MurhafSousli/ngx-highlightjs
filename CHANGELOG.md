@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.0.0
+
+- Upgrade library to Angular 13
+
 ## 5.0.0
 
 - Upgrade usage to highlight.js v11, you can find the breaking changes from the official page [here](https://highlightjs.readthedocs.io/en/latest/upgrade-11.html).

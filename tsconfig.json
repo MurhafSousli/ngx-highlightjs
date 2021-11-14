@@ -19,11 +19,11 @@
       "dom"
     ],
     "paths": {
-      "ngx-higlightjs": [
-        "projects/ngx-higlightjs/src/public-api"
+      "ngx-highlightjs": [
+        "projects/ngx-highlightjs/src/public-api"
       ],
-      "ngx-higlightjs/plus": [
-        "projects/ngx-higlightjs/plus/src/public_api"
+      "ngx-highlightjs/plus": [
+        "projects/ngx-highlightjs/plus/src/public_api"
       ]
     }
   },
