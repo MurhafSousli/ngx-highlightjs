@@ -23,8 +23,8 @@ describe('HighlightService', () => {
   }));
 
   it('should load the library', (done: DoneFn) => {
-    loader.ready.subscribe((hljs: HighlightLibrary) => {
-      expect(hljs).toBeTruthy();
+    loader.ready.subscribe((lib: HighlightLibrary) => {
+      expect(lib).toBeTruthy();
       done();
     });
   });
