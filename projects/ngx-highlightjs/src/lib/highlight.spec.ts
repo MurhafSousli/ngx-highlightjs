@@ -1,5 +1,5 @@
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { Component, DebugElement, Input, OnInit } from '@angular/core';
+import { Component, DebugElement, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import hljs from 'highlight.js';
@@ -28,7 +28,8 @@ describe('Highlight Directive', () => {
   let directiveInstance: Highlight;
   let fixture: ComponentFixture<TestHighlightComponent>;
   let loader: HighlightLoader;
-  const testCode = 'console.log(&quot;test&quot;)';
+  const testJsCode = 'console.log(&quot;test&quot;)';
+  const testHtmlCode = '<div class=&quot;my-class&quot;></div>';
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -55,11 +56,52 @@ describe('Highlight Directive', () => {
   });
 
   it('should highlight given text', fakeAsync(() => {
-    component.code = testCode;
+    let highlightedCode: string;
+    component.code = testJsCode;
     fixture.detectChanges();
-    let highlightedCode;
-    loader.ready.subscribe((lib: HighlightLibrary) => highlightedCode = lib.highlightAuto(testCode, null).value);
+    loader.ready.subscribe((lib: HighlightLibrary) => highlightedCode = lib.highlightAuto(testJsCode, null).value);
     tick(500);
     expect(directiveElement.nativeElement.innerHTML).toBe(highlightedCode);
+  }));
+
+  it('should reset text if empty string was passed', () => {
+    component.code = '';
+    fixture.detectChanges();
+    expect(directiveElement.nativeElement.innerHTML).toBe('');
+  });
+
+  it('should not highlight if code is undefined', () => {
+    spyOn(directiveInstance, 'highlightElement');
+    component.code = null;
+    fixture.detectChanges();
+    expect(directiveInstance.highlightElement).not.toHaveBeenCalled();
+  });
+
+  it('should highlight given text and highlight another text when change', fakeAsync(() => {
+    let highlightedCode: string;
+    component.code = testJsCode;
+    fixture.detectChanges();
+    loader.ready.subscribe((lib: HighlightLibrary) => highlightedCode = lib.highlightAuto(testJsCode, null).value);
+    tick(500);
+    expect(directiveElement.nativeElement.innerHTML).toBe(highlightedCode);
+
+    // Change code 2nd time with another value
+    component.code = testHtmlCode;
+    fixture.detectChanges();
+    loader.ready.subscribe((lib: HighlightLibrary) => highlightedCode = lib.highlightAuto(testHtmlCode, null).value);
+    tick(500);
+    expect(directiveElement.nativeElement.innerHTML).toBe(highlightedCode);
+
+    // Change code 3rd time but with empty string
+    component.code = '';
+    fixture.detectChanges();
+    tick(300);
+    expect(directiveElement.nativeElement.innerHTML).toBe('');
+
+    // Change code 4th time but with nullish value
+    component.code = null;
+    fixture.detectChanges();
+    tick(300);
+    expect(directiveElement.nativeElement.innerHTML).toBe('');
   }));
 });
