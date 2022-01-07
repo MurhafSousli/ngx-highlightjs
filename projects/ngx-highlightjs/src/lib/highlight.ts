@@ -51,11 +51,15 @@ export class Highlight implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      this.code &&
-      changes?.code?.currentValue &&
+      changes?.code?.currentValue !== null &&
       changes.code.currentValue !== changes.code.previousValue
     ) {
-      this.highlightElement(this.code, this.languages);
+      if (this.code) {
+        this.highlightElement(this.code, this.languages);
+      } else {
+        // If string is empty, set the text content to empty
+        this.setTextContent('');
+      }
     }
   }
 
@@ -70,7 +74,7 @@ export class Highlight implements OnChanges {
     this.setTextContent(code);
     this._hljs.highlightAuto(code, languages).subscribe((res: HighlightAutoResult) => {
       // Set highlighted code
-      this.setInnerHTML(res.value || null);
+      this.setInnerHTML(res?.value);
       // Check if user want to show line numbers
       if (this.lineNumbers && this._options && this._options.lineNumbersLoader) {
         this.addLineNumbers();
