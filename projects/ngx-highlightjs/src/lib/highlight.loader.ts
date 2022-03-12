@@ -48,7 +48,7 @@ export class HighlightLoader {
       }
 
       // Load highlighting theme
-      if (this._options.themePath) {
+      if (this._options?.themePath) {
         this.loadTheme(this._options.themePath);
       }
     }
@@ -60,16 +60,16 @@ export class HighlightLoader {
   private _loadLibrary(): Observable<any> {
     if (this._options) {
       if (this._options.fullLibraryLoader && this._options.coreLibraryLoader) {
-        return throwError('The full library and the core library were imported, only one of them should be imported!');
+        return throwError(() => 'The full library and the core library were imported, only one of them should be imported!');
       }
       if (this._options.fullLibraryLoader && this._options.languages) {
-        return throwError('The highlighting languages were imported they are not needed!');
+        return throwError(() => 'The highlighting languages were imported they are not needed!');
       }
       if (this._options.coreLibraryLoader && !this._options.languages) {
-        return throwError('The highlighting languages were not imported!');
+        return throwError(() => 'The highlighting languages were not imported!');
       }
       if (!this._options.coreLibraryLoader && this._options.languages) {
-        return throwError('The core library was not imported!');
+        return throwError(() => 'The core library was not imported!');
       }
       if (this._options.fullLibraryLoader) {
         return this.loadFullLibrary();
@@ -78,14 +78,14 @@ export class HighlightLoader {
         return this.loadCoreLibrary().pipe(switchMap((hljs: HighlightLibrary) => this._loadLanguages(hljs)));
       }
     }
-    return throwError('Highlight.js library was not imported!');
+    return throwError(() => 'Highlight.js library was not imported!');
   }
 
   /**
    * Lazy-load highlight.js languages
    */
   private _loadLanguages(hljs: HighlightLibrary): Observable<any> {
-    const languages = Object.entries(this._options.languages!).map(([langName, langLoader]) =>
+    const languages = Object.entries(this._options.languages).map(([langName, langLoader]: [string, () => Promise<any>]) =>
       importModule(langLoader()).pipe(
         tap((langFunc: any) => hljs.registerLanguage(langName, langFunc))
       )
