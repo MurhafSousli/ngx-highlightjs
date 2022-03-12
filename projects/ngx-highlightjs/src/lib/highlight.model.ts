@@ -125,7 +125,7 @@ export interface HighlightAutoResult {
 
 export interface HighlightOptions {
   config?: HighlightConfig;
-  languages?: { [name: string]: () => Promise<any> };
+  languages?: Record<string, () => Promise<any>>;
   coreLibraryLoader?: () => Promise<any>;
   fullLibraryLoader?: () => Promise<any>;
   lineNumbersLoader?: () => Promise<any>;
