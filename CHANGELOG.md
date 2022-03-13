@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.1.2
+
+- fix: check if `options` is defined in `HighlightLoader` service, closes [#219](https://github.com/MurhafSousli/ngx-highlightjs/issues/219) in [cac55cb](https://github.com/MurhafSousli/ngx-highlightjs/pull/220/commits/cac55cb39dbdc61919f9ca24a128dd9a37363ce4).
+- fix: Update deprecated usage of `throwError` in rxjs 7.
+
 ## 6.1.1
 
 - fix: RxJS peerDependency warning when installing the package, closes[#205](https://github.com/MurhafSousli/ngx-highlightjs/issues/205) in [87c8521](https://github.com/MurhafSousli/ngx-highlightjs/pull/208/commits/87c85211d47b063b0e7cc1c4254f019708ca2f2a).
