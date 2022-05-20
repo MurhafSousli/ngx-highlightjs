@@ -30,7 +30,7 @@ export class Highlight implements OnChanges {
   private _lineNumbersObs: any;
 
   // Highlight code input
-  @Input('highlight') code!: string;
+  @Input('highlight') code: string | null;
 
   // An optional array of language names and aliases restricting detection to only those languages.
   // The subset can also be set with configure, but the local parameter overrides the option if set.
