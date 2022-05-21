@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.1.3
+
+- fix typo: Angular async pipe return type is 'string|null' not 'string' as [highlight] expect, closes [#209](https://github.com/MurhafSousli/ngx-highlightjs/issues/209) in [277322f](https://github.com/MurhafSousli/ngx-highlightjs/pull/225/commits/277322fc21267d201a7bce5ea167af77ea6e6e49).
+
 ## 6.1.2
 
 - fix: check if `options` is defined in `HighlightLoader` service, closes [#219](https://github.com/MurhafSousli/ngx-highlightjs/issues/219) in [cac55cb](https://github.com/MurhafSousli/ngx-highlightjs/pull/220/commits/cac55cb39dbdc61919f9ca24a128dd9a37363ce4).
