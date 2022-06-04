@@ -146,6 +146,5 @@
         }
       }
     }
-  },
-  "defaultProject": "ngx-highlightjs-demo"
+  }
 }

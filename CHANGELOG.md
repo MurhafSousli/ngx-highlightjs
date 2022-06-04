@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.0
+
+- Update to Angular 14 in [c13d41c](https://github.com/MurhafSousli/ngx-highlightjs/pull/227/commits/c13d41cecec1f874de1785b32faa41f02ddb7cc6).
+
 ## 6.1.3
 
 - fix typo: Angular async pipe return type is 'string|null' not 'string' as [highlight] expect, closes [#209](https://github.com/MurhafSousli/ngx-highlightjs/issues/209) in [277322f](https://github.com/MurhafSousli/ngx-highlightjs/pull/225/commits/277322fc21267d201a7bce5ea167af77ea6e6e49).
