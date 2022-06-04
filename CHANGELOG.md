@@ -2,7 +2,7 @@
 
 ## 7.0.0
 
-- Update to Angular 14
+- Update to Angular 14 in [c13d41c](https://github.com/MurhafSousli/ngx-highlightjs/pull/227/commits/c13d41cecec1f874de1785b32faa41f02ddb7cc6).
 
 ## 6.1.3
 
