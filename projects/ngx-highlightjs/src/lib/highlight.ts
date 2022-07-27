@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { animationFrameScheduler } from 'rxjs';
 import { HighlightJS } from './highlight.service';
 import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightAutoResult } from './highlight.model';
+import { trustedHTMLFromStringBypass } from './trusted-types';
 
 @Directive({
   host: {
@@ -41,6 +42,7 @@ export class Highlight implements OnChanges {
 
   // Stream that emits when code string is highlighted
   @Output() highlighted = new EventEmitter<HighlightAutoResult>();
+
 
   constructor(el: ElementRef,
               private _hljs: HighlightJS,
@@ -117,7 +119,9 @@ export class Highlight implements OnChanges {
 
   private setInnerHTML(content: string | null) {
     animationFrameScheduler.schedule(() =>
-      this._nativeElement.innerHTML = this._sanitizer.sanitize(SecurityContext.HTML, content) || ''
+      this._nativeElement.innerHTML = trustedHTMLFromStringBypass(
+        this._sanitizer.sanitize(SecurityContext.HTML, content) || ''
+      )
     );
   }
 }
