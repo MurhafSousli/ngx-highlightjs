@@ -299,13 +299,11 @@ If you identify any errors in the library, or have an idea for an improvement, p
 
 ## More plugins
 
-- [ngx-scrollbar](https://github.com/MurhafSousli/ngx-ngx-scrollbar)
+- [ngx-scrollbar](https://github.com/MurhafSousli/ngx-scrollbar)
 - [ngx-sharebuttons](https://github.com/MurhafSousli/ngx-sharebuttons)
 - [ngx-gallery](https://github.com/MurhafSousli/ngx-gallery)
 - [ngx-progressbar](https://github.com/MurhafSousli/ngx-progressbar)
-- [ngx-scrollbar](https://github.com/MurhafSousli/ngx-scrollbar)
 - [ngx-bar-rating](https://github.com/MurhafSousli/ngx-bar-rating)
 - [ngx-disqus](https://github.com/MurhafSousli/ngx-disqus)
 - [ngx-wordpress](https://github.com/MurhafSousli/ngx-wordpress)
-- [ngx-highlightjs](https://github.com/MurhafSousli/ngx-highlightjs)
 - [ngx-teximate](https://github.com/MurhafSousli/ngx-teximate)

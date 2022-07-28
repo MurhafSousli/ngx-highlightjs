@@ -43,7 +43,6 @@ export class Highlight implements OnChanges {
   // Stream that emits when code string is highlighted
   @Output() highlighted = new EventEmitter<HighlightAutoResult>();
 
-
   constructor(el: ElementRef,
               private _hljs: HighlightJS,
               private _sanitizer: DomSanitizer,
