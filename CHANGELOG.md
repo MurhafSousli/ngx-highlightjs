@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.1
+
+- Add support for trusted types (CSP), in [125a55b](https://github.com/MurhafSousli/ngx-highlightjs/pull/230/commits/125a55b0c9f2345c5cf824619477c8b694eee7d0).
+
 ## 7.0.0
 
 - Update to Angular 14 in [c13d41c](https://github.com/MurhafSousli/ngx-highlightjs/pull/227/commits/c13d41cecec1f874de1785b32faa41f02ddb7cc6).
