@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { animationFrameScheduler } from 'rxjs';
 import { HighlightJS } from './highlight.service';
 import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightAutoResult } from './highlight.model';
+import { trustedHTMLFromStringBypass } from './trusted-types';
 
 @Directive({
   host: {
@@ -30,7 +31,7 @@ export class Highlight implements OnChanges {
   private _lineNumbersObs: any;
 
   // Highlight code input
-  @Input('highlight') code!: string;
+  @Input('highlight') code: string | null;
 
   // An optional array of language names and aliases restricting detection to only those languages.
   // The subset can also be set with configure, but the local parameter overrides the option if set.
@@ -51,11 +52,15 @@ export class Highlight implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      this.code &&
-      changes?.code?.currentValue &&
+      changes?.code?.currentValue !== null &&
       changes.code.currentValue !== changes.code.previousValue
     ) {
-      this.highlightElement(this.code, this.languages);
+      if (this.code) {
+        this.highlightElement(this.code, this.languages);
+      } else {
+        // If string is empty, set the text content to empty
+        this.setTextContent('');
+      }
     }
   }
 
@@ -70,7 +75,7 @@ export class Highlight implements OnChanges {
     this.setTextContent(code);
     this._hljs.highlightAuto(code, languages).subscribe((res: HighlightAutoResult) => {
       // Set highlighted code
-      this.setInnerHTML(res.value || null);
+      this.setInnerHTML(res?.value);
       // Check if user want to show line numbers
       if (this.lineNumbers && this._options && this._options.lineNumbersLoader) {
         this.addLineNumbers();
@@ -113,7 +118,9 @@ export class Highlight implements OnChanges {
 
   private setInnerHTML(content: string | null) {
     animationFrameScheduler.schedule(() =>
-      this._nativeElement.innerHTML = this._sanitizer.sanitize(SecurityContext.HTML, content) || ''
+      this._nativeElement.innerHTML = trustedHTMLFromStringBypass(
+        this._sanitizer.sanitize(SecurityContext.HTML, content) || ''
+      )
     );
   }
 }

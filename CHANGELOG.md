@@ -1,5 +1,27 @@
 # Changelog
 
+## 7.0.1
+
+- Add support for trusted types (CSP), in [125a55b](https://github.com/MurhafSousli/ngx-highlightjs/pull/230/commits/125a55b0c9f2345c5cf824619477c8b694eee7d0).
+
+## 7.0.0
+
+- Update to Angular 14 in [c13d41c](https://github.com/MurhafSousli/ngx-highlightjs/pull/227/commits/c13d41cecec1f874de1785b32faa41f02ddb7cc6).
+
+## 6.1.3
+
+- fix typo: Angular async pipe return type is 'string|null' not 'string' as [highlight] expect, closes [#209](https://github.com/MurhafSousli/ngx-highlightjs/issues/209) in [277322f](https://github.com/MurhafSousli/ngx-highlightjs/pull/225/commits/277322fc21267d201a7bce5ea167af77ea6e6e49).
+
+## 6.1.2
+
+- fix: check if `options` is defined in `HighlightLoader` service, closes [#219](https://github.com/MurhafSousli/ngx-highlightjs/issues/219) in [cac55cb](https://github.com/MurhafSousli/ngx-highlightjs/pull/220/commits/cac55cb39dbdc61919f9ca24a128dd9a37363ce4).
+- fix: Update deprecated usage of `throwError` in rxjs 7.
+
+## 6.1.1
+
+- fix: RxJS peerDependency warning when installing the package, closes[#205](https://github.com/MurhafSousli/ngx-highlightjs/issues/205) in [87c8521](https://github.com/MurhafSousli/ngx-highlightjs/pull/208/commits/87c85211d47b063b0e7cc1c4254f019708ca2f2a).
+- fix: Passing empty string to `[highlight]` input should clear the highlighted content (test cases is added for that), closes [#119](https://github.com/MurhafSousli/ngx-highlightjs/issues/119) in [2d67fb3](https://github.com/MurhafSousli/ngx-highlightjs/pull/208/commits/2d67fb34bdb268b27aab525a437b59eb2a839da2).
+
 ## 6.1.0
 
 - feat: Load highlighting theme dynamically, ability to switch between themes easily, closes [#194](https://github.com/MurhafSousli/ngx-highlightjs/issues/194) in [9422d29](https://github.com/MurhafSousli/ngx-highlightjs/commit/9422d295ab7254e5cf908c35e984efd2c801e8ec).
