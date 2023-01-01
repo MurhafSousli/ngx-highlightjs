@@ -4,12 +4,13 @@
   font-weight: 300;
 }
 
-.mat-card {
+.mat-mdc-card {
   padding: 0;
   margin-bottom: 3em;
+  overflow: hidden;
 }
 
-.mat-card-header {
+.mat-mdc-card-header {
   margin: 0 !important;
   padding: 0 !important;
   display: flex;
@@ -17,15 +18,14 @@
   height: 40px;
 }
 
-.mat-card-content {
+.mat-mdc-card-content {
   position: relative;
   overflow: hidden;
   padding: 1px;
   margin-bottom: 0;
 }
 
-.mat-card-footer {
-  padding: 10px !important;
+.mat-mdc-card-footer {
   margin: 0 !important;
   display: flex;
   flex-direction: row-reverse;
@@ -44,6 +44,10 @@
     width: 18px;
     height: 18px;
     //color: #d32f2f;
+  }
+
+  .mat-mdc-button {
+    --mdc-text-button-container-shape: 0;
   }
 }
 

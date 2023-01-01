@@ -1,9 +1,9 @@
-<mat-card *ngIf="(state$ | async) as state" color="accent">
+<mat-card *ngIf="(state$ | async) as state" >
   <!--        <mat-card-header>-->
   <!--          <mat-icon>visibility</mat-icon>-->
   <!--          Preview-->
   <!--        </mat-card-header>-->
-  <mat-card-content>
+  <mat-card-content style="padding-top: 0">
     <div class="code-wrapper hljs" [gist]="id" (gistLoad)="onGistLoad($event)">
       <mat-tab-group *ngIf="state.loaded" dynamicHeight>
         <mat-tab *ngFor="let file of state.gist?.files | keyvalue" [label]="file.value.filename">
@@ -18,7 +18,7 @@
     </div>
   </mat-card-content>
   <mat-card-footer>
-    <a class="gist-url" [href]="state?.gist?.html_url" target="_blank">
+    <a mat-button class="gist-url" [href]="state?.gist?.html_url" target="_blank">
       <mat-icon>link</mat-icon>
       Open gist on Github
     </a>
