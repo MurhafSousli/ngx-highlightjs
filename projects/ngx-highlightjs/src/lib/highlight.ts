@@ -5,11 +5,13 @@ import {
   Inject,
   Optional,
   EventEmitter,
+  PLATFORM_ID,
   OnChanges,
   SimpleChanges,
   ElementRef,
   SecurityContext
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { animationFrameScheduler } from 'rxjs';
 import { HighlightJS } from './highlight.service';
@@ -46,12 +48,14 @@ export class Highlight implements OnChanges {
   constructor(el: ElementRef,
               private _hljs: HighlightJS,
               private _sanitizer: DomSanitizer,
+              @Inject(PLATFORM_ID) private platformId: object,
               @Optional() @Inject(HIGHLIGHT_OPTIONS) private _options: HighlightOptions) {
     this._nativeElement = el.nativeElement;
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (
+      isPlatformBrowser(this.platformId) &&
       changes?.code?.currentValue !== null &&
       changes.code.currentValue !== changes.code.previousValue
     ) {

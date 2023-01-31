@@ -30,10 +30,20 @@
   justify-content: center;
 }
 
-.btn-icon img {
-  height: 38px;
-  width: 38px;
-  margin-right: 7px;
+.btn-icon {
+  ::ng-deep {
+    .mdc-button__label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+
+  img {
+    height: 28px;
+    width: 28px;
+    margin-right: 7px;
+  }
 }
 
 .footer {

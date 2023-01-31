@@ -45,7 +45,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-highlightjs-demo",
+            "outputPath": "dist/ngx-highlightjs-demo/browser",
             "index": "projects/ngx-highlightjs-demo/src/index.html",
             "main": "projects/ngx-highlightjs-demo/src/main.ts",
             "polyfills": "projects/ngx-highlightjs-demo/src/polyfills.ts",
@@ -59,7 +59,8 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "highlight.js"
+              "highlight.js",
+              "bezier-easing"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -143,6 +144,67 @@
               "devServerTarget": "ngx-highlightjs-demo:serve:production"
             }
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/ngx-highlightjs-demo/server",
+            "main": "projects/ngx-highlightjs-demo/server.ts",
+            "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.server.json",
+            "optimization": false,
+            "sourceMap": true,
+            "extractLicenses": false,
+            "vendorChunk": true
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "projects/ngx-highlightjs-demo/src/environments/environment.ts",
+                  "with": "projects/ngx-highlightjs-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true,
+              "vendorChunk": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "ngx-highlightjs-demo:build:development",
+              "serverTarget": "ngx-highlightjs-demo:server:development"
+            },
+            "production": {
+              "browserTarget": "ngx-highlightjs-demo:build:production",
+              "serverTarget": "ngx-highlightjs-demo:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ngx-highlightjs-demo:build:production",
+              "serverTarget": "ngx-highlightjs-demo:server:production"
+            },
+            "development": {
+              "browserTarget": "ngx-highlightjs-demo:build:development",
+              "serverTarget": "ngx-highlightjs-demo:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

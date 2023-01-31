@@ -22,7 +22,7 @@ import { CodeComponent } from './code/code.component';
     CodeComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     FormsModule,
     MaterialModule,

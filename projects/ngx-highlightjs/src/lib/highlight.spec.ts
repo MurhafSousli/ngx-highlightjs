@@ -1,5 +1,5 @@
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { Component, DebugElement, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import hljs from 'highlight.js';
@@ -34,7 +34,10 @@ describe('Highlight Directive', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [Highlight, TestHighlightComponent],
-      providers: [{ provide: HighlightLoader, useValue: highlightLoaderStub }]
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: HighlightLoader, useValue: highlightLoaderStub }
+      ]
     }).compileComponents();
     loader = TestBed.inject(HighlightLoader);
   }));
