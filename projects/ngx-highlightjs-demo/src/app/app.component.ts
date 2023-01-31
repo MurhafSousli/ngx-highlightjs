@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Gist } from 'ngx-highlightjs/plus';
 import { HighlightLoader } from 'ngx-highlightjs';
 
@@ -8,7 +8,7 @@ import { HighlightLoader } from 'ngx-highlightjs';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   gist!: Gist;
 
@@ -20,31 +20,89 @@ export class AppComponent {
   // Themes
   theme = 'androidstudio';
   styles = [
-    'vs',
-    'rainbow',
-    'dracula',
+    'a11y-dark',
+    'a11y-light',
+    'agate',
+    'an-old-hope',
     'androidstudio',
-    'agate',
-    'zenburn',
-    'agate',
-    'color-brewer',
+    'arduino-light',
+    'arta',
+    'ascetic',
+    'atom-one-dark-reasonable',
     'atom-one-dark',
     'atom-one-light',
-    'github',
-    'solarized-light',
-    'solarized-dark',
-    'railscasts',
-    'tomorrow',
-    'monokai-sublime',
-    'mono-blue',
+    'brown-paper',
+    'codepen-embed',
+    'color-brewer',
+    'dark',
     'default',
+    'devibeans',
+    'docco',
+    'far',
+    'felipec',
+    'foundation',
+    'github-dark-dimmed',
+    'github-dark',
+    'github',
+    'gml',
+    'googlecode',
+    'gradient-dark',
+    'gradient-light',
+    'grayscale',
+    'hybrid',
+    'idea',
+    'intellij-light',
+    'ir-black',
+    'isbl-editor-dark',
+    'isbl-editor-light',
+    'kimbie-dark',
+    'kimbie-light',
+    'lightfair',
+    'lioshi',
+    'magula',
+    'mono-blue',
+    'monokai-sublime',
+    'monokai',
+    'night-owl',
+    'nnfx-dark',
+    'nnfx-light',
+    'nord',
+    'obsidian',
+    'panda-syntax-dark',
+    'panda-syntax-light',
+    'paraiso-dark',
+    'paraiso-light',
+    'pojoaque',
+    'purebasic',
+    'qtcreator-dark',
+    'qtcreator-light',
+    'rainbow',
+    'routeros',
+    'school-book',
+    'shades-of-purple',
+    'srcery',
+    'stackoverflow-dark',
+    'stackoverflow-light',
+    'sunburst',
+    'tokyo-night-dark',
+    'tokyo-night-light',
+    'tomorrow-night-blue',
+    'tomorrow-night-bright',
+    'vs',
+    'vs2015',
+    'xcode',
+    'xt256',
   ];
 
   constructor(private hljsLoader: HighlightLoader) {
   }
 
-  changeTheme() {
-    this.hljsLoader.setTheme(`assets/styles/${ this.theme }.css`);
+  ngOnInit(): void {
+    this.changeTheme();
+  }
+
+  changeTheme(): void {
+    this.hljsLoader.setTheme(`//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/${ this.theme }.min.css`);
   }
 
 }

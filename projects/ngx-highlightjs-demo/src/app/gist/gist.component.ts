@@ -3,8 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HighlightLoader } from 'ngx-highlightjs';
 import { Gist } from 'ngx-highlightjs/plus';
-// import { Gist } from '../../../../ngx-highlightjs/plus/src/public_api';
-// import { HighlightLoader } from '../../../../ngx-highlightjs/src/public-api';
 
 @Component({
   selector: 'app-gist',

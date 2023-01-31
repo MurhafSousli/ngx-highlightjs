@@ -2,28 +2,37 @@
 @use '@angular/material' as mat;
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,500,700");
-@import '~normalize.css';
 
 @include mat.core();
 
-$primary: mat.define-palette(mat.$red-palette, 700);
-$accent: mat.define-palette(mat.$grey-palette, 800);
-$warn: mat.define-palette(mat.$lime-palette, 400);
-$theme: mat.define-dark-theme($primary, $accent, $warn);
+$my-primary: mat.define-palette(mat.$blue-gray-palette, 700);
+$my-accent: mat.define-palette(mat.$grey-palette, 800);
+$my-warn: mat.define-palette(mat.$lime-palette, 400);
 
-@include mat.all-component-themes($theme);
+$my-theme: mat.define-dark-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($my-theme);
 
 * {
   box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   height: 100vh;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  background: mat.get-color-from-palette(mat.define-palette(mat.$red-palette, 900));
+  background: mat.get-color-from-palette(mat.define-palette(mat.$blue-gray-palette, 600));
 }
 
 h3 {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 8.0.0
+
+- Update to Angular 15.
+- Fix `setTheme` does not load theme if `themePath` was not specified in the configuration, closes [#247](https://github.com/MurhafSousli/ngx-highlightjs/issues/247) in [4a74d84](https://github.com/MurhafSousli/ngx-highlightjs/pull/244/commits/4a74d84b819c5705158c8fcd3fce03bf9ecb475d).
+- Fix Angular Universal error, closes [243](https://github.com/MurhafSousli/ngx-highlightjs/issues/243) in [8815a9e](https://github.com/MurhafSousli/ngx-highlightjs/pull/244/commits/8815a9e98972bb7ea2d878a44c5806493878ad80).
+- Make Angular Universal happy with `setTheme` function `HighlightLoader` service, in [0ed6508](https://github.com/MurhafSousli/ngx-highlightjs/pull/244/commits/0ed65089780ab03690d9c4a00c84fdf5202208cf).
+- Make gist setter public, closes [#242](https://github.com/MurhafSousli/ngx-highlightjs/issues/242) in [3208b0d](https://github.com/MurhafSousli/ngx-highlightjs/pull/244/commits/3208b0df6670f75bd9ee7209b979e30bf1d9d64d).
+
 ## 7.0.1
 
 - Add support for trusted types (CSP), in [125a55b](https://github.com/MurhafSousli/ngx-highlightjs/pull/230/commits/125a55b0c9f2345c5cf824619477c8b694eee7d0).

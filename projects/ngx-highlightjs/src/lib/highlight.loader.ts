@@ -20,7 +20,7 @@ export class HighlightLoader {
   private _themeLinkElement: HTMLLinkElement;
 
   constructor(@Inject(DOCUMENT) private doc: any,
-              @Inject(PLATFORM_ID) platformId: object,
+              @Inject(PLATFORM_ID) private platformId: object,
               @Optional() @Inject(HIGHLIGHT_OPTIONS) private _options: HighlightOptions) {
     if (isPlatformBrowser(platformId)) {
       // Check if hljs is already available
@@ -45,11 +45,11 @@ export class HighlightLoader {
             return EMPTY;
           })
         ).subscribe();
-      }
 
-      // Load highlighting theme
-      if (this._options?.themePath) {
-        this.loadTheme(this._options.themePath);
+        // Load highlighting theme
+        if (this._options?.themePath) {
+          this.loadTheme(this._options.themePath);
+        }
       }
     }
   }
@@ -119,7 +119,13 @@ export class HighlightLoader {
    * Reload theme styles
    */
   setTheme(path: string): void {
-    this._themeLinkElement.href = path;
+    if (isPlatformBrowser(this.platformId)) {
+      if (this._themeLinkElement) {
+        this._themeLinkElement.href = path;
+      } else {
+        this.loadTheme(path);
+      }
+    }
   }
 
   /**

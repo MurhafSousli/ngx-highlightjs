@@ -11,7 +11,7 @@ export class GistDirective {
   }
 
   @Input()
-  private set gist(value: string) {
+  set gist(value: string) {
     if (value) {
       this._loader.getCodeFromGist(value).subscribe((gist: Gist) => this.gistLoad.emit(gist));
     }
