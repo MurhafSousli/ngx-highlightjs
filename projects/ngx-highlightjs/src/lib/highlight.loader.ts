@@ -120,7 +120,11 @@ export class HighlightLoader {
    */
   setTheme(path: string): void {
     if (isPlatformBrowser(this.platformId)) {
-      this._themeLinkElement.href = path;
+      if (this._themeLinkElement) {
+        this._themeLinkElement.href = path;
+      } else {
+        this.loadTheme(path);
+      }
     }
   }
 
