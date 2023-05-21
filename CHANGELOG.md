@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.0.0
+
+- Update to Angular 16.
+
 ## 8.0.0
 
 - Update to Angular 15.
