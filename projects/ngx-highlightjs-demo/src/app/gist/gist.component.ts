@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, map } from 'rxjs';
 import { HighlightLoader } from 'ngx-highlightjs';
 import { Gist } from 'ngx-highlightjs/plus';
 

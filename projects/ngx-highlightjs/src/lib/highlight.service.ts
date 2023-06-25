@@ -1,6 +1,5 @@
 import { Injectable, Inject, Optional } from '@angular/core';
-import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { Observable, filter, map, tap } from 'rxjs';
 import {
   HighlightConfig,
   HighlightResult,

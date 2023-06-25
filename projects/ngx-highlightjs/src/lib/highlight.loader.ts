@@ -1,7 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID, Optional } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, from, EMPTY, zip, throwError } from 'rxjs';
-import { catchError, tap, map, switchMap, filter, take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, EMPTY, from, zip, throwError, catchError, tap, map, switchMap, filter, take } from 'rxjs';
 import { HIGHLIGHT_OPTIONS, HighlightLibrary, HighlightOptions } from './highlight.model';
 
 // @dynamic
