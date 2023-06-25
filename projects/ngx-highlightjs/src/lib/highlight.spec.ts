@@ -8,7 +8,8 @@ import { HighlightLoader } from './highlight.loader';
 import { HighlightLibrary } from './highlight.model';
 
 @Component({
-  template: `<code [highlight]="code"></code>`
+  template: `<code [highlight]="code"></code>`,
+  standalone: true
 })
 class TestHighlightComponent implements OnInit {
   @Input() code: string;
@@ -33,7 +34,7 @@ describe('Highlight Directive', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [Highlight, TestHighlightComponent],
+      imports: [Highlight, TestHighlightComponent],
       providers: [
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: HighlightLoader, useValue: highlightLoaderStub }

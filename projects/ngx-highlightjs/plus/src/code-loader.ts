@@ -19,7 +19,7 @@ export class CodeLoader {
     if (this.isOAuthProvided()) {
       params = new HttpParams().set('client_id', this._options.clientId).set('client_secret', this._options.clientSecret);
     }
-    return this.fetchFile(`https://api.github.com/gists/${id}`, { params, responseType: 'json' });
+    return this.fetchFile(`https://api.github.com/gists/${ id }`, { params, responseType: 'json' });
   }
 
   /**

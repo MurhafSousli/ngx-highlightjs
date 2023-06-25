@@ -22,7 +22,8 @@ import { trustedHTMLFromStringBypass } from './trusted-types';
   host: {
     '[class.hljs]': 'true'
   },
-  selector: '[highlight]'
+  selector: '[highlight]',
+  standalone: true
 })
 export class Highlight implements OnChanges {
 

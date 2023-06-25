@@ -9,10 +9,9 @@ import { HIGHLIGHT_OPTIONS, HighlightLibrary, HighlightOptions } from './highlig
 })
 export class HighlightLoader {
   // Stream that emits when hljs library is loaded and ready to use
-  private readonly _ready = new BehaviorSubject<HighlightLibrary | null>(null);
+  private readonly _ready: BehaviorSubject<HighlightLibrary> = new BehaviorSubject<HighlightLibrary>(null);
   readonly ready: Observable<HighlightLibrary> = this._ready.asObservable().pipe(
     filter((hljs: HighlightLibrary | null) => !!hljs),
-    map((hljs: HighlightLibrary | null) => hljs as HighlightLibrary),
     take(1)
   );
 
@@ -150,7 +149,7 @@ export class HighlightLoader {
  */
 const importModule = (moduleLoader: Promise<any>): Observable<any> => {
   return from(moduleLoader).pipe(
-    filter((module: any) => !!module && !!module.default),
+    filter((module: any) => !!module?.default),
     map((module: any) => module.default)
   );
 };
