@@ -1,7 +1,7 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { GIST_OPTIONS } from 'ngx-highlightjs/plus';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { environment } from './environments/environment';
@@ -14,7 +14,6 @@ if (environment.production) {
 function bootstrap() {
   bootstrapApplication(AppComponent, {
     providers: [
-      importProvidersFrom(BrowserModule.withServerTransition({ appId: 'serverApp' })),
       provideHttpClient(),
       {
         provide: HIGHLIGHT_OPTIONS,

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FlexModule } from '@angular/flex-layout/flex';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +7,7 @@ import { FlexModule } from '@angular/flex-layout/flex';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FlexModule]
+  imports: [FlexLayoutModule]
 })
 export class HeaderComponent {
 }

@@ -151,14 +151,15 @@
             "outputPath": "dist/ngx-highlightjs-demo/server",
             "main": "projects/ngx-highlightjs-demo/server.ts",
             "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.server.json",
+            "buildOptimizer": false,
             "optimization": false,
             "sourceMap": true,
             "extractLicenses": false,
-            "vendorChunk": true,
-            "buildOptimizer": false
+            "vendorChunk": true
           },
           "configurations": {
             "production": {
+              "buildOptimizer": true,
               "outputHashing": "media",
               "fileReplacements": [
                 {
@@ -169,8 +170,7 @@
               "optimization": true,
               "sourceMap": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "vendorChunk": false
             }
           },
           "defaultConfiguration": "production"
