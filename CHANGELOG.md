@@ -9,6 +9,17 @@
 ### Breaking changes
 
 - When using `HighlightPlusModule`, you must have `provideHttpClient()` provided in your `main.ts` file in order to make the http requests work.
+-  The line numbers plugin is now included within the package, the import path should point to the new sub-package `ngx-highlightjs/line-numbers`
+```ts
+providers: [
+  {
+    provide: HIGHLIGHT_OPTIONS,
+    useValue: {
+      lineNumbersLoader: () => import('ngx-highlightjs/line-numbers')
+    }
+  }
+]
+```
 
 ## 9.0.0
 
