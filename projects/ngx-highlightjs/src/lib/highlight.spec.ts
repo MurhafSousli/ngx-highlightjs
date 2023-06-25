@@ -9,7 +9,8 @@ import { HighlightLibrary } from './highlight.model';
 
 @Component({
   template: `<code [highlight]="code"></code>`,
-  standalone: true
+  standalone: true,
+  imports: [Highlight]
 })
 class TestHighlightComponent implements OnInit {
   @Input() code: string;
@@ -32,7 +33,7 @@ describe('Highlight Directive', () => {
   const testJsCode = 'console.log(&quot;test&quot;)';
   const testHtmlCode = '<div class=&quot;my-class&quot;></div>';
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [Highlight, TestHighlightComponent],
       providers: [
@@ -41,9 +42,7 @@ describe('Highlight Directive', () => {
       ]
     }).compileComponents();
     loader = TestBed.inject(HighlightLoader);
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestHighlightComponent);
     component = fixture.componentInstance;
     directiveElement = fixture.debugElement.query(By.directive(Highlight));
