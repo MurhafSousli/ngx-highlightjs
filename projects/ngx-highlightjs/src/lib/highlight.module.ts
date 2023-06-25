@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Highlight } from './highlight';
 
 @NgModule({
-  declarations: [Highlight],
+  imports: [Highlight],
   exports: [Highlight]
 })
 export class HighlightModule {

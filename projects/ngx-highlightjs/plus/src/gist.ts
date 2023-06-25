@@ -3,7 +3,8 @@ import { CodeLoader } from './code-loader';
 import { Gist } from './gist.model';
 
 @Directive({
-  selector: '[gist]'
+  selector: '[gist]',
+  standalone: true
 })
 export class GistDirective {
 
@@ -21,7 +22,8 @@ export class GistDirective {
 }
 
 @Pipe({
-  name: 'gistFile'
+  name: 'gistFile',
+  standalone: true
 })
 export class GistFilePipe implements PipeTransform {
   transform(gist: Gist, fileName: string): string | null {

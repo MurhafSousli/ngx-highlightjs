@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import { CodeLoader } from './code-loader';
 
 @Pipe({
-  name: 'codeFromUrl'
+  name: 'codeFromUrl',
+  standalone: true
 })
 export class CodeFromUrlPipe implements PipeTransform {
 

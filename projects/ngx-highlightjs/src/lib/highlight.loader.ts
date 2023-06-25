@@ -1,7 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID, Optional } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, from, EMPTY, zip, throwError } from 'rxjs';
-import { catchError, tap, map, switchMap, filter, take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, EMPTY, from, zip, throwError, catchError, tap, map, switchMap, filter, take } from 'rxjs';
 import { HIGHLIGHT_OPTIONS, HighlightLibrary, HighlightOptions } from './highlight.model';
 
 // @dynamic
@@ -10,10 +9,9 @@ import { HIGHLIGHT_OPTIONS, HighlightLibrary, HighlightOptions } from './highlig
 })
 export class HighlightLoader {
   // Stream that emits when hljs library is loaded and ready to use
-  private readonly _ready = new BehaviorSubject<HighlightLibrary | null>(null);
+  private readonly _ready: BehaviorSubject<HighlightLibrary> = new BehaviorSubject<HighlightLibrary>(null);
   readonly ready: Observable<HighlightLibrary> = this._ready.asObservable().pipe(
     filter((hljs: HighlightLibrary | null) => !!hljs),
-    map((hljs: HighlightLibrary | null) => hljs as HighlightLibrary),
     take(1)
   );
 
@@ -34,7 +32,12 @@ export class HighlightLoader {
               // Make hljs available on window object (required for the line numbers library)
               doc.defaultView.hljs = hljs;
               // Load line numbers library
-              return this.loadLineNumbers().pipe(tap(() => this._ready.next(hljs)));
+              return this.loadLineNumbers().pipe(
+                tap((plugin: { activateLineNumbers: () => void }) => {
+                  plugin.activateLineNumbers();
+                  this._ready.next(hljs);
+                })
+              );
             } else {
               this._ready.next(hljs);
               return EMPTY;
@@ -112,7 +115,7 @@ export class HighlightLoader {
    * Import line numbers library
    */
   private loadLineNumbers(): Observable<any> {
-    return importModule(this._options.lineNumbersLoader!());
+    return from(this._options.lineNumbersLoader!());
   }
 
   /**
@@ -146,7 +149,7 @@ export class HighlightLoader {
  */
 const importModule = (moduleLoader: Promise<any>): Observable<any> => {
   return from(moduleLoader).pipe(
-    filter((module: any) => !!module && !!module.default),
+    filter((module: any) => !!module?.default),
     map((module: any) => module.default)
   );
 };

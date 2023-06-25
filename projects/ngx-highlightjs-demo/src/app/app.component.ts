@@ -1,12 +1,37 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Gist } from 'ngx-highlightjs/plus';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import { HighlightLoader } from 'ngx-highlightjs';
+import { Gist } from 'ngx-highlightjs/plus';
+import { GistComponent } from './gist/gist.component';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatToolbarModule,
+    NgScrollbarModule,
+    FlexLayoutModule,
+    HeaderComponent,
+    GistComponent
+  ]
 })
 export class AppComponent implements OnInit {
 
