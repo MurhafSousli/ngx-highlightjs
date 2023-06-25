@@ -68,7 +68,7 @@ To avoid import everything from highlight.js library, you should import each lan
 
 ```typescript
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
- 
+
 @NgModule({
   imports: [
     HighlightModule
@@ -78,7 +78,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
         coreLibraryLoader: () => import('highlight.js/lib/core'),
-        lineNumbersLoader: () => import('highlightjs-line-numbers.js'), // Optional, only if you want the line numbers
+        lineNumbersLoader: () => import('ngx-highlightjs/line-numbers'), // Optional, only if you want the line numbers
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
           css: () => import('highlight.js/lib/languages/css'),
@@ -220,7 +220,7 @@ In version >= 4, a new sub-package were added with the following features:
 
 ```typescript
 import { HighlightPlusModule } from 'ngx-highlightjs/plus';
- 
+
 @NgModule({
   imports: [
     HighlightPlusModule
