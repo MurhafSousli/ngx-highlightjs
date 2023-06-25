@@ -39,25 +39,21 @@ npm i ngx-highlightjs
 
 ## Usage
 
-### Import `HighlightModule` in your app
+### Provide the config for `HIGHLIGHT_OPTIONS` in `main.ts` file
 
 ```typescript
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
-@NgModule({
-  imports: [
-    HighlightModule
-  ],
+bootstrapApplication(AppComponent, {
   providers: [
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        fullLibraryLoader: () => import('highlight.js'),
+        fullLibraryLoader: () => import('highlight.js')
       }
     }
-  ],
+  ]
 })
-export class AppModule { }
 ```
 
 > Note: This will add highlight.js library including all languages to your bundle.
@@ -67,12 +63,9 @@ To avoid import everything from highlight.js library, you should import each lan
 ### Import only the core library and the needed highlighting languages
 
 ```typescript
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
-@NgModule({
-  imports: [
-    HighlightModule
-  ],
+bootstrapApplication(AppComponent, {
   providers: [
     {
       provide: HIGHLIGHT_OPTIONS,
@@ -87,9 +80,8 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
         themePath: 'path-to-theme.css' // Optional, and useful if you want to change the theme dynamically
       }
     }
-  ],
+  ]
 })
-export class AppModule { }
 ```
 
 ### HighlightOptions API
@@ -103,15 +95,19 @@ export class AppModule { }
 | config            | Set highlight.js config, see [configure-options](http://highlightjs.readthedocs.io/en/latest/api.html#configure-option) |
 | themePath         | The path to highlighting theme CSS file                                                                                 |
 
-> **NOTE:** Since the update of highlight.js@v10.x.x, should use `coreLibraryLoader: () => import('highlight.js/lib/core')` instead of `coreLibraryLoader: () => import('highlight.js/lib/highlight')`
+> **NOTE:** Since the update of highlight.js@v10.x.x, should
+> use `coreLibraryLoader: () => import('highlight.js/lib/core')` instead
+> of `coreLibraryLoader: () => import('highlight.js/lib/highlight')`
 
 ### Import highlighting theme
 
-**In version >=6.1.0**, A new way is available to load the theme dynamically! this is **OPTIONAL**, you can still use the traditional way.
+**In version >=6.1.0**, A new way is available to load the theme dynamically! this is **OPTIONAL**, you can still use
+the traditional way.
 
 **Dynamic way**
 
-Set the theme path in the global config, this makes it possible to change the theme on the fly, which is useful if you have light and dark theme in your app.
+Set the theme path in the global config, this makes it possible to change the theme on the fly, which is useful if you
+have light and dark theme in your app.
 
 ```ts
  providers: [
@@ -124,7 +120,9 @@ Set the theme path in the global config, this makes it possible to change the th
   }
 ]
 ```
-If you want to import it from the app dist folder, then copy the themes you want to your `assets` directory, or you can just use a CDN link to the theme.
+
+If you want to import it from the app dist folder, then copy the themes you want to your `assets` directory, or you can
+just use a CDN link to the theme.
 
 When switching between the app themes you need to call the `setTheme(path)` from the `HighlightLoader` service.
 
@@ -169,27 +167,41 @@ _[List of all available themes from highlight.js](https://github.com/isagalaev/h
 
 The following line will highlight the given code and append it to the host element
 
-```html
-<pre><code [highlight]="code"></code></pre>
+```ts
+import { HighlightModule } from 'ngx-highlightjs';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <pre><code [highlight]="code"></code></pre>
+  `,
+  standalone: true,
+  imports: [
+    HighlightModule
+  ]
+})
+export class AppComponent {
+}
 ```
 
 [Demo stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 
 ## Options
 
-| Name              | Type            | Description                                                                                                |
-|-------------------|-----------------|------------------------------------------------------------------------------------------------------------|
-| **[highlight]**   | string          | Accept code string to highlight, default `null`                                                            |
-| **[languages]**   | string[]        | An array of language names and aliases restricting auto detection to only these languages, default: `null` |
-| **[lineNumbers]** | boolean         | A flag that indicates adding line numbers to highlighted code element                                      |
+| Name              | Type                | Description                                                                                                |
+|-------------------|---------------------|------------------------------------------------------------------------------------------------------------|
+| **[highlight]**   | string              | Accept code string to highlight, default `null`                                                            |
+| **[languages]**   | string[]            | An array of language names and aliases restricting auto detection to only these languages, default: `null` |
+| **[lineNumbers]** | boolean             | A flag that indicates adding line numbers to highlighted code element                                      |
 | **(highlighted)** | HighlightAutoResult | Stream that emits the result object when element is highlighted                                            |
-
 
 ### NOTE
 
-In Angular 10, when building your project, you might get a warning `WARNING in ... CommonJS or AMD dependencies can cause optimization bailouts.`
+In Angular 10, when building your project, you might get a
+warning `WARNING in ... CommonJS or AMD dependencies can cause optimization bailouts.`
 
 To avoid this warning, add the following in your `angular.json`
+
 ```json
 {
   "projects": {
@@ -207,27 +219,32 @@ To avoid this warning, add the following in your `angular.json`
   }
 }
 ```
+
 Read more about [CommonJS dependencies configuration](https://angular.io/guide/build#configuring-commonjs-dependencies)
 
 ## Plus package
 
-In version >= 4, a new sub-package were added with the following features:
+This package contains the following features:
 
 - Highlight gists using gists API
 - Highlight code directly from URL
 
 ### Usage
 
-```typescript
-import { HighlightPlusModule } from 'ngx-highlightjs/plus';
+The plus package relies on `HttpClient` to make the http requests, ensure that it is imported in your `main.ts` file
 
-@NgModule({
-  imports: [
-    HighlightPlusModule
+```ts
+import { provideHttpClient } from '@angular/common/http';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: // ...
+    }
   ]
 })
-export class AppModule {
-}
 ```
 
 ### Highlight a gist file
@@ -238,10 +255,21 @@ export class AppModule {
 
 **Example:**
 
-```html
-<pre [gist]="gistId" (gistLoaded)="gist = $event">
-  <code [highlight]="gist | gistContent: 'main.js'"></code>
-</pre>
+```ts
+import { HighlightPlusModule } from 'ngx-highlightjs';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <pre [gist]="gistId" (gistLoaded)="gist = $event">
+      <code [highlight]="gist | gistContent: 'main.js'"></code>
+    </pre>
+  `,
+  standalone: true,
+  imports: [HighlightPlusModule]
+})
+export class AppComponent {
+}
 ```
 
 ### Highlight all gist files
@@ -250,12 +278,23 @@ To loop over `gist?.files`, use `keyvalue` pipe to pass file name into `gistCont
 
 **Example:**
 
-```html
-<ng-container [gist]="gistId" (gistLoaded)="gist = $event">
-  <pre *ngFor="let file of gist?.files | keyvalue">
-    <code [highlight]="gist | gistContent: file.key"></code>
-  </pre>
-</ng-container>
+```ts
+import { HighlightPlusModule } from 'ngx-highlightjs';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-container [gist]="gistId" (gistLoaded)="gist = $event">
+      <pre *ngFor="let file of gist?.files | keyvalue">
+        <code [highlight]="gist | gistContent: file.key"></code>
+      </pre>
+    </ng-container>
+  `,
+  standalone: true,
+  imports: [HighlightPlusModule, CommonModule]
+})
+export class AppComponent {
+}
 ```
 
 ### Highlight code from URL directly
@@ -264,11 +303,48 @@ Use the pipe `codeFromUrl` with the `async` pipe together to get the code text f
 
 **Example:**
 
-```html
-<pre>
-  <code [highlight]="codeUrl | codeFromUrl | async"></code>
-</pre>
-``` 
+```ts
+import { HighlightPlusModule } from 'ngx-highlightjs';
+
+@Component({
+  selector: 'app-root',
+  template: `
+   <pre>
+     <code [highlight]="codeUrl | codeFromUrl | async"></code>
+   </pre>
+  `,
+  standalone: true,
+  imports: [HighlightPlusModule, CommonModule]
+})
+export class AppComponent {
+}
+```
+
+### Providing Gist API secret (Optional)
+
+To take full advantage of the gist loader feature, the package provides `GIST_OPTIONS` token to set your `clientId`
+and `clientSecret` with the gist http requests, you can provide it in `main.ts` like in this example:
+
+```typescript
+import { GIST_OPTIONS } from 'ngx-highlightjs/plus'
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: // ...
+    },
+    {
+      provide: GIST_OPTIONS,
+      useValue: {
+        clientId: 'CLIENT_ID',
+        clientSecret: 'CLIENT_SECRET'
+      }
+    },
+  ]
+})
+```
 
 <a name="development"/>
 
@@ -284,7 +360,8 @@ $ ng build ngx-highlightjs
 
 ## Issues
 
-If you identify any errors in the library, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/ngx-highlightjs/issues).
+If you identify any errors in the library, or have an idea for an improvement, please open
+an [issue](https://github.com/MurhafSousli/ngx-highlightjs/issues).
 
 <a name="author"/>
 
