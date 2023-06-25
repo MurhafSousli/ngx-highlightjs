@@ -34,7 +34,12 @@ export class HighlightLoader {
               // Make hljs available on window object (required for the line numbers library)
               doc.defaultView.hljs = hljs;
               // Load line numbers library
-              return this.loadLineNumbers().pipe(tap(() => this._ready.next(hljs)));
+              return this.loadLineNumbers().pipe(
+                tap((plugin: { activateLineNumbers: () => void }) => {
+                  plugin.activateLineNumbers();
+                  this._ready.next(hljs);
+                })
+              );
             } else {
               this._ready.next(hljs);
               return EMPTY;
@@ -112,7 +117,7 @@ export class HighlightLoader {
    * Import line numbers library
    */
   private loadLineNumbers(): Observable<any> {
-    return importModule(this._options.lineNumbersLoader!());
+    return from(this._options.lineNumbersLoader!());
   }
 
   /**

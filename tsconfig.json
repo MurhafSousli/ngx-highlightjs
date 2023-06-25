@@ -24,6 +24,9 @@
       ],
       "ngx-highlightjs/plus": [
         "projects/ngx-highlightjs/plus/src/public_api"
+      ],
+      "ngx-highlightjs/line-numbers": [
+        "projects/ngx-highlightjs/line-numbers/src/public_api"
       ]
     },
     "useDefineForClassFields": false

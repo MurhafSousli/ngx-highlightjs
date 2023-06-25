@@ -35,7 +35,7 @@ import { CodeComponent } from './code/code.component';
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
         // fullLibraryLoader: () => import('highlight.js'),
-        lineNumbersLoader: () => import('highlightjs-line-numbers.js'),
+        lineNumbersLoader: () => import('ngx-highlightjs/line-numbers'),
         coreLibraryLoader: () => import('highlight.js/lib/core'),
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
