@@ -1,5 +1,15 @@
 # Changelog
 
+## 10.0.0
+
+- feat: Migrate to Angular standalone components, closes [#260](https://github.com/MurhafSousli/ngx-highlightjs/issues/260) in [cadcd11](https://github.com/MurhafSousli/ngx-highlightjs/pull/261/commits/cadcd11564adc23bda9d9a0f2bc6b9d26651bee1).
+- fix: Add line-numbers as a sub package, closes [#234](https://github.com/MurhafSousli/ngx-highlightjs/issues/234) in [7f8f551](https://github.com/MurhafSousli/ngx-highlightjs/pull/261/commits/7f8f551a044d6f783ecfa98e2d61299ea41f0294).
+- refactor: Update deprecated rxjs usage.
+
+### Breaking changes
+
+- When using `HighlightPlusModule`, you must have `provideHttpClient()` provided in your `main.ts` file in order to make the http requests work.
+
 ## 9.0.0
 
 - Update to Angular 16.

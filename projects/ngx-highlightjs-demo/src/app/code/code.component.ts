@@ -1,16 +1,17 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { HighlightModule } from 'ngx-highlightjs';
 
 @Component({
-  selector: 'app-code',
-  template: `
-<!--    <ng-scrollbar track="horizontal" appearance="standard" pointerEventsMethod="scrollbar">-->
+    selector: 'app-code',
+    template: `
       <pre>
         <code [highlight]="code" [lineNumbers]="lineNumbers" [languages]="languages"></code>
       </pre>
-<!--    </ng-scrollbar>-->
   `,
-  styleUrls: ['./code.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./code.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [HighlightModule]
 })
 export class CodeComponent {
   @Input() code!: string;

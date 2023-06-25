@@ -1,22 +1,51 @@
 import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { AppModule } from './app/app.module';
+import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { GIST_OPTIONS } from 'ngx-highlightjs/plus';
+import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { environment } from './environments/environment';
+import { AppComponent } from './app/app.component';
 
 if (environment.production) {
   enableProdMode();
 }
 
 function bootstrap() {
-     platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
-   };
+  bootstrapApplication(AppComponent, {
+    providers: [
+      provideHttpClient(),
+      {
+        provide: HIGHLIGHT_OPTIONS,
+        useValue: {
+          // fullLibraryLoader: () => import('highlight.js'),
+          lineNumbersLoader: () => import('ngx-highlightjs/line-numbers'),
+          coreLibraryLoader: () => import('highlight.js/lib/core'),
+          languages: {
+            typescript: () => import('highlight.js/lib/languages/typescript'),
+            css: () => import('highlight.js/lib/languages/css'),
+            xml: () => import('highlight.js/lib/languages/xml')
+          },
+          themePath: 'assets/styles/androidstudio.css'
+        }
+      },
+      {
+        provide: GIST_OPTIONS,
+        useValue: {
+          // clientId:
+          // clientSecret:
+        }
+      },
+      provideAnimations()
+    ]
+  })
+    .catch(err => console.error(err));
+};
 
 
- if (document.readyState === 'complete') {
-   bootstrap();
- } else {
-   document.addEventListener('DOMContentLoaded', bootstrap);
- }
- 
+if (document.readyState === 'complete') {
+  bootstrap();
+} else {
+  document.addEventListener('DOMContentLoaded', bootstrap);
+}
+

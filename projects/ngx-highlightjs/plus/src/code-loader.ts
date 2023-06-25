@@ -1,7 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, EMPTY } from 'rxjs';
-import { catchError, publishReplay, refCount } from 'rxjs/operators';
+import { Observable, EMPTY, catchError, shareReplay } from 'rxjs';
 import { Gist, GIST_OPTIONS, GistOptions } from './gist.model';
 
 @Injectable({
@@ -20,7 +19,7 @@ export class CodeLoader {
     if (this.isOAuthProvided()) {
       params = new HttpParams().set('client_id', this._options.clientId).set('client_secret', this._options.clientSecret);
     }
-    return this.fetchFile(`https://api.github.com/gists/${id}`, { params, responseType: 'json' });
+    return this.fetchFile(`https://api.github.com/gists/${ id }`, { params, responseType: 'json' });
   }
 
   /**
@@ -43,8 +42,7 @@ export class CodeLoader {
     if (isUrl(url)) {
       return this._http.get(url, options).pipe(
         // Catch response
-        publishReplay(1),
-        refCount(),
+        shareReplay(1),
         catchError((err: Error) => {
           console.error('[NgxHighlight]: Unable to fetch the URL!', err.message);
           return EMPTY;
