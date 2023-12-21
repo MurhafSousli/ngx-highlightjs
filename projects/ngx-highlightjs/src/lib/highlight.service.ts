@@ -7,7 +7,7 @@ import {
   HighlightOptions,
   HIGHLIGHT_OPTIONS,
   HighlightAutoResult
-} from './highlight.model';
+} from 'ngx-highlightjs/model';
 import { HighlightLoader } from './highlight.loader';
 
 @Injectable({

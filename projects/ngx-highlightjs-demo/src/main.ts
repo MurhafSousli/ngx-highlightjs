@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { GIST_OPTIONS } from 'ngx-highlightjs/plus';
-import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs/model';
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 

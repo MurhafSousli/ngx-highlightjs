@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import hljs from 'highlight.js';
 import { Highlight } from './highlight';
 import { HighlightLoader } from './highlight.loader';
-import { HighlightLibrary } from './highlight.model';
+import { HighlightLibrary } from 'ngx-highlightjs/model';
 
 @Component({
   template: `<code [highlight]="code"></code>`,
