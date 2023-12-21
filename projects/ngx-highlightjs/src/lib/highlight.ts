@@ -15,7 +15,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { animationFrameScheduler } from 'rxjs';
 import { HighlightJS } from './highlight.service';
-import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightAutoResult } from './highlight.model';
+import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightAutoResult } from 'ngx-highlightjs/model';
 import { trustedHTMLFromStringBypass } from './trusted-types';
 
 @Directive({
