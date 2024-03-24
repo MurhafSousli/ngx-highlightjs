@@ -1,5 +1,24 @@
 # Changelog
 
+## 11.0.0-beta.1
+
+- Update to Angular 17.
+- feat: Add `provideHighlightOptions` function to easily override the default options.
+- feat: Add `provideGistOptions` function in the plus package to easily set gist id and secret into the HTTP requests.
+- feat: Add `startFrom` and `singleLine` inputs to `lineNumbers` directive, closes [#274](https://github.com/MurhafSousli/ngx-highlightjs/issues/274).
+- feat: Make `codeFromUrl` pipe supports loading of relative URLs, closes [#224](https://github.com/MurhafSousli/ngx-highlightjs/issues/224).
+- feat: Add `highlight` directive which uses a different function and provide different options, closes [#275](https://github.com/MurhafSousli/ngx-highlightjs/issues/275).
+- feat: Add `lineNumbersOptions` property to set the default line number options.
+- refactor: Rename the previous `highlight` directive to `highlightAuto`.
+- refactor: split line numbers functionality into its own directive.
+- refactor: Use `highlight.js` original interfaces.
+- enhance: Allow loading theme from global options if `highlight.js` was imported externally.
+
+### Breaking changes
+
+- The `highlight` directive now uses a different function from highlight.js which requires selecting a language.
+- The `highlightAuto` directive automatically detects the language and highlights the code.
+
 ## 10.0.0
 
 - feat: Migrate to Angular standalone components, closes [#260](https://github.com/MurhafSousli/ngx-highlightjs/issues/260) in [cadcd11](https://github.com/MurhafSousli/ngx-highlightjs/pull/261/commits/cadcd11564adc23bda9d9a0f2bc6b9d26651bee1).

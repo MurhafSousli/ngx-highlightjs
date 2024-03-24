@@ -6,9 +6,13 @@
       <img src="assets/github-logo.svg"> GITHUB
     </a>
   </mat-toolbar>
-  <ng-scrollbar pointerEventsMethod="scrollbar" autoHeightDisabled="true">
+  <ng-scrollbar>
 
-    <app-header></app-header>
+<!--    <code [highlight]="'assets/example-code.ts' | codeFromUrl | async"-->
+<!--          language="ts"-->
+<!--          ignoreIllegals></code>-->
+
+    <app-header/>
 
     <div class="container">
 
@@ -20,10 +24,10 @@
 
       <h3>Ngx-Highlight Usage</h3>
       <!-- PREVIEW -->
-      <app-gist id="de9decbcd2539d5ba399aedc598bcaa6"></app-gist>
+      <app-gist id="de9decbcd2539d5ba399aedc598bcaa6"/>
 
       <h3>Ngx-Highlight Plus Usage</h3>
-      <app-gist [id]="gistId"></app-gist>
+      <app-gist [id]="gistId"/>
 
       <div class="footer">
         <div class="author">Made with

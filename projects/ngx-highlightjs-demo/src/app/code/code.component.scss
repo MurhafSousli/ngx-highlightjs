@@ -3,17 +3,6 @@
   overflow: auto;
 }
 
-//.ng-scrollbar {
-//  --scrollbar-thumb-color: orange;
-//  --scrollbar-track-color: rgba(0, 0, 0, 0.2);
-//
-//  ::ng-deep {
-//    .scrollbar-control {
-//      background-color: #545454;
-//    }
-//  }
-//}
-
 pre {
   display: flex;
   margin-top: 0;
@@ -26,9 +15,61 @@ pre {
     font-size: 14px;
     min-height: 100%;
     padding: 1em 1.2em;
+    overflow-x: unset;
+    overflow-y: unset;
 
     &.hljs-line-numbers {
       padding: 0;
+    }
+  }
+}
+
+:host {
+  ::ng-deep {
+    .hljs {
+      padding: 0;
+      border: none;
+      transition: border ease 1s;
+    }
+
+    .hljs-ln {
+      tr {
+        &:first-child td {
+          padding-top: 10px !important;
+        }
+
+        &:last-child td {
+          padding-bottom: 10px !important;
+        }
+      }
+    }
+
+    table, tbody, tr, td {
+      background: inherit;
+    }
+
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+      background: inherit;
+    }
+
+    /* for block of numbers */
+    td.hljs-ln-numbers {
+      position: sticky;
+      left: 0;
+      user-select: none;
+      text-align: center;
+      color: #cccccc6b;
+      border-right: 1px solid #cccccc1c;
+      vertical-align: top;
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+    }
+
+    /* for block of code */
+    td.hljs-ln-code {
+      padding-left: 10px !important;
     }
   }
 }

@@ -1,7 +1,11 @@
 .loading-label {
-  margin: 2em 0;
   text-align: center;
   font-weight: 300;
+  place-items: center;
+  place-content: center;
+  height: 60px;
+  display: flex;
+  margin: 0;
 }
 
 .mat-mdc-card {
@@ -21,7 +25,8 @@
 .mat-mdc-card-content {
   position: relative;
   overflow: hidden;
-  padding: 1px;
+  padding: 1px !important;
+  margin-top: 0;
   margin-bottom: 0;
 }
 
@@ -57,42 +62,4 @@
 
 .code-wrapper {
   border-radius: 3px 3px 0 0;
-}
-
-::ng-deep {
-  .hljs {
-    padding: 0;
-    border: none;
-    transition: border ease 1s;
-  }
-
-  .hljs-ln {
-    padding: 10px 0;
-
-    tr {
-      &:first-child td {
-        padding-top: 10px !important;
-      }
-
-      &:last-child td {
-        padding-bottom: 10px !important;
-      }
-    }
-  }
-
-  /* for block of numbers */
-  td.hljs-ln-numbers {
-    user-select: none;
-    text-align: center;
-    color: #cccccc6b;
-    border-right: 1px solid #cccccc1c;
-    vertical-align: top;
-    padding-right: 10px !important;
-    padding-left: 10px !important;
-  }
-
-  /* for block of code */
-  td.hljs-ln-code {
-    padding-left: 10px !important;
-  }
 }

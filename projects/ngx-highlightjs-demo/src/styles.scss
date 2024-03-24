@@ -1,8 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,500,700");
-
 @include mat.core();
 
 $my-primary: mat.define-palette(mat.$blue-gray-palette, 700);
@@ -39,4 +36,13 @@ h3 {
   color: white;
   font-weight: 300;
   margin: 3em 0 1.5em;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+ng-scrollbar.ng-scrollbar {
+  --scrollbar-thumb-color: orange;
+  --scrollbar-track-color: rgb(0 0 0 / 20%);
+  --scrollbar-hover-thickness: 10;
 }

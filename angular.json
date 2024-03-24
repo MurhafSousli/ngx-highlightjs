@@ -12,21 +12,36 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.json",
             "project": "projects/ngx-highlightjs/ng-package.json"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-highlightjs/src/test.ts",
             "tsConfig": "projects/ngx-highlightjs/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "karmaConfig": "projects/ngx-highlightjs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngx-highlightjs/**/*.ts",
+              "projects/ngx-highlightjs/**/*.html"
+            ]
           }
         }
       }
@@ -43,13 +58,16 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ngx-highlightjs-demo/browser",
+            "outputPath": "dist/ngx-highlightjs-demo",
             "index": "projects/ngx-highlightjs-demo/src/index.html",
-            "main": "projects/ngx-highlightjs-demo/src/main.ts",
-            "polyfills": "projects/ngx-highlightjs-demo/src/polyfills.ts",
+            "browser": "projects/ngx-highlightjs-demo/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "projects/ngx-highlightjs-demo/src/favicon.ico",
               "projects/ngx-highlightjs-demo/src/assets"
@@ -59,70 +77,71 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "highlight.js",
-              "bezier-easing"
+              "highlight.js"
             ],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "server": "projects/ngx-highlightjs-demo/src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "projects/ngx-highlightjs-demo/server.ts"
+            }
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/ngx-highlightjs-demo/src/environments/environment.ts",
-                  "with": "projects/ngx-highlightjs-demo/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/ngx-highlightjs-demo/src/environments/environment.ts",
+                  "with": "projects/ngx-highlightjs-demo/src/environments/environment.development.ts"
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "ngx-highlightjs-demo:build"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-highlightjs-demo:build:production"
+              "buildTarget": "ngx-highlightjs-demo:build:production"
+            },
+            "development": {
+              "buildTarget": "ngx-highlightjs-demo:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-highlightjs-demo:build"
+            "buildTarget": "ngx-highlightjs-demo:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-highlightjs-demo/src/test.ts",
-            "polyfills": "projects/ngx-highlightjs-demo/src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-highlightjs-demo/karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "projects/ngx-highlightjs-demo/src/favicon.ico",
               "projects/ngx-highlightjs-demo/src/assets"
@@ -132,83 +151,13 @@
             ],
             "scripts": []
           }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/ngx-highlightjs-demo/e2e/protractor.conf.js",
-            "devServerTarget": "ngx-highlightjs-demo:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ngx-highlightjs-demo:serve:production"
-            }
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/ngx-highlightjs-demo/server",
-            "main": "projects/ngx-highlightjs-demo/server.ts",
-            "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.server.json",
-            "buildOptimizer": false,
-            "optimization": false,
-            "sourceMap": true,
-            "extractLicenses": false,
-            "vendorChunk": true
-          },
-          "configurations": {
-            "production": {
-              "buildOptimizer": true,
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "projects/ngx-highlightjs-demo/src/environments/environment.ts",
-                  "with": "projects/ngx-highlightjs-demo/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "sourceMap": false,
-              "extractLicenses": true,
-              "vendorChunk": false
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "ngx-highlightjs-demo:build:development",
-              "serverTarget": "ngx-highlightjs-demo:server:development"
-            },
-            "production": {
-              "browserTarget": "ngx-highlightjs-demo:build:production",
-              "serverTarget": "ngx-highlightjs-demo:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ngx-highlightjs-demo:build:production",
-              "serverTarget": "ngx-highlightjs-demo:server:production"
-            },
-            "development": {
-              "browserTarget": "ngx-highlightjs-demo:build:development",
-              "serverTarget": "ngx-highlightjs-demo:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

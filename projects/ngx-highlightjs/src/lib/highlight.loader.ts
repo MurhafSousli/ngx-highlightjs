@@ -1,36 +1,53 @@
-import { Injectable, Inject, PLATFORM_ID, Optional } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, EMPTY, from, zip, throwError, catchError, tap, map, switchMap, filter, take } from 'rxjs';
-import { HIGHLIGHT_OPTIONS, HighlightLibrary, HighlightOptions } from './highlight.model';
+import {
+  Observable,
+  BehaviorSubject,
+  EMPTY,
+  tap,
+  map,
+  from,
+  filter,
+  forkJoin,
+  switchMap,
+  throwError,
+  catchError,
+  firstValueFrom
+} from 'rxjs';
+import { HIGHLIGHT_OPTIONS, HighlightJSOptions } from './highlight.model';
+import type { HLJSApi } from 'highlight.js';
+import { LoaderErrors } from './loader-errors';
 
-// @dynamic
 @Injectable({
   providedIn: 'root'
 })
 export class HighlightLoader {
+
+  private document: Document = inject(DOCUMENT);
+  private isPlatformBrowser: boolean = isPlatformBrowser(inject(PLATFORM_ID));
+  private options: HighlightJSOptions = inject(HIGHLIGHT_OPTIONS, { optional: true });
+
   // Stream that emits when hljs library is loaded and ready to use
-  private readonly _ready: BehaviorSubject<HighlightLibrary> = new BehaviorSubject<HighlightLibrary>(null);
-  readonly ready: Observable<HighlightLibrary> = this._ready.asObservable().pipe(
-    filter((hljs: HighlightLibrary | null) => !!hljs),
-    take(1)
-  );
+  private readonly _ready: BehaviorSubject<HLJSApi> = new BehaviorSubject<HLJSApi>(null);
+
+  readonly ready: Promise<HLJSApi> = firstValueFrom(this._ready.asObservable().pipe(
+    filter((hljs: HLJSApi) => !!hljs),
+  ));
 
   private _themeLinkElement: HTMLLinkElement;
 
-  constructor(@Inject(DOCUMENT) private doc: any,
-              @Inject(PLATFORM_ID) private platformId: object,
-              @Optional() @Inject(HIGHLIGHT_OPTIONS) private _options: HighlightOptions) {
-    if (isPlatformBrowser(platformId)) {
+  constructor() {
+    if (this.isPlatformBrowser) {
       // Check if hljs is already available
-      if (doc.defaultView.hljs) {
-        this._ready.next(doc.defaultView.hljs);
+      if (this.document.defaultView['hljs']) {
+        this._ready.next(this.document.defaultView['hljs']);
       } else {
         // Load hljs library
         this._loadLibrary().pipe(
-          switchMap((hljs: HighlightLibrary) => {
-            if (this._options && this._options.lineNumbersLoader) {
+          switchMap((hljs: HLJSApi) => {
+            if (this.options?.lineNumbersLoader) {
               // Make hljs available on window object (required for the line numbers library)
-              doc.defaultView.hljs = hljs;
+              this.document.defaultView['hljs'] = hljs;
               // Load line numbers library
               return this.loadLineNumbers().pipe(
                 tap((plugin: { activateLineNumbers: () => void }) => {
@@ -38,21 +55,23 @@ export class HighlightLoader {
                   this._ready.next(hljs);
                 })
               );
-            } else {
+            }
+            else {
               this._ready.next(hljs);
               return EMPTY;
             }
           }),
           catchError((e: any) => {
             console.error('[HLJS] ', e);
+            this._ready.error(e);
             return EMPTY;
           })
         ).subscribe();
 
-        // Load highlighting theme
-        if (this._options?.themePath) {
-          this.loadTheme(this._options.themePath);
-        }
+      }
+      // Load highlighting theme
+      if (this.options?.themePath) {
+        this.loadTheme(this.options.themePath);
       }
     }
   }
@@ -61,68 +80,68 @@ export class HighlightLoader {
    * Lazy-Load highlight.js library
    */
   private _loadLibrary(): Observable<any> {
-    if (this._options) {
-      if (this._options.fullLibraryLoader && this._options.coreLibraryLoader) {
-        return throwError(() => 'The full library and the core library were imported, only one of them should be imported!');
+    if (this.options) {
+      if (this.options.fullLibraryLoader && this.options.coreLibraryLoader) {
+        return throwError(() => LoaderErrors.FULL_WITH_CORE_LIBRARY_IMPORTS);
       }
-      if (this._options.fullLibraryLoader && this._options.languages) {
-        return throwError(() => 'The highlighting languages were imported they are not needed!');
+      if (this.options.fullLibraryLoader && this.options.languages) {
+        return throwError(() => LoaderErrors.FULL_WITH_LANGUAGE_IMPORTS);
       }
-      if (this._options.coreLibraryLoader && !this._options.languages) {
-        return throwError(() => 'The highlighting languages were not imported!');
+      if (this.options.coreLibraryLoader && !this.options.languages) {
+        return throwError(() => LoaderErrors.CORE_WITHOUT_LANGUAGE_IMPORTS);
       }
-      if (!this._options.coreLibraryLoader && this._options.languages) {
-        return throwError(() => 'The core library was not imported!');
+      if (!this.options.coreLibraryLoader && this.options.languages) {
+        return throwError(() => LoaderErrors.LANGUAGE_WITHOUT_CORE_IMPORTS);
       }
-      if (this._options.fullLibraryLoader) {
+      if (this.options.fullLibraryLoader) {
         return this.loadFullLibrary();
       }
-      if (this._options.coreLibraryLoader && this._options.languages && Object.keys(this._options.languages).length) {
-        return this.loadCoreLibrary().pipe(switchMap((hljs: HighlightLibrary) => this._loadLanguages(hljs)));
+      if (this.options.coreLibraryLoader && this.options.languages && Object.keys(this.options.languages).length) {
+        return this.loadCoreLibrary().pipe(switchMap((hljs: HLJSApi) => this._loadLanguages(hljs)));
       }
     }
-    return throwError(() => 'Highlight.js library was not imported!');
+    return throwError(() => LoaderErrors.NO_FULL_AND_NO_CORE_IMPORTS);
   }
 
   /**
    * Lazy-load highlight.js languages
    */
-  private _loadLanguages(hljs: HighlightLibrary): Observable<any> {
-    const languages = Object.entries(this._options.languages).map(([langName, langLoader]: [string, () => Promise<any>]) =>
+  private _loadLanguages(hljs: HLJSApi): Observable<HLJSApi> {
+    const languages: Observable<any>[] = Object.entries(this.options.languages).map(([langName, langLoader]: [string, () => Promise<any>]) =>
       importModule(langLoader()).pipe(
         tap((langFunc: any) => hljs.registerLanguage(langName, langFunc))
       )
     );
-    return zip(...languages).pipe(map(() => hljs));
+    return forkJoin(languages).pipe(map(() => hljs));
   }
 
 
   /**
    * Import highlight.js core library
    */
-  private loadCoreLibrary(): Observable<HighlightLibrary> {
-    return importModule(this._options.coreLibraryLoader!());
+  private loadCoreLibrary(): Observable<HLJSApi> {
+    return importModule(this.options.coreLibraryLoader!());
   }
 
   /**
    * Import highlight.js library with all languages
    */
-  private loadFullLibrary(): Observable<HighlightLibrary> {
-    return importModule(this._options.fullLibraryLoader!());
+  private loadFullLibrary(): Observable<HLJSApi> {
+    return importModule(this.options.fullLibraryLoader!());
   }
 
   /**
    * Import line numbers library
    */
   private loadLineNumbers(): Observable<any> {
-    return from(this._options.lineNumbersLoader!());
+    return from(this.options.lineNumbersLoader!());
   }
 
   /**
    * Reload theme styles
    */
   setTheme(path: string): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.isPlatformBrowser) {
       if (this._themeLinkElement) {
         this._themeLinkElement.href = path;
       } else {
@@ -135,12 +154,12 @@ export class HighlightLoader {
    * Load theme
    */
   private loadTheme(path: string): void {
-    this._themeLinkElement = this.doc.createElement('link');
+    this._themeLinkElement = this.document.createElement('link');
     this._themeLinkElement.href = path;
     this._themeLinkElement.type = 'text/css';
     this._themeLinkElement.rel = 'stylesheet';
     this._themeLinkElement.media = 'screen,print';
-    this.doc.head.appendChild(this._themeLinkElement);
+    this.document.head.appendChild(this._themeLinkElement);
   }
 }
 

@@ -17,6 +17,9 @@ jobs:
         run: npm ci
       - name: Build demo
         run: npm run build-demo
+        env:
+          GIST_CLIENT_ID: ${{ secrets.GIST_CLIENT_ID }}
+          GIST_CLIENT_SECRET: ${{ secrets.GIST_CLIENT_SECRET }}
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1.11
         with:

@@ -1,17 +1,17 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { HighlightLoader } from 'ngx-highlightjs';
-import { Gist } from 'ngx-highlightjs/plus';
+import { Highlight, HighlightLoader } from 'ngx-highlightjs';
+import { CodeFromUrlPipe, Gist } from 'ngx-highlightjs/plus';
 import { GistComponent } from './gist/gist.component';
 import { HeaderComponent } from './header/header.component';
+import { CodeComponent } from './code/code.component';
 
 @Component({
   selector: 'app-root',
@@ -28,23 +28,34 @@ import { HeaderComponent } from './header/header.component';
     MatButtonModule,
     MatToolbarModule,
     NgScrollbarModule,
-    FlexLayoutModule,
     HeaderComponent,
-    GistComponent
+    GistComponent,
+    CodeComponent,
+    Highlight,
+    CodeFromUrlPipe
   ]
 })
 export class AppComponent implements OnInit {
 
+  private readonly hljsLoader: HighlightLoader = inject(HighlightLoader);
+
   gist!: Gist;
 
-  codeUrl = 'https://raw.githubusercontent.com/MurhafSousli/ngx-highlightjs/master/README.md';
+  codeUrl: string = 'https://raw.githubusercontent.com/MurhafSousli/ngx-highlightjs/master/README.md';
+
+  testCode: string = `
+  var testString = @$"
+   Some multi-
+   line text
+  ";
+  `
 
   // Gist id
-  gistId = '6fd1b8fe940ded9f792335addb60c809';
+  gistId: string = '6fd1b8fe940ded9f792335addb60c809';
 
   // Themes
-  theme = 'androidstudio';
-  styles = [
+  theme: string = 'androidstudio';
+  styles: string[] = [
     'a11y-dark',
     'a11y-light',
     'agate',
@@ -118,9 +129,6 @@ export class AppComponent implements OnInit {
     'xcode',
     'xt256',
   ];
-
-  constructor(private hljsLoader: HighlightLoader) {
-  }
 
   ngOnInit(): void {
     this.changeTheme();

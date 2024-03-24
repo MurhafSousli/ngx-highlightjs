@@ -1,5 +1,6 @@
 :host,
 .wrapper {
+  height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -15,11 +16,6 @@
 
 .ng-scrollbar {
   flex: 1;
-  --scrollbar-thumb-color: orange;
-  --scrollbar-track-color: rgba(0, 0, 0, 0.2);
-  --scrollbar-size: 7px;
-  --scrollbar-padding: 5px;
-  --scrollbar-hover-size: 10px;
 }
 
 .mat-toolbar {

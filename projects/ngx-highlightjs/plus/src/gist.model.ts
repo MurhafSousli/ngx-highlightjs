@@ -1,11 +1,27 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Provider } from '@angular/core';
+
+
+export function isUrl(url: string): boolean {
+  const regExp: RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!]))?/;
+  return regExp.test(url);
+}
 
 export interface GistOptions {
   clientId: string;
   clientSecret: string;
 }
 
-export const GIST_OPTIONS = new InjectionToken<GistOptions>('GIST_OPTIONS');
+export const GIST_OPTIONS: InjectionToken<GistOptions> = new InjectionToken<GistOptions>('GIST_OPTIONS');
+
+export function provideGistOptions(options: GistOptions): Provider[]  {
+  return [
+    {
+      provide: GIST_OPTIONS,
+      useValue: options
+    }
+  ]
+}
+
 
 interface Owner {
   login: string;

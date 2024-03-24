@@ -1,15 +1,14 @@
-import { Directive, Pipe, Input, Output, PipeTransform, EventEmitter } from '@angular/core';
+import { Directive, Pipe, Input, Output, PipeTransform, EventEmitter, inject } from '@angular/core';
 import { CodeLoader } from './code-loader';
 import { Gist } from './gist.model';
 
 @Directive({
-  selector: '[gist]',
-  standalone: true
+  standalone: true,
+  selector: '[gist]'
 })
 export class GistDirective {
 
-  constructor(private _loader: CodeLoader) {
-  }
+  private _loader: CodeLoader = inject(CodeLoader);
 
   @Input()
   set gist(value: string) {
@@ -18,12 +17,12 @@ export class GistDirective {
     }
   }
 
-  @Output() gistLoad = new EventEmitter<Gist>();
+  @Output() gistLoad: EventEmitter<Gist> = new EventEmitter<Gist>();
 }
 
 @Pipe({
-  name: 'gistFile',
-  standalone: true
+  standalone: true,
+  name: 'gistFile'
 })
 export class GistFilePipe implements PipeTransform {
   transform(gist: Gist, fileName: string): string | null {
