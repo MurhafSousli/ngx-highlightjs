@@ -1,14 +1,16 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, EMPTY, catchError, shareReplay } from 'rxjs';
-import { Gist, GIST_OPTIONS, GistOptions } from './gist.model';
+import { Gist, GIST_OPTIONS, GistOptions, isUrl } from './gist.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CodeLoader {
-  constructor(private _http: HttpClient, @Optional() @Inject(GIST_OPTIONS) private _options: GistOptions) {
-  }
+
+  private _http: HttpClient = inject(HttpClient);
+
+  private _options: GistOptions = inject(GIST_OPTIONS, { optional: true });
 
   /**
    * Get plus code
@@ -16,7 +18,7 @@ export class CodeLoader {
    */
   getCodeFromGist(id: string): Observable<Gist> {
     let params!: HttpParams;
-    if (this.isOAuthProvided()) {
+    if (this._options?.clientId && this._options?.clientSecret) {
       params = new HttpParams().set('client_id', this._options.clientId).set('client_secret', this._options.clientSecret);
     }
     return this.fetchFile(`https://api.github.com/gists/${ id }`, { params, responseType: 'json' });
@@ -28,13 +30,6 @@ export class CodeLoader {
    */
   getCodeFromUrl(url: string): Observable<string> {
     return this.fetchFile(url, { responseType: 'text' });
-  }
-
-  /**
-   * Check if OAuth option is provided
-   */
-  private isOAuthProvided(): boolean {
-    return !!this._options && !!this._options.clientId && !!this._options.clientSecret;
   }
 
   private fetchFile(url: string, options: any): Observable<any> {
@@ -52,9 +47,4 @@ export class CodeLoader {
     return EMPTY;
   }
 
-}
-
-function isUrl(url: string) {
-  const regExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-  return regExp.test(url);
 }

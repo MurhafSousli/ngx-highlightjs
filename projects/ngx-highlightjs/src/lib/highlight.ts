@@ -2,131 +2,48 @@ import {
   Directive,
   Input,
   Output,
-  Inject,
-  Optional,
+  signal,
+  booleanAttribute,
+  input,
   EventEmitter,
-  PLATFORM_ID,
-  OnChanges,
-  SimpleChanges,
-  ElementRef,
-  SecurityContext
+  InputSignal,
+  WritableSignal
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
-import { animationFrameScheduler } from 'rxjs';
-import { HighlightJS } from './highlight.service';
-import { HIGHLIGHT_OPTIONS, HighlightOptions, HighlightAutoResult } from './highlight.model';
-import { trustedHTMLFromStringBypass } from './trusted-types';
+import type { HighlightResult } from 'highlight.js';
+import { HighlightBase } from './highlight-base';
 
 @Directive({
+  standalone: true,
+  selector: '[highlight]',
+  providers: [{ provide: HighlightBase, useExisting: Highlight }],
   host: {
     '[class.hljs]': 'true'
-  },
-  selector: '[highlight]',
-  standalone: true
+  }
 })
-export class Highlight implements OnChanges {
+export class Highlight extends HighlightBase {
 
-  // Highlighted Code
-  private readonly _nativeElement: HTMLElement;
+  // Code to highlight
+  code: InputSignal<string> = input(null, { alias: 'highlight' });
 
-  // Temp observer to observe when line numbers has been added to code element
-  private _lineNumbersObs: any;
-
-  // Highlight code input
-  @Input('highlight') code: string | null;
+  // Highlighted result
+  highlightResult: WritableSignal<HighlightResult> = signal(null);
 
   // An optional array of language names and aliases restricting detection to only those languages.
   // The subset can also be set with configure, but the local parameter overrides the option if set.
-  @Input() languages!: string[];
+  @Input({ required: true }) language: string;
 
-  // Show line numbers
-  @Input() lineNumbers!: boolean;
+  // An optional flag, when set to true it forces highlighting to finish even in case of detecting
+  // illegal syntax for the language instead of throwing an exception.
+  @Input({ transform: booleanAttribute }) ignoreIllegals: boolean;
 
   // Stream that emits when code string is highlighted
-  @Output() highlighted = new EventEmitter<HighlightAutoResult>();
+  @Output() highlighted: EventEmitter<HighlightResult> = new EventEmitter<HighlightResult>();
 
-  constructor(el: ElementRef,
-              private _hljs: HighlightJS,
-              private _sanitizer: DomSanitizer,
-              @Inject(PLATFORM_ID) private platformId: object,
-              @Optional() @Inject(HIGHLIGHT_OPTIONS) private _options: HighlightOptions) {
-    this._nativeElement = el.nativeElement;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (
-      isPlatformBrowser(this.platformId) &&
-      changes?.code?.currentValue !== null &&
-      changes.code.currentValue !== changes.code.previousValue
-    ) {
-      if (this.code) {
-        this.highlightElement(this.code, this.languages);
-      } else {
-        // If string is empty, set the text content to empty
-        this.setTextContent('');
-      }
-    }
-  }
-
-  /**
-   * Highlighting with language detection and fix markup.
-   * @param code Accepts a string with the code to highlight
-   * @param languages An optional array of language names and aliases restricting detection to only those languages.
-   * The subset can also be set with configure, but the local parameter overrides the option if set.
-   */
-  highlightElement(code: string, languages: string[]): void {
-    // Set code text before highlighting
-    this.setTextContent(code);
-    this._hljs.highlightAuto(code, languages).subscribe((res: HighlightAutoResult) => {
-      // Set highlighted code
-      this.setInnerHTML(res?.value);
-      // Check if user want to show line numbers
-      if (this.lineNumbers && this._options && this._options.lineNumbersLoader) {
-        this.addLineNumbers();
-      }
-      // Forward highlight response to the highlighted output
-      this.highlighted.emit(res);
+  async highlightElement(code: string): Promise<void> {
+    const res: HighlightResult = await this._hljs.highlight(code, {
+      language: this.language,
+      ignoreIllegals: this.ignoreIllegals
     });
-  }
-
-  private addLineNumbers() {
-    // Clean up line numbers observer
-    this.destroyLineNumbersObserver();
-    animationFrameScheduler.schedule(() => {
-      // Add line numbers
-      this._hljs.lineNumbersBlock(this._nativeElement).subscribe();
-      // If lines count is 1, the line numbers library will not add numbers
-      // Observe changes to add 'hljs-line-numbers' class only when line numbers is added to the code element
-      this._lineNumbersObs = new MutationObserver(() => {
-        if (this._nativeElement.firstElementChild && this._nativeElement.firstElementChild.tagName.toUpperCase() === 'TABLE') {
-          this._nativeElement.classList.add('hljs-line-numbers');
-        }
-        this.destroyLineNumbersObserver();
-      });
-      this._lineNumbersObs.observe(this._nativeElement, { childList: true });
-    });
-  }
-
-  private destroyLineNumbersObserver() {
-    if (this._lineNumbersObs) {
-      this._lineNumbersObs.disconnect();
-      this._lineNumbersObs = null;
-    }
-  }
-
-  private setTextContent(content: string) {
-    animationFrameScheduler.schedule(() =>
-      this._nativeElement.textContent = content
-    );
-  }
-
-  private setInnerHTML(content: string | null) {
-    animationFrameScheduler.schedule(() =>
-      this._nativeElement.innerHTML = trustedHTMLFromStringBypass(
-        this._sanitizer.sanitize(SecurityContext.HTML, content) || ''
-      )
-    );
+    this.highlightResult.set(res);
   }
 }
-

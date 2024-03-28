@@ -1,20 +1,22 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { HighlightModule } from 'ngx-highlightjs';
+import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 @Component({
-    selector: 'app-code',
-    template: `
+  standalone: true,
+  selector: 'app-code',
+  imports: [HighlightModule, HighlightLineNumbers, NgScrollbar],
+  template: `
+    <ng-scrollbar appearance="compact">
       <pre>
-        <code [highlight]="code" [lineNumbers]="lineNumbers" [languages]="languages"></code>
+        <code [highlightAuto]="code" lineNumbers></code>
       </pre>
+    </ng-scrollbar>
   `,
-    styleUrls: ['./code.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [HighlightModule]
+  styleUrls: ['./code.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodeComponent {
-  @Input() code!: string;
-  @Input() languages!: string[];
-  @Input() lineNumbers!: boolean;
+  @Input() code: string;
 }

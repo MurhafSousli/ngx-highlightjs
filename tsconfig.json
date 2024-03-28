@@ -1,38 +1,43 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "strict": false,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "paths": {
+      "ngx-highlightjs": [
+        "./projects/ngx-highlightjs/src/public-api"
+      ],
+      "ngx-highlightjs/plus": [
+        "./projects/ngx-highlightjs/plus/src/public_api"
+      ],
+      "ngx-highlightjs/line-numbers": [
+        "./projects/ngx-highlightjs/line-numbers/src/public_api"
+      ]
+    },
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "module": "ES2022",
+    "useDefineForClassFields": false,
     "lib": [
-      "es2018",
+      "ES2022",
       "dom"
-    ],
-    "paths": {
-      "ngx-highlightjs": [
-        "projects/ngx-highlightjs/src/public-api"
-      ],
-      "ngx-highlightjs/plus": [
-        "projects/ngx-highlightjs/plus/src/public_api"
-      ],
-      "ngx-highlightjs/line-numbers": [
-        "projects/ngx-highlightjs/line-numbers/src/public_api"
-      ]
-    },
-    "useDefineForClassFields": false
+    ]
   },
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }
