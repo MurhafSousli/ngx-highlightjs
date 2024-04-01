@@ -1,10 +1,10 @@
 <p align="center">
   <img height="200px" width="200px" style="text-align: center" src="https://cdn.rawgit.com/MurhafSousli/ngx-highlightjs/b8b00ec3/src/assets/logo.svg">
-  <h1 align="center">Angular Highlight.js</h1>
+  <h1 align="center">Angular Highlight.js v10</h1>
 </p>
 
 [![Demo](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://ngx-highlight.netlify.com/)
-[![Stackblitz](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-highlightjs)
+[![Stackblitz](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-highlightjs-v10)
 [![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
 [![tests](https://github.com/MurhafSousli/ngx-highlightjs/workflows/tests/badge.svg)](https://github.com/MurhafSousli/ngx-highlightjs/actions?query=workflow%3Atests)
 [![codecov](https://codecov.io/gh/MurhafSousli/ngx-highlightjs/graph/badge.svg?token=JWAelEiLT1)](https://codecov.io/gh/MurhafSousli/ngx-highlightjs)
@@ -16,9 +16,11 @@
 Instant code highlighting directives
 ___
 
+> This is the documentation for v10. For latest version, go to [README.md](/README.md).
+
 ## Table of Contents
 
-- [Live Demo](https://ngx-highlight.netlify.com/) | [Stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
+- [Live Demo](https://ngx-highlight.netlify.com/) | [Stackblitz for v10](https://stackblitz.com/edit/ngx-highlightjs-v10)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Development](#development)
@@ -33,7 +35,7 @@ ___
 Install with **NPM**
 
 ```bash
-npm i ngx-highlightjs
+npm i ngx-highlightjs@10
 ```
 
 <a name="usage"/>
@@ -185,7 +187,7 @@ export class AppComponent {
 }
 ```
 
-[Demo stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
+[Demo stackblitz for v10](https://stackblitz.com/edit/ngx-highlightjs-v10)
 
 ## Options
 
