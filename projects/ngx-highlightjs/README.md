@@ -21,6 +21,10 @@ ___
 - [Live Demo](https://ngx-highlight.netlify.com/) | [Stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Lazy-load highlight.js script](#usage)
+  - [Import highlight.js theme](#themes)
+  - [Highlight usage](#highlight)
+  - [HighlightAuto usage](#highlight-auto)
 - [Line numbers addon usage](#line-numbers)
 - [Plus package](#plus)
 - [Issues](#issues)
@@ -92,6 +96,8 @@ export const appConfig: ApplicationConfig = {
 | lineNumbersOptions | Set line numbers plugin options                                                                                                |
 | themePath          | The path to the CSS file for the highlighting theme                                                                            |
 
+<a name="themes"/>
+
 ### Import highlighting theme
 
 **Dynamic Approach**
@@ -141,12 +147,14 @@ In `angular.json`:
 Or directly in `src/style.scss`:
 
 ```css
-@import '~highlight.js/styles/github.css';
+@import 'highlight.js/styles/github.css';
 ```
 
 _[List of all available themes from highlight.js](https://github.com/isagalaev/highlight.js/tree/master/src/styles)_
 
-### Use highlight directive
+<a name="highlight"/>
+
+### Highlight Directive Usage
 
 To apply code highlighting, use the `highlight` directive. It requires setting the target language, with an optional feature to ignore illegal syntax.
 
@@ -165,7 +173,7 @@ export class AppComponent {
 }
 ```
 
-## Options
+#### Options
 
 | Name                 | Type            | Description                                                                                                                                                    |
 |----------------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -174,7 +182,10 @@ export class AppComponent {
 | **[ignoreIllegals]** | boolean         | An optional parameter that when true forces highlighting to finish even in case of detecting illegal syntax for the language instead of throwing an exception. |
 | **(highlighted)**    | HighlightResult | Stream that emits the result object when element is highlighted                                                                                                |
 
-### `highlightAuto` directive
+
+<a name="highlight-auto"/>
+
+### HighlightAuto Directive Usage
 
 The `highlightAuto` directive works the same way but automatically detects the language to apply highlighting.
 
@@ -182,18 +193,18 @@ The `highlightAuto` directive works the same way but automatically detects the l
 import { HighlightAuto } from 'ngx-highlightjs';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   template: `
     <pre><code [highlightAuto]="code"></code></pre>
   `,
-  standalone: true,
   imports: [HighlightAuto]
 })
 export class AppComponent {
 }
 ```
 
-## Options
+#### Options
 
 | Name                | Type                | Description                                                                                                |
 |---------------------|---------------------|------------------------------------------------------------------------------------------------------------|
@@ -204,9 +215,7 @@ export class AppComponent {
 
 <a name="line-numbers"/>
 
-## Line Numbers
-
-### `lineNumbers` directive
+## Line Numbers Directive Usage
 
 The `lineNumbers` directive extends highlighted code with line numbers. It functions in conjunction with the `highlight` and `highlightAuto` directives.
 
@@ -215,18 +224,18 @@ import { HighlightAuto } from 'ngx-highlightjs';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   template: `
     <pre><code [highlightAuto]="code" lineNumbers></code></pre>
   `,
-  standalone: true,
   imports: [HighlightAuto, HighlightLineNumbers]
 })
 export class AppComponent {
 }
 ```
 
-## Options
+#### Options
 
 | Name             | Type    | Description                                                  |
 |------------------|---------|--------------------------------------------------------------|
@@ -295,13 +304,13 @@ export const appConfig: ApplicationConfig = {
 import { HighlightPlusModule } from 'ngx-highlightjs';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   template: `
     <pre [gist]="gistId" (gistLoaded)="gist = $event">
       <code [highlight]="gist | gistContent: 'main.js'"></code>
     </pre>
   `,
-  standalone: true,
   imports: [HighlightPlusModule]
 })
 export class AppComponent {
@@ -320,6 +329,7 @@ To highlight all files within a gist, iterate through `gist.files` and utilize t
 import { HighlightPlusModule } from 'ngx-highlightjs';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   template: `
     <ng-container [gist]="gistId" (gistLoaded)="gist = $event">
@@ -328,7 +338,6 @@ import { HighlightPlusModule } from 'ngx-highlightjs';
       }
     </ng-container>
   `,
-  standalone: true,
   imports: [HighlightPlusModule, CommonModule]
 })
 export class AppComponent {
@@ -345,13 +354,13 @@ Use the pipe `codeFromUrl` with the `async` pipe to get the code text from a raw
 import { HighlightPlusModule } from 'ngx-highlightjs';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   template: `
    <pre>
      <code [highlight]="codeUrl | codeFromUrl | async"></code>
    </pre>
   `,
-  standalone: true,
   imports: [HighlightPlusModule, CommonModule]
 })
 export class AppComponent {
