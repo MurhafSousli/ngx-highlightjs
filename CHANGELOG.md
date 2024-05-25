@@ -1,6 +1,6 @@
 # Changelog
 
-## 11.0.0-beta.1
+## 11.0.0
 
 - Update to Angular 17.
 - feat: Add `provideHighlightOptions` function to easily override the default options.
