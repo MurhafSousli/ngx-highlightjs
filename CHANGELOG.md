@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.0.1
+
+- fix: `highlight.js` dependency was removed in v11, closes [#283](https://github.com/MurhafSousli/ngx-highlightjs/issues/283).
+
 ## 11.0.0
 
 - Update to Angular 17.
