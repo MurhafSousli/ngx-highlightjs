@@ -3,5 +3,8 @@
   "dest": "../../dist/ngx-highlightjs",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "."
+  ]
 }
