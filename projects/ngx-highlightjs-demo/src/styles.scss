@@ -1,22 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
+@use 'sass:map';
+
 @include mat.core();
 
-$my-primary: mat.define-palette(mat.$blue-gray-palette, 700);
-$my-accent: mat.define-palette(mat.$grey-palette, 800);
-$my-warn: mat.define-palette(mat.$lime-palette, 400);
-
-$my-theme: mat.define-dark-theme((
+// Define the theme object.
+$ngx-highlightjs-demo-theme: mat.define-theme((
   color: (
-    primary: $my-primary,
-    accent: $my-accent,
-    warn: $my-warn,
+    theme-type: dark,
+    primary: mat.$red-palette,
+    tertiary: mat.$rose-palette,
   ),
-  typography: mat.define-typography-config(),
-  density: 0,
+  density: (
+    scale: 0,
+  )
 ));
 
-@include mat.all-component-themes($my-theme);
+:root {
+  @include mat.all-component-themes($ngx-highlightjs-demo-theme);
+
+  --header-bg: mat.get-theme-color($ngx-highlightjs-demo-theme, primary, 60);
+}
 
 * {
   box-sizing: border-box;
@@ -29,7 +32,7 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  background: mat.get-color-from-palette(mat.define-palette(mat.$blue-gray-palette, 600));
+  background:  mat.get-theme-color($ngx-highlightjs-demo-theme, primary, 20);
 }
 
 h3 {
@@ -38,8 +41,14 @@ h3 {
   margin: 3em 0 1.5em;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 ng-scrollbar.ng-scrollbar {
   --scrollbar-thumb-color: orange;
