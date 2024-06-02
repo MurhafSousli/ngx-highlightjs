@@ -3,7 +3,7 @@
   <h1 align="center">Angular Highlight.js</h1>
 </p>
 
-[![Demo](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://ngx-highlight.netlify.com/)
+[![Demo](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://ngx-highlight.netlify.app/)
 [![Stackblitz](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-highlightjs)
 [![npm](https://img.shields.io/npm/v/ngx-highlightjs.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-highlightjs)
 [![tests](https://github.com/MurhafSousli/ngx-highlightjs/workflows/tests/badge.svg)](https://github.com/MurhafSousli/ngx-highlightjs/actions?query=workflow%3Atests)
@@ -18,7 +18,7 @@ ___
 
 ## Table of Contents
 
-- [Live Demo](https://ngx-highlight.netlify.com/) | [Stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
+- [Live Demo](https://ngx-highlight.netlify.app/) | [Stackblitz](https://stackblitz.com/edit/ngx-highlightjs)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Lazy-load highlight.js script](#usage)
