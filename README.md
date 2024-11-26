@@ -41,6 +41,11 @@ Install with **NPM**
 npm i ngx-highlightjs
 ```
 
+Install with **PNPM**
+```bash
+pnpm add ngx-highlightjs highlight.js
+```
+
 <a name="usage"/>
 
 ## Usage
