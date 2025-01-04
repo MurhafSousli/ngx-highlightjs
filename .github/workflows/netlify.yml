@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@vmaster
       - name: Use Node.js 20
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@vmaster
         with:
           node-version: 20
       - name: Install dependencies
@@ -21,7 +21,7 @@ jobs:
           GIST_CLIENT_ID: ${{ secrets.GIST_CLIENT_ID }}
           GIST_CLIENT_SECRET: ${{ secrets.GIST_CLIENT_SECRET }}
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@latest
+        uses: nwtgck/actions-netlify@master
         with:
           publish-dir: './dist/ngx-highlightjs-demo/browser'
           production-branch: deploy-netlify
