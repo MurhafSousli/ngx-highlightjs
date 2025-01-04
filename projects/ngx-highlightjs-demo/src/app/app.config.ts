@@ -1,14 +1,12 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { provideGistOptions } from 'ngx-highlightjs/plus';
 import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom([FlexLayoutModule]),
     provideHttpClient(withFetch()),
     provideHighlightOptions({
       // fullLibraryLoader: () => import('highlight.js'),

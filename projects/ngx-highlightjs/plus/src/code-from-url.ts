@@ -5,7 +5,6 @@ import { HIGHLIGHT_FILE_LOCATION, CodeFileLocation } from './code-file-location'
 import { isUrl } from './gist.model';
 
 @Pipe({
-  standalone: true,
   name: 'codeFromUrl'
 })
 export class CodeFromUrlPipe implements PipeTransform {

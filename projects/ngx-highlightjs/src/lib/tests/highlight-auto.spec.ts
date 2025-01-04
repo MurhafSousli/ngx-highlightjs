@@ -1,5 +1,5 @@
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
-import { Component, Input, DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { HighlightAuto, HighlightLoader } from 'ngx-highlightjs';
 import hljs from 'highlight.js';
@@ -7,11 +7,10 @@ import { afterTimeout, highlightLoaderStub } from './common-tests';
 
 @Component({
   template: `<code [highlightAuto]="code"></code>`,
-  standalone: true,
   imports: [HighlightAuto]
 })
 class TestHighlightComponent {
-  @Input() code: string;
+  code: string;
 }
 
 describe('HighlightAuto Directive', () => {
@@ -40,7 +39,7 @@ describe('HighlightAuto Directive', () => {
 
 
   it('[Content-Security-Policy (CSP)] highlight element when trustedTypes is not supported by the browser', async () => {
-    const trustedTypesBackup: any = window['trustedTypes'];
+    const trustedTypesBackup: unknown = window['trustedTypes'];
     delete window['trustedTypes'];
     component.code = testJsCode;
     fixture.detectChanges()

@@ -3,49 +3,6 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-highlightjs": {
-      "projectType": "library",
-      "root": "projects/ngx-highlightjs",
-      "sourceRoot": "projects/ngx-highlightjs/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/ngx-highlightjs/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/ngx-highlightjs/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "karmaConfig": "projects/ngx-highlightjs/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/ngx-highlightjs/**/*.ts",
-              "projects/ngx-highlightjs/**/*.html"
-            ]
-          }
-        }
-      }
-    },
     "ngx-highlightjs-demo": {
       "projectType": "application",
       "schematics": {
@@ -76,13 +33,10 @@
               "projects/ngx-highlightjs-demo/src/styles.scss"
             ],
             "scripts": [],
-            "allowedCommonJsDependencies": [
-              "highlight.js"
-            ],
             "server": "projects/ngx-highlightjs-demo/src/main.server.ts",
             "prerender": true,
             "ssr": {
-              "entry": "projects/ngx-highlightjs-demo/server.ts"
+              "entry": "projects/ngx-highlightjs-demo/src/server.ts"
             }
           },
           "configurations": {
@@ -90,13 +44,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "15kb",
+                  "maximumError": "15kb"
                 }
               ],
               "outputHashing": "all"
@@ -104,13 +58,7 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "fileReplacements": [
-                {
-                  "replace": "projects/ngx-highlightjs-demo/src/environments/environment.ts",
-                  "with": "projects/ngx-highlightjs-demo/src/environments/environment.development.ts"
-                }
-              ]
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -150,6 +98,49 @@
               "projects/ngx-highlightjs-demo/src/styles.scss"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "ngx-highlightjs": {
+      "projectType": "library",
+      "root": "projects/ngx-highlightjs",
+      "sourceRoot": "projects/ngx-highlightjs/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-highlightjs/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-highlightjs/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-highlightjs/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "karmaConfig": "projects/ngx-highlightjs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngx-highlightjs/**/*.ts",
+              "projects/ngx-highlightjs/**/*.html"
+            ]
           }
         }
       }

@@ -162,7 +162,6 @@ To apply code highlighting, use the `highlight` directive. It requires setting t
 import { Highlight } from 'ngx-highlightjs';
 
 @Component({
-  standalone: true,
   selector: 'app-root',
   template: `
     <pre><code [highlight]="code" language="html"></code></pre>
@@ -193,7 +192,6 @@ The `highlightAuto` directive works the same way but automatically detects the l
 import { HighlightAuto } from 'ngx-highlightjs';
 
 @Component({
-  standalone: true,
   selector: 'app-root',
   template: `
     <pre><code [highlightAuto]="code"></code></pre>
@@ -224,7 +222,6 @@ import { HighlightAuto } from 'ngx-highlightjs';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
 
 @Component({
-  standalone: true,
   selector: 'app-root',
   template: `
     <pre><code [highlightAuto]="code" lineNumbers></code></pre>
@@ -304,7 +301,6 @@ export const appConfig: ApplicationConfig = {
 import { HighlightPlusModule } from 'ngx-highlightjs';
 
 @Component({
-  standalone: true,
   selector: 'app-root',
   template: `
     <pre [gist]="gistId" (gistLoaded)="gist = $event">
@@ -329,7 +325,6 @@ To highlight all files within a gist, iterate through `gist.files` and utilize t
 import { HighlightPlusModule } from 'ngx-highlightjs';
 
 @Component({
-  standalone: true,
   selector: 'app-root',
   template: `
     <ng-container [gist]="gistId" (gistLoaded)="gist = $event">
@@ -354,7 +349,6 @@ Use the pipe `codeFromUrl` with the `async` pipe to get the code text from a raw
 import { HighlightPlusModule } from 'ngx-highlightjs';
 
 @Component({
-  standalone: true,
   selector: 'app-root',
   template: `
    <pre>

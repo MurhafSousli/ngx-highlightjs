@@ -16,12 +16,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build demo
-        run: npm run build-demo
+        run: npm run build
         env:
           GIST_CLIENT_ID: ${{ secrets.GIST_CLIENT_ID }}
           GIST_CLIENT_SECRET: ${{ secrets.GIST_CLIENT_SECRET }}
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.1.11
+        uses: nwtgck/actions-netlify@latest
         with:
           publish-dir: './dist/ngx-highlightjs-demo/browser'
           production-branch: deploy-netlify

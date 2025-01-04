@@ -15,6 +15,8 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "no-prototype-builtins": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -36,9 +38,7 @@
         "@angular-eslint/no-input-rename": 0,
         "@angular-eslint/no-output-rename": 0,
         "@angular-eslint/no-output-native": 0,
-        "@angular-eslint/no-host-metadata-property": 0,
-        "@typescript-eslint/no-explicit-any": 0,
-        "no-prototype-builtins": 0
+        "@angular-eslint/no-host-metadata-property": 0
       }
     },
     {
