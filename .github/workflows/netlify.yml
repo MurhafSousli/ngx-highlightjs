@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@vmaster
+      - uses: actions/checkout@master
       - name: Use Node.js 20
-        uses: actions/setup-node@vmaster
+        uses: actions/setup-node@master
         with:
           node-version: 20
       - name: Install dependencies
