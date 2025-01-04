@@ -1,23 +1,20 @@
 import {
   Directive,
-  Input,
   inject,
-  effect,
   numberAttribute,
   booleanAttribute,
+  afterRenderEffect,
+  input,
   ElementRef,
-  PLATFORM_ID
+  InputSignalWithTransform
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { HighlightJS, HighlightBase, HIGHLIGHT_OPTIONS, LineNumbersOptions } from 'ngx-highlightjs';
+import { HIGHLIGHT_OPTIONS, HighlightJS, HighlightBase, LineNumbersOptions } from 'ngx-highlightjs';
 
 @Directive({
-  standalone: true,
   selector: '[highlight][lineNumbers], [highlightAuto][lineNumbers]'
 })
 export class HighlightLineNumbers {
 
-  private readonly _platform: object = inject(PLATFORM_ID);
   private readonly options: LineNumbersOptions = inject(HIGHLIGHT_OPTIONS)?.lineNumbersOptions;
   private readonly _hljs: HighlightJS = inject(HighlightJS);
   private readonly _highlight: HighlightBase = inject(HighlightBase);
@@ -26,18 +23,22 @@ export class HighlightLineNumbers {
   // Temp observer to observe when line numbers has been added to code element
   private _lineNumbersObs: MutationObserver;
 
-  @Input({ transform: numberAttribute }) startFrom: number = this.options?.startFrom;
+  readonly startFrom: InputSignalWithTransform<number, unknown> = input<number, unknown>(this.options?.startFrom, {
+    transform: numberAttribute
+  });
 
-  @Input({ transform: booleanAttribute }) singleLine: boolean = this.options?.singleLine;
+  readonly singleLine: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(this.options?.singleLine, {
+    transform: booleanAttribute
+  });
 
   constructor() {
-    if (isPlatformBrowser(this._platform)) {
-      effect(() => {
+    afterRenderEffect({
+      write: () => {
         if (this._highlight.highlightResult()) {
           this.addLineNumbers();
         }
-      });
-    }
+      }
+    });
   }
 
   private addLineNumbers(): void {
@@ -46,8 +47,8 @@ export class HighlightLineNumbers {
     requestAnimationFrame(async () => {
       // Add line numbers
       await this._hljs.lineNumbersBlock(this._nativeElement, {
-        startFrom: this.startFrom,
-        singleLine: this.singleLine
+        startFrom: this.startFrom(),
+        singleLine: this.singleLine()
       });
       // If lines count is 1, the line numbers library will not add numbers
       // Observe changes to add 'hljs-line-numbers' class only when line numbers is added to the code element

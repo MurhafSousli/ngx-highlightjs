@@ -16,9 +16,9 @@ $ngx-highlightjs-demo-theme: mat.define-theme((
 ));
 
 :root {
-  @include mat.all-component-themes($ngx-highlightjs-demo-theme);
-
   --header-bg: mat.get-theme-color($ngx-highlightjs-demo-theme, primary, 60);
+
+  @include mat.all-component-themes($ngx-highlightjs-demo-theme);
 }
 
 * {
@@ -32,7 +32,7 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  background:  mat.get-theme-color($ngx-highlightjs-demo-theme, primary, 20);
+  background: mat.get-theme-color($ngx-highlightjs-demo-theme, primary, 20);
 }
 
 h3 {

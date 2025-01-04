@@ -15,7 +15,7 @@ import {
   firstValueFrom
 } from 'rxjs';
 import { HIGHLIGHT_OPTIONS, HighlightJSOptions } from './highlight.model';
-import type { HLJSApi } from 'highlight.js';
+import type { HLJSApi, LanguageFn } from 'highlight.js';
 import { LoaderErrors } from './loader-errors';
 
 @Injectable({
@@ -55,19 +55,17 @@ export class HighlightLoader {
                   this._ready.next(hljs);
                 })
               );
-            }
-            else {
+            } else {
               this._ready.next(hljs);
               return EMPTY;
             }
           }),
-          catchError((e: any) => {
+          catchError((e: Error) => {
             console.error('[HLJS] ', e);
             this._ready.error(e);
             return EMPTY;
           })
         ).subscribe();
-
       }
       // Load highlighting theme
       if (this.options?.themePath) {
@@ -79,7 +77,7 @@ export class HighlightLoader {
   /**
    * Lazy-Load highlight.js library
    */
-  private _loadLibrary(): Observable<any> {
+  private _loadLibrary(): Observable<HLJSApi> {
     if (this.options) {
       if (this.options.fullLibraryLoader && this.options.coreLibraryLoader) {
         return throwError(() => LoaderErrors.FULL_WITH_CORE_LIBRARY_IMPORTS);
@@ -107,9 +105,9 @@ export class HighlightLoader {
    * Lazy-load highlight.js languages
    */
   private _loadLanguages(hljs: HLJSApi): Observable<HLJSApi> {
-    const languages: Observable<any>[] = Object.entries(this.options.languages).map(([langName, langLoader]: [string, () => Promise<any>]) =>
+    const languages: Observable<unknown>[] = Object.entries(this.options.languages).map(([langName, langLoader]: [string, () => Promise<unknown>]) =>
       importModule(langLoader()).pipe(
-        tap((langFunc: any) => hljs.registerLanguage(langName, langFunc))
+        tap((langFunc: LanguageFn) => hljs.registerLanguage(langName, langFunc))
       )
     );
     return forkJoin(languages).pipe(map(() => hljs));
@@ -120,20 +118,20 @@ export class HighlightLoader {
    * Import highlight.js core library
    */
   private loadCoreLibrary(): Observable<HLJSApi> {
-    return importModule(this.options.coreLibraryLoader!());
+    return importModule<HLJSApi>(this.options.coreLibraryLoader());
   }
 
   /**
    * Import highlight.js library with all languages
    */
   private loadFullLibrary(): Observable<HLJSApi> {
-    return importModule(this.options.fullLibraryLoader!());
+    return importModule<HLJSApi>(this.options.fullLibraryLoader());
   }
 
   /**
    * Import line numbers library
    */
-  private loadLineNumbers(): Observable<any> {
+  private loadLineNumbers(): Observable<unknown> {
     return from(this.options.lineNumbersLoader!());
   }
 
@@ -166,9 +164,9 @@ export class HighlightLoader {
 /**
  * Map loader response to module object
  */
-const importModule = (moduleLoader: Promise<any>): Observable<any> => {
+const importModule = <T>(moduleLoader: Promise<unknown>): Observable<T> => {
   return from(moduleLoader).pipe(
-    filter((module: any) => !!module?.default),
-    map((module: any) => module.default)
+    filter((module: { default: T }) => !!module?.default),
+    map((module: { default: T }) => module.default)
   );
 };

@@ -1,9 +1,16 @@
-import { Directive, Input, Output, signal, input, EventEmitter, WritableSignal, InputSignal } from '@angular/core';
+import {
+  Directive,
+  signal,
+  output,
+  input,
+  InputSignal,
+  WritableSignal,
+  OutputEmitterRef
+} from '@angular/core';
 import type { AutoHighlightResult } from 'highlight.js';
 import { HighlightBase } from './highlight-base';
 
 @Directive({
-  standalone: true,
   selector: '[highlightAuto]',
   providers: [{ provide: HighlightBase, useExisting: HighlightAuto }],
   host: {
@@ -20,13 +27,13 @@ export class HighlightAuto extends HighlightBase {
 
   // An optional array of language names and aliases restricting detection to only those languages.
   // The subset can also be set with configure, but the local parameter overrides the option if set.
-  @Input() languages!: string[];
+  readonly languages: InputSignal<string[]> = input<string[]>();
 
   // Stream that emits when code string is highlighted
-  @Output() highlighted: EventEmitter<AutoHighlightResult> = new EventEmitter<AutoHighlightResult>();
+  highlighted: OutputEmitterRef<AutoHighlightResult> = output<AutoHighlightResult>();
 
   protected async highlightElement(code: string): Promise<void> {
-    const res: AutoHighlightResult = await this._hljs.highlightAuto(code, this.languages);
+    const res: AutoHighlightResult = await this._hljs.highlightAuto(code, this.languages());
     this.highlightResult.set(res);
   }
 }

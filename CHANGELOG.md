@@ -1,5 +1,10 @@
 # Changelog
 
+## 13.0.0
+
+- Upgrade to Angular 19.
+- refactor: Use `afterRenderEffect` instead of `effect` in the highlight directives.
+
 ## 12.0.0
 
 - Upgrade to Angular 18, closes [#286](https://github.com/MurhafSousli/ngx-highlightjs/issues/286).

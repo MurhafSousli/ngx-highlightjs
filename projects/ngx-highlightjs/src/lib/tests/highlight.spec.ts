@@ -1,5 +1,5 @@
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
-import { Component, Input, DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Highlight, HighlightLoader } from 'ngx-highlightjs';
 import hljs from 'highlight.js';
@@ -7,12 +7,11 @@ import { afterTimeout, highlightLoaderStub } from './common-tests';
 
 @Component({
   template: `<code [highlight]="code" [language]="language"></code>`,
-  standalone: true,
   imports: [Highlight]
 })
 class TestHighlightComponent {
-  @Input() code: string;
-  @Input() language: string;
+  code: string;
+  language: string;
 }
 
 describe('Highlight Directive', () => {

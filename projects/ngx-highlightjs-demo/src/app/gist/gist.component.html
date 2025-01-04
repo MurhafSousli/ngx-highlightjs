@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <div class="code-wrapper hljs" [gist]="id" (gistLoad)="gist = $event">
+    <div class="code-wrapper hljs" [gist]="id()" (gistLoad)="gist = $event">
       @if (gist) {
         <mat-tab-group dynamicHeight>
           @for (file of gist?.files | keyvalue; track file.key) {

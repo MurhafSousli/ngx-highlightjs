@@ -14,8 +14,13 @@
   height: 100%;
   max-width: 1255px;
   margin: auto;
+  display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
 }
 
 h1 {

@@ -7,18 +7,16 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { Highlight, HighlightLoader } from 'ngx-highlightjs';
-import { CodeFromUrlPipe, Gist } from 'ngx-highlightjs/plus';
+import { HighlightLoader } from 'ngx-highlightjs';
+import { Gist } from 'ngx-highlightjs/plus';
 import { GistComponent } from './gist/gist.component';
 import { HeaderComponent } from './header/header.component';
-import { CodeComponent } from './code/code.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -29,10 +27,7 @@ import { CodeComponent } from './code/code.component';
     MatToolbarModule,
     NgScrollbarModule,
     HeaderComponent,
-    GistComponent,
-    CodeComponent,
-    Highlight,
-    CodeFromUrlPipe
+    GistComponent
   ]
 })
 export class AppComponent implements OnInit {
@@ -40,15 +35,6 @@ export class AppComponent implements OnInit {
   private readonly hljsLoader: HighlightLoader = inject(HighlightLoader);
 
   gist!: Gist;
-
-  codeUrl: string = 'https://raw.githubusercontent.com/MurhafSousli/ngx-highlightjs/master/README.md';
-
-  testCode: string = `
-  var testString = @$"
-   Some multi-
-   line text
-  ";
-  `
 
   // Gist id
   gistId: string = '6fd1b8fe940ded9f792335addb60c809';
