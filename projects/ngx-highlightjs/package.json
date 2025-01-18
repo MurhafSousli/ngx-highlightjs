@@ -1,6 +1,6 @@
 {
   "name": "ngx-highlightjs",
-  "version": "13.0.0",
+  "version": "14.0.0",
   "description": "Instant code highlighting, auto-detect language, super easy to use.",
   "homepage": "https://ngx-highlight.netlify.app",
   "author": {

@@ -1,5 +1,11 @@
 # Changelog
 
+## 14.0.0
+
+### Possible breaking changes
+
+- refactor: Prevent `provideHighlightOptions` from being accidentally referenced in `@Component` in a component injector, closes [#309](https://github.com/MurhafSousli/ngx-highlightjs/issues/309).
+
 ## 13.0.0
 
 - Upgrade to Angular 19.

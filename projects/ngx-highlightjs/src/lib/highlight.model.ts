@@ -1,4 +1,4 @@
-import { InjectionToken, Provider } from '@angular/core';
+import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
 import type { HLJSOptions } from 'highlight.js';
 
 /**
@@ -22,11 +22,11 @@ export interface HighlightJSOptions {
 
 export const HIGHLIGHT_OPTIONS: InjectionToken<HighlightJSOptions> = new InjectionToken<HighlightJSOptions>('HIGHLIGHT_OPTIONS');
 
-export function provideHighlightOptions(options: HighlightJSOptions): Provider[] {
-  return [
+export function provideHighlightOptions(options: HighlightJSOptions): EnvironmentProviders {
+  return makeEnvironmentProviders([
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: options
     }
-  ]
+  ]);
 }
