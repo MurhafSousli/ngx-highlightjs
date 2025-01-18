@@ -26,8 +26,10 @@
             "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/ngx-highlightjs-demo/src/favicon.ico",
-              "projects/ngx-highlightjs-demo/src/assets"
+              {
+                "glob": "**/*",
+                "input": "projects/ngx-highlightjs-demo/public"
+              }
             ],
             "styles": [
               "projects/ngx-highlightjs-demo/src/styles.scss"
@@ -91,8 +93,10 @@
             "tsConfig": "projects/ngx-highlightjs-demo/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/ngx-highlightjs-demo/src/favicon.ico",
-              "projects/ngx-highlightjs-demo/src/assets"
+              {
+                "glob": "**/*",
+                "input": "projects/ngx-highlightjs-demo/public"
+              }
             ],
             "styles": [
               "projects/ngx-highlightjs-demo/src/styles.scss"
