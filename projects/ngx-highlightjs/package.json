@@ -14,6 +14,7 @@
   "bugs": {
     "url": "http://github.com/murhafsousli/ngx-highlightjs/issues"
   },
+  "license": "MIT",
   "keywords": [
     "angular",
     "highlight",
