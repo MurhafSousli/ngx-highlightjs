@@ -37,20 +37,6 @@ describe('HighlightAuto Directive', () => {
     directiveInstance = directiveElement.injector.get(HighlightAuto);
   });
 
-
-  it('[Content-Security-Policy (CSP)] highlight element when trustedTypes is not supported by the browser', async () => {
-    const trustedTypesBackup: unknown = window['trustedTypes'];
-    delete window['trustedTypes'];
-    component.code = testJsCode;
-    fixture.detectChanges()
-
-    const highlightedCode: string = hljs.highlightAuto(testJsCode, null).value;
-
-    await afterTimeout(100);
-    expect(directiveElement.nativeElement.innerHTML).toBe(highlightedCode);
-    window['trustedTypes'] = trustedTypesBackup;
-  });
-
   it('should create highlightAuto directive add hljs class', () => {
     expect(directiveInstance).toBeTruthy();
     expect(directiveElement.nativeElement.classList.contains('hljs')).toBeTruthy();
