@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.0.1
+
+- Add missing license in package.json, closes [#318](https://github.com/MurhafSousli/ngx-highlightjs/issues/318).
+
 ## 14.0.0
 
 ### Possible breaking changes
