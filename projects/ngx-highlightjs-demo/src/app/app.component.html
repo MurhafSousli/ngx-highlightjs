@@ -8,33 +8,35 @@
   </mat-toolbar>
   <ng-scrollbar>
 
-<!--    <code [highlight]="'assets/example-code.ts' | codeFromUrl | async"-->
-<!--          language="ts"-->
-<!--          ignoreIllegals></code>-->
+    <!--    <code [highlight]="'assets/example-code.ts' | codeFromUrl | async"-->
+    <!--          language="ts"-->
+  <!--          ignoreIllegals></code>-->
 
-    <app-header/>
+  <app-header/>
 
-    <div class="container">
+  <div class="container">
 
-      <mat-form-field color="accent">
-        <mat-select placeholder="Theme" [(value)]="theme" (valueChange)="changeTheme()">
-          <mat-option *ngFor="let style of styles" [value]="style">{{style}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field color="accent">
+      <mat-select placeholder="Theme" [(value)]="theme" (valueChange)="changeTheme()">
+        @for (style of styles; track style) {
+          <mat-option [value]="style">{{style}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-      <h3>Ngx-Highlight Usage</h3>
-      <!-- PREVIEW -->
-      <app-gist id="de9decbcd2539d5ba399aedc598bcaa6"/>
+    <h3>Ngx-Highlight Usage</h3>
+    <!-- PREVIEW -->
+    <app-gist id="de9decbcd2539d5ba399aedc598bcaa6"/>
 
-      <h3>Ngx-Highlight Plus Usage</h3>
-      <app-gist [id]="gistId"/>
+    <h3>Ngx-Highlight Plus Usage</h3>
+    <app-gist [id]="gistId"/>
 
-      <div class="footer">
-        <div class="author">Made with
-          <mat-icon>favorite</mat-icon>
-          by Murhaf Sousli
-        </div>
+    <div class="footer">
+      <div class="author">Made with
+        <mat-icon>favorite</mat-icon>
+        by Murhaf Sousli
       </div>
     </div>
-  </ng-scrollbar>
+  </div>
+</ng-scrollbar>
 </div>
