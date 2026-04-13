@@ -6,8 +6,10 @@ import {
   afterRenderEffect,
   input,
   ElementRef,
-  InputSignalWithTransform
+  InputSignalWithTransform,
+  PLATFORM_ID
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HIGHLIGHT_OPTIONS, HighlightJS, HighlightBase, LineNumbersOptions } from 'ngx-highlightjs';
 
 @Directive({
@@ -15,10 +17,11 @@ import { HIGHLIGHT_OPTIONS, HighlightJS, HighlightBase, LineNumbersOptions } fro
 })
 export class HighlightLineNumbers {
 
-  private readonly options: LineNumbersOptions = inject(HIGHLIGHT_OPTIONS)?.lineNumbersOptions;
+  private readonly options: LineNumbersOptions = inject(HIGHLIGHT_OPTIONS, { optional: true })?.lineNumbersOptions;
   private readonly _hljs: HighlightJS = inject(HighlightJS);
   private readonly _highlight: HighlightBase = inject(HighlightBase);
   private readonly _nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+  private readonly _isPlatformBrowser: boolean = isPlatformBrowser(inject(PLATFORM_ID));
 
   // Temp observer to observe when line numbers has been added to code element
   private _lineNumbersObs: MutationObserver;
@@ -34,7 +37,7 @@ export class HighlightLineNumbers {
   constructor() {
     afterRenderEffect({
       write: () => {
-        if (this._highlight.highlightResult()) {
+        if (this._isPlatformBrowser && this._highlight.highlightResult()) {
           this.addLineNumbers();
         }
       }
@@ -44,12 +47,15 @@ export class HighlightLineNumbers {
   private addLineNumbers(): void {
     // Clean up line numbers observer
     this.destroyLineNumbersObserver();
-    requestAnimationFrame(async () => {
+    this.scheduleDOMWrite(async () => {
       // Add line numbers
       await this._hljs.lineNumbersBlock(this._nativeElement, {
         startFrom: this.startFrom(),
         singleLine: this.singleLine()
       });
+      if (typeof MutationObserver !== 'function') {
+        return;
+      }
       // If lines count is 1, the line numbers library will not add numbers
       // Observe changes to add 'hljs-line-numbers' class only when line numbers is added to the code element
       this._lineNumbersObs = new MutationObserver(() => {
@@ -67,5 +73,13 @@ export class HighlightLineNumbers {
       this._lineNumbersObs.disconnect();
       this._lineNumbersObs = null;
     }
+  }
+
+  private scheduleDOMWrite(task: FrameRequestCallback): void {
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(task);
+      return;
+    }
+    task(0);
   }
 }

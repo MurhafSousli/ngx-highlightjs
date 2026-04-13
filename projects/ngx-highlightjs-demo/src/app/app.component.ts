@@ -6,8 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { HighlightLoader } from 'ngx-highlightjs';
+import { Highlight, HighlightLoader} from 'ngx-highlightjs';
 import { Gist } from 'ngx-highlightjs/plus';
 import { GistComponent } from './gist/gist.component';
 import { HeaderComponent } from './header/header.component';
@@ -25,9 +26,11 @@ import { HeaderComponent } from './header/header.component';
     MatSelectModule,
     MatButtonModule,
     MatToolbarModule,
+    MatCardModule,
     NgScrollbarModule,
     HeaderComponent,
-    GistComponent
+    GistComponent,
+    Highlight,
   ]
 })
 export class AppComponent implements OnInit {

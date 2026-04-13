@@ -12,7 +12,11 @@ export class GistDirective {
   @Input()
   set gist(value: string) {
     if (value) {
-      this._loader.getCodeFromGist(value).subscribe((gist: Gist) => this.gistLoad.emit(gist));
+      this._loader.getCodeFromGist(value).subscribe((gist: Gist) => {
+        // Transfer-cache hits can resolve synchronously during hydration.
+        // Defer the output so the host listener is already attached.
+        queueMicrotask(() => this.gistLoad.emit(gist));
+      });
     }
   }
 

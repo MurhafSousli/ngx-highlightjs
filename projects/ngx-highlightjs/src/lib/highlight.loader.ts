@@ -37,36 +37,36 @@ export class HighlightLoader {
   private _themeLinkElement: HTMLLinkElement;
 
   constructor() {
+    // Check if hljs is already available
+    if (this.document.defaultView?.['hljs']) {
+      this._ready.next(this.document.defaultView['hljs']);
+    } else {
+      // Load hljs library
+      this._loadLibrary().pipe(
+        switchMap((hljs: HLJSApi) => {
+          if (this.isPlatformBrowser && this.options?.lineNumbersLoader) {
+            // Make hljs available on window object (required for the line numbers library)
+            this.document.defaultView['hljs'] = hljs;
+            // Load line numbers library
+            return this.loadLineNumbers().pipe(
+              tap((plugin: { activateLineNumbers: () => void }) => {
+                plugin.activateLineNumbers();
+                this._ready.next(hljs);
+              })
+            );
+          }
+          this._ready.next(hljs);
+          return EMPTY;
+        }),
+        catchError((e: Error) => {
+          console.error('[HLJS] ', e);
+          this._ready.error(e);
+          return EMPTY;
+        })
+      ).subscribe();
+    }
+
     if (this.isPlatformBrowser) {
-      // Check if hljs is already available
-      if (this.document.defaultView['hljs']) {
-        this._ready.next(this.document.defaultView['hljs']);
-      } else {
-        // Load hljs library
-        this._loadLibrary().pipe(
-          switchMap((hljs: HLJSApi) => {
-            if (this.options?.lineNumbersLoader) {
-              // Make hljs available on window object (required for the line numbers library)
-              this.document.defaultView['hljs'] = hljs;
-              // Load line numbers library
-              return this.loadLineNumbers().pipe(
-                tap((plugin: { activateLineNumbers: () => void }) => {
-                  plugin.activateLineNumbers();
-                  this._ready.next(hljs);
-                })
-              );
-            } else {
-              this._ready.next(hljs);
-              return EMPTY;
-            }
-          }),
-          catchError((e: Error) => {
-            console.error('[HLJS] ', e);
-            this._ready.error(e);
-            return EMPTY;
-          })
-        ).subscribe();
-      }
       // Load highlighting theme
       if (this.options?.themePath) {
         this.loadTheme(this.options.themePath);
