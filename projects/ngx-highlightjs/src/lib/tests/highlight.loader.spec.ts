@@ -1,3 +1,4 @@
+import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HIGHLIGHT_OPTIONS, HighlightLoader, HighlightJSOptions } from 'ngx-highlightjs';
 import hljs, { HLJSApi } from 'highlight.js';
@@ -48,6 +49,26 @@ describe('HighlightService', () => {
     const loader: HighlightLoader = TestBed.inject(HighlightLoader);
     const lib: HLJSApi = await loader.ready;
     expect(lib).toBe(hljs);
+  });
+
+  it('should load the library on the server when coreLibrary is provided', async () => {
+    TestBed.overrideProvider(PLATFORM_ID, {
+      useValue: 'server'
+    });
+    TestBed.overrideProvider(HIGHLIGHT_OPTIONS, {
+      useValue: {
+        coreLibraryLoader,
+        languages: {
+          typescript
+        }
+      } as HighlightJSOptions
+    });
+
+    const loader: HighlightLoader = TestBed.inject(HighlightLoader);
+    const lib: HLJSApi = await loader.ready;
+
+    expect(lib).toBe(hljs);
+    expect(lib.getLanguage('typescript')).toBeTruthy();
   });
 
   it('should load the library when lineNumber is provided', async () => {

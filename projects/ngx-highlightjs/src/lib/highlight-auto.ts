@@ -32,9 +32,7 @@ export class HighlightAuto extends HighlightBase {
   // Stream that emits when code string is highlighted
   highlighted: OutputEmitterRef<AutoHighlightResult> = output<AutoHighlightResult>();
 
-  protected async highlightElement(code: string): Promise<void> {
-    const res: AutoHighlightResult = await this._hljs.highlightAuto(code, this.languages());
-    this.highlightResult.set(res);
+  protected async highlightElement(code: string): Promise<AutoHighlightResult> {
+    return this._hljs.highlightAuto(code, this.languages());
   }
 }
-

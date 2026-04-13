@@ -42,6 +42,69 @@
   }
 }
 
+.example-card {
+  margin-bottom: 3em;
+  overflow: hidden;
+}
+
+.example-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0.9em 1.2em;
+  color: rgba(255, 255, 255, 0.9);
+  background: #282b2e;
+  border-bottom: 1px solid rgb(255 255 255 / 7%);
+}
+
+.example-card__title {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.example-card__badge {
+  font-size: 12px;
+  padding: 0.35em 0.7em;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgb(255 255 255 / 10%);
+}
+
+.example-card__content {
+  padding: 1px !important;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.example-card__code {
+  border-radius: 3px 3px 0 0;
+}
+
+.example-card__pre {
+  display: flex;
+  margin: 0;
+
+  code {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.8em;
+    padding: 1.2em;
+    overflow: auto;
+  }
+}
+
+:host {
+  ::ng-deep {
+    .example-card .hljs {
+      border: none;
+      padding: 0;
+    }
+  }
+}
+
 .footer {
   font-size: 18px;
   color: rgba(0, 0, 0, 0.3);

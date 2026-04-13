@@ -39,11 +39,10 @@ export class Highlight extends HighlightBase {
   // Stream that emits when code string is highlighted
   highlighted: OutputEmitterRef<HighlightResult> = output<HighlightResult>();
 
-  async highlightElement(code: string): Promise<void> {
-    const res: HighlightResult = await this._hljs.highlight(code, {
+  async highlightElement(code: string): Promise<HighlightResult> {
+    return this._hljs.highlight(code, {
       language: this.language(),
       ignoreIllegals: this.ignoreIllegals()
     });
-    this.highlightResult.set(res);
   }
 }
