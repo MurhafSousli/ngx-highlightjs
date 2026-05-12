@@ -9,14 +9,21 @@
  * Trusted Types: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/trusted-types
  */
 
-let policy: any;
+interface NgxTrustedTypePolicyFactory {
+  createPolicy(name: string, rules: { createHTML: (s: string) => string }): NgxTrustedTypePolicy;
+}
 
-function getPolicy() {
+interface NgxTrustedTypePolicy {
+  createHTML(input: string): string;
+}
+
+let policy: NgxTrustedTypePolicy | undefined;
+
+function getPolicy(): NgxTrustedTypePolicy | undefined {
   if (!policy) {
     try {
-      policy = (window as any)?.trustedTypes?.createPolicy('ngx-highlightjs', {
-        createHTML: (s: string) => s,
-      });
+      policy = (window as Window & { trustedTypes?: NgxTrustedTypePolicyFactory })
+        .trustedTypes?.createPolicy('ngx-highlightjs', { createHTML: (s: string) => s });
     } catch {
       // fallback
     }

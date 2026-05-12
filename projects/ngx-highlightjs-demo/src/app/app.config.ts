@@ -18,12 +18,11 @@ export const appConfig: ApplicationConfig = {
         xml: () => import('highlight.js/lib/languages/xml'),
         cs: () => import('highlight.js/lib/languages/csharp'),
       },
-      themePath: 'assets/styles/androidstudio.css'
     }),
     provideGistOptions({
       clientId: environment.clientId,
       clientSecret: environment.clientSecret,
     }),
-    provideAnimationsAsync()
-  ]
+    provideAnimationsAsync(),
+  ],
 };

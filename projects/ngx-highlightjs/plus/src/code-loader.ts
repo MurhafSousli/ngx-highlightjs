@@ -17,11 +17,21 @@ export class CodeLoader {
    * @param id Gist ID
    */
   getCodeFromGist(id: string): Observable<Gist> {
-    let params!: HttpParams;
+    let params: HttpParams | undefined;
     if (this._options?.clientId && this._options?.clientSecret) {
-      params = new HttpParams().set('client_id', this._options.clientId).set('client_secret', this._options.clientSecret);
+      params = new HttpParams()
+        .set('client_id', this._options.clientId)
+        .set('client_secret', this._options.clientSecret);
     }
-    return this.fetchFile(`https://api.github.com/gists/${ id }`, { params, responseType: 'json' });
+    const url = `https://api.github.com/gists/${ id }`;
+    if (!isUrl(url)) return EMPTY;
+    return this._http.get<Gist>(url, { params }).pipe(
+      shareReplay(1),
+      catchError((err: Error) => {
+        console.error('[NgxHighlight]: Unable to fetch the URL!', err.message);
+        return EMPTY;
+      })
+    );
   }
 
   /**
@@ -29,22 +39,13 @@ export class CodeLoader {
    * @param url File raw link
    */
   getCodeFromUrl(url: string): Observable<string> {
-    return this.fetchFile(url, { responseType: 'text' });
+    if (!isUrl(url)) return EMPTY;
+    return this._http.get(url, { responseType: 'text' }).pipe(
+      shareReplay(1),
+      catchError((err: Error) => {
+        console.error('[NgxHighlight]: Unable to fetch the URL!', err.message);
+        return EMPTY;
+      })
+    );
   }
-
-  private fetchFile(url: string, options: any): Observable<any> {
-    // Check if URL is valid
-    if (isUrl(url)) {
-      return this._http.get(url, options).pipe(
-        // Catch response
-        shareReplay(1),
-        catchError((err: Error) => {
-          console.error('[NgxHighlight]: Unable to fetch the URL!', err.message);
-          return EMPTY;
-        })
-      );
-    }
-    return EMPTY;
-  }
-
 }

@@ -1,19 +1,21 @@
-@use '@angular/material' as mat;
-@use 'sass:map';
+@use "@angular/material" as mat;
+@use "sass:map";
 
 @include mat.core();
 
 // Define the theme object.
-$ngx-highlightjs-demo-theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    primary: mat.$red-palette,
-    tertiary: mat.$rose-palette,
-  ),
-  density: (
-    scale: 0,
+$ngx-highlightjs-demo-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$red-palette,
+      tertiary: mat.$rose-palette,
+    ),
+    density: (
+      scale: 0,
+    ),
   )
-));
+);
 
 :root {
   --header-bg: mat.get-theme-color($ngx-highlightjs-demo-theme, primary, 60);
@@ -41,7 +43,8 @@ h3 {
   margin: 3em 0 1.5em;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 

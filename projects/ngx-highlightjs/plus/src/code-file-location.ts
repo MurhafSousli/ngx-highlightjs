@@ -1,5 +1,5 @@
-import { inject, InjectionToken } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { inject, InjectionToken, DOCUMENT } from '@angular/core';
+
 
 /**
  * Injection token used to provide the current location to `codeFromUrl` pipe.

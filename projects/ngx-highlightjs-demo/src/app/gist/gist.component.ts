@@ -1,5 +1,11 @@
-import { Component, inject, input, InputSignal, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  inject,
+  input,
+  InputSignal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { KeyValuePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -15,18 +21,18 @@ import { CodeComponent } from '../code/code.component';
   styleUrl: './gist.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
+    KeyValuePipe,
     MatIconModule,
     MatCardModule,
     MatTabsModule,
     MatButtonModule,
     MatProgressBarModule,
     HighlightPlusModule,
-    CodeComponent
-  ]
+    CodeComponent,
+  ],
 })
 export class GistComponent {
   readonly hljs: HighlightJS = inject(HighlightJS);
-  gist: Gist;
-  readonly id: InputSignal<string> = input<string>();
+  gist: Gist | null = null;
+  readonly id: InputSignal<string> = input.required<string>();
 }

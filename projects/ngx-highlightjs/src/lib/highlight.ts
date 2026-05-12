@@ -22,10 +22,10 @@ import { HighlightBase } from './highlight-base';
 export class Highlight extends HighlightBase {
 
   // Code to highlight
-  code: InputSignal<string> = input(null, { alias: 'highlight' });
+  code: InputSignal<string | null> = input<string | null>(null, { alias: 'highlight' });
 
   // Highlighted result
-  highlightResult: WritableSignal<HighlightResult> = signal(null);
+  highlightResult: WritableSignal<HighlightResult | null> = signal<HighlightResult | null>(null);
 
   // The language name highlight only one language.
   readonly language: InputSignal<string> = input.required<string>();

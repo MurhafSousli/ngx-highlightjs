@@ -1,4 +1,6 @@
-import { Directive, Pipe, Input, Output, PipeTransform, EventEmitter, inject } from '@angular/core';
+import { Directive, Pipe, PipeTransform, inject, input, output } from '@angular/core';
+import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter, switchMap } from 'rxjs';
 import { CodeLoader } from './code-loader';
 import { Gist } from './gist.model';
 
@@ -7,16 +9,18 @@ import { Gist } from './gist.model';
 })
 export class GistDirective {
 
-  private _loader: CodeLoader = inject(CodeLoader);
+  private readonly _loader = inject(CodeLoader);
 
-  @Input()
-  set gist(value: string) {
-    if (value) {
-      this._loader.getCodeFromGist(value).subscribe((gist: Gist) => this.gistLoad.emit(gist));
-    }
+  readonly gist = input<string>();
+  readonly gistLoad = output<Gist>();
+
+  constructor() {
+    toObservable(this.gist).pipe(
+      filter(Boolean),
+      switchMap(id => this._loader.getCodeFromGist(id)),
+      takeUntilDestroyed()
+    ).subscribe(gist => this.gistLoad.emit(gist));
   }
-
-  @Output() gistLoad: EventEmitter<Gist> = new EventEmitter<Gist>();
 }
 
 @Pipe({

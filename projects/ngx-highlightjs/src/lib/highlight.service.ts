@@ -46,7 +46,7 @@ export class HighlightJS {
   /**
    * Highlighting with language detection.
    */
-  async highlightAuto(value: string, languageSubset: string[]): Promise<AutoHighlightResult> {
+  async highlightAuto(value: string, languageSubset?: string[]): Promise<AutoHighlightResult> {
     const hljs: HLJSApi = await this.loader.ready;
     return hljs.highlightAuto(value, languageSubset);
   }

@@ -22,10 +22,10 @@ export abstract class HighlightBase {
   private _sanitizer: DomSanitizer = inject(DomSanitizer);
 
   // Code to highlight
-  abstract code: InputSignal<string>;
+  abstract code: InputSignal<string | null>;
 
   // Highlighted result
-  abstract highlightResult: WritableSignal<HighlightResult | AutoHighlightResult>;
+  abstract highlightResult: WritableSignal<HighlightResult | AutoHighlightResult | null>;
 
   // Stream that emits when code string is highlighted
   abstract highlighted: OutputEmitterRef<HighlightResult | AutoHighlightResult>;
@@ -45,10 +45,11 @@ export abstract class HighlightBase {
 
     afterRenderEffect({
       write: () => {
-        const res: AutoHighlightResult = this.highlightResult();
-        this.setInnerHTML(res?.value);
-        // Forward highlight response to the highlighted output
-        this.highlighted.emit(res);
+        const res = this.highlightResult();
+        if (res) {
+          this.setInnerHTML(res.value);
+          this.highlighted.emit(res);
+        }
       }
     });
   }

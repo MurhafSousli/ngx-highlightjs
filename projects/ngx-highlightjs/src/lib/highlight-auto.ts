@@ -20,14 +20,14 @@ import { HighlightBase } from './highlight-base';
 export class HighlightAuto extends HighlightBase {
 
   // Code to highlight
-  code: InputSignal<string> = input(null, { alias: 'highlightAuto' });
+  code: InputSignal<string | null> = input<string | null>(null, { alias: 'highlightAuto' });
 
   // Highlighted result
-  highlightResult: WritableSignal<AutoHighlightResult> = signal(null);
+  highlightResult: WritableSignal<AutoHighlightResult | null> = signal<AutoHighlightResult | null>(null);
 
   // An optional array of language names and aliases restricting detection to only those languages.
   // The subset can also be set with configure, but the local parameter overrides the option if set.
-  readonly languages: InputSignal<string[]> = input<string[]>();
+  readonly languages: InputSignal<string[] | undefined> = input<string[] | undefined>();
 
   // Stream that emits when code string is highlighted
   highlighted: OutputEmitterRef<AutoHighlightResult> = output<AutoHighlightResult>();

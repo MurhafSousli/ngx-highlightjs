@@ -5,7 +5,7 @@
         <mat-tab-group dynamicHeight>
           @for (file of gist?.files | keyvalue; track file.key) {
             <mat-tab [label]="file.value.filename">
-              <app-code [code]="gist | gistFile: file.key"/>
+              <app-code [code]="gist | gistFile: file.key" />
             </mat-tab>
           }
         </mat-tab-group>
@@ -18,7 +18,7 @@
               Loading highlight.js library...
             }
           </h3>
-          <mat-progress-bar mode="indeterminate"/>
+          <mat-progress-bar mode="indeterminate" />
         </div>
       }
     </div>

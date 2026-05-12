@@ -1,5 +1,19 @@
 # Changelog
 
+## 15.0.0
+
+- Upgrade Angular peer dependency to `>=21.0.0`.
+- fix: Remove unused `@angular/cdk` peer dependency.
+- fix: `highlighted` output no longer emits `null` on initial render before any code is highlighted.
+- fix: `BehaviorSubject` in `HighlightLoader` is now correctly typed as `HLJSApi | null` with a proper type-narrowing filter guard.
+- fix: Signal initializations in `Highlight` and `HighlightAuto` directives now carry explicit `| null` type parameters (`signal<T | null>(null)`, `input<T | null>(null)`).
+- fix: Abstract `code` and `highlightResult` in `HighlightBase` updated to reflect `string | null` and `T | null` types.
+- refactor: Migrate `GistDirective` from `@Input()`/`@Output()`/`EventEmitter` to signal-based `input()`/`output()`.
+- fix: `GistDirective` subscription now uses `toObservable` + `switchMap` + `takeUntilDestroyed` - cancels in-flight requests on input change and cleans up on destroy.
+- fix: `CodeLoader.fetchFile` private method removed; `getCodeFromGist` and `getCodeFromUrl` are now fully typed without `any`.
+- fix: `trusted-types.ts` policy variable typed as `TrustedTypePolicy | undefined` instead of `any`; window access uses a proper intersection type.
+- fix: `HighlightAuto` `languages` input now typed as `string[] | undefined` - passing no value (or `undefined`) correctly falls through to hljs's default language set instead of being rejected at the type level. `HighlightJS.highlightAuto()` service method updated to match (`languageSubset?: string[]`).
+
 ## 14.0.1
 
 - Add missing license in package.json, closes [#318](https://github.com/MurhafSousli/ngx-highlightjs/issues/318).
@@ -51,16 +65,17 @@
 ### Breaking changes
 
 - When using `HighlightPlusModule`, you must have `provideHttpClient()` provided in your `main.ts` file in order to make the http requests work.
--  The line numbers plugin is now included within the package, the import path should point to the new sub-package `ngx-highlightjs/line-numbers`
+- The line numbers plugin is now included within the package, the import path should point to the new sub-package `ngx-highlightjs/line-numbers`
+
 ```ts
 providers: [
   {
     provide: HIGHLIGHT_OPTIONS,
     useValue: {
-      lineNumbersLoader: () => import('ngx-highlightjs/line-numbers')
-    }
-  }
-]
+      lineNumbersLoader: () => import("ngx-highlightjs/line-numbers"),
+    },
+  },
+];
 ```
 
 ## 9.0.0
@@ -122,7 +137,7 @@ providers: [
 - Upgrade to Angular 12
 - Set peer dependency of highlight.js to v10
 
- > The library is still compatible with the new version of highlight.js v11 but the highlighting function will be deprecated in their next release
+> The library is still compatible with the new version of highlight.js v11 but the highlighting function will be deprecated in their next release
 
 ## 4.1.3
 
@@ -254,7 +269,7 @@ Version 3 is written from scratch, Please read the updated [documentations](/REA
 
 ## 1.2.0
 
-- Remove *HighlightUmdModule* and systemjs support
+- Remove _HighlightUmdModule_ and systemjs support
 - Refactir(HighlightModule)
 - Add `[code]` input
 
@@ -262,23 +277,24 @@ Version 3 is written from scratch, Please read the updated [documentations](/REA
 
 - Improve performance
 - Fix load hljs script only once
-- Remove `hlAuto` and `hlDelay` inputs from *HighlightDirective*, but they are still usable in *HighlightUmdDirective*
+- Remove `hlAuto` and `hlDelay` inputs from _HighlightDirective_, but they are still usable in _HighlightUmdDirective_
 - Update `HighlightModule` parameter:
 
-    before:
-    ```ts
-      HighlightModule.forRoot('monokai-sublime', 'assets/js/highlight-js');
-    ```
+  before:
 
-    after
+  ```ts
+  HighlightModule.forRoot("monokai-sublime", "assets/js/highlight-js");
+  ```
 
-    ```ts
-      HighlightModule.forRoot({
-        theme: 'monokai-sublime',
-        path: 'assets/js/highlight-js',
-        auto: true
-      });
-    ```
+  after
+
+  ```ts
+  HighlightModule.forRoot({
+    theme: "monokai-sublime",
+    path: "assets/js/highlight-js",
+    auto: true,
+  });
+  ```
 
 ## 1.0.0
 
